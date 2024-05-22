@@ -61,7 +61,7 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
 export default ({
   heading = "Checkout the Menu",
   tabs = {
-    Starters: [
+    All: [
       {
         imageSrc:
           "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
@@ -143,9 +143,10 @@ export default ({
         url: "#"
       }
     ],
-    Main: getRandomCards(),
-    Soup: getRandomCards(),
-    Desserts: getRandomCards()
+    'Kiến trúc': getRandomCards(),
+    'Văn hoá': getRandomCards(),
+    'Cờ': getRandomCards(),
+    'Emoji': getRandomCards(),
   }
 }) => {
   /*

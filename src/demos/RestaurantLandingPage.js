@@ -14,7 +14,16 @@ import Footer from "components/footers/FiveColumnWithInputForm.js";
 import chefIconImageSrc from "images/chef-icon.svg";
 import celebrationIconImageSrc from "images/celebration-icon.svg";
 import shopIconImageSrc from "images/shop-icon.svg";
-
+import styled from "styled-components";
+import ResponsiveVideoEmbed from "../helpers/ResponsiveVideoEmbed.js";
+const StyledResponsiveVideoEmbed = styled(ResponsiveVideoEmbed)`
+  padding-bottom: 56.25% !important;
+  padding-top: 0px !important;
+  ${tw`rounded`}
+  iframe {
+    ${tw`rounded bg-black shadow-xl`}
+  }
+`;
 export default () => {
   const Subheading = tw.span`tracking-wider text-sm font-medium`;
   const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 transform -skew-x-12 inline-block`;
@@ -24,14 +33,22 @@ export default () => {
   return (
     <AnimationRevealPage>
       <Hero
-        heading={<>Delicious & Affordable <HighlightedText>Meals Near You.</HighlightedText></>}
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        heading={<>Tô màu Thời trang, Vẽ sắc Thời gian cùng <HighlightedText>Tô nón lá</HighlightedText></>}
+        description={`"Tô nón lá" là nơi giúp bạn trải nghiệm trang trí chiếc nón lá Việt Nam, tạo ra Sản phẩm thời trang mang Văn hoá Việt và Dấu ấn của riêng bạn.`}
         imageSrc="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
         imageCss={imageCss}
         imageDecoratorBlob={true}
-        primaryButtonText="Order Now"
-        watchVideoButtonText="Meet The Chefs"
+        primaryButtonText="Tìm hiểu ngay"
+        // watchVideoButtonText="Meet The Chefs"
       />
+      //Video giới thiệu: Nguyên liệu, trải nghiệm, thành phẩm. Nhấn mạnh vào trải nghiệm một mình hoặc với gia đình, bạn bè; có thể sử dụng để đội, trang trí hoặc làm quà tặng.
+      <StyledResponsiveVideoEmbed
+        url="https://www.youtube.com/embed/fVGgOCFzaqQ?si=3LsGbpSkMsZkvCok"
+        background="transparent"
+      />
+      //Giới thiệu quy trình: 
+      //Đặt qua web: 1. Chọn mẫu nón lá: kích thước, thiết kế, 2. Đặt lịch, confirm từ Tô nón lá 3. Trải nghiệm
+      //Sau này nếu có cửa hàng: 1. Chọn mẫu nón lá: kích thước, thiết kế, 2. Trải nghiệm
       <MainFeature
         subheading={<Subheading>Established Since 2014</Subheading>}
         heading={
@@ -63,7 +80,7 @@ export default () => {
       <TabGrid
         heading={
           <>
-            Checkout our <HighlightedText>menu.</HighlightedText>
+            <HighlightedText>Sản phẩm</HighlightedText> của chúng tôi
           </>
         }
       />
