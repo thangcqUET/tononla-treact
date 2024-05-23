@@ -6,9 +6,10 @@ import Hero from "components/hero/TwoColumnWithVideo.js";
 import Features from "components/features/ThreeColSimple.js";
 import MainFeature from "components/features/TwoColWithButton.js";
 import MainFeature2 from "components/features/TwoColSingleFeatureWithStats2.js";
-import TabGrid from "components/cards/TabCardGrid.js";
+import TabGrid from "components/cards/EditedTabCardGrid.js";
 import Testimonial from "components/testimonials/ThreeColumnWithProfileImage.js";
 import DownloadApp from "components/cta/DownloadApp.js";
+import Header from "components/headers/light.js";
 import Footer from "components/footers/FiveColumnWithInputForm.js";
 
 import chefIconImageSrc from "images/chef-icon.svg";
@@ -29,11 +30,19 @@ export default () => {
   const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 transform -skew-x-12 inline-block`;
   const HighlightedTextInverse = tw.span`bg-gray-100 text-primary-500 px-4 transform -skew-x-12 inline-block`;
   const Description = tw.span`inline-block mt-8`;
+  const VideoFrame = tw.div`pt-6 pb-6 mx-auto max-w-screen-xl`;
   const imageCss = tw`rounded-4xl`;
   return (
     <AnimationRevealPage>
+      <Header />
       <Hero
-        heading={<>Tô màu Thời trang, Vẽ sắc Thời gian cùng <HighlightedText>Tô nón lá</HighlightedText></>}
+        heading={
+          <>
+            Tô màu Thời trang
+            <br /> Vẽ sắc Thời gian
+            <br /> cùng <HighlightedText>Tô nón lá</HighlightedText>
+          </>
+        }
         description={`"Tô nón lá" là nơi giúp bạn trải nghiệm trang trí chiếc nón lá Việt Nam, tạo ra Sản phẩm thời trang mang Văn hoá Việt và Dấu ấn của riêng bạn.`}
         imageSrc="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
         imageCss={imageCss}
@@ -41,34 +50,45 @@ export default () => {
         primaryButtonText="Tìm hiểu ngay"
         // watchVideoButtonText="Meet The Chefs"
       />
-      //Video giới thiệu: Nguyên liệu, trải nghiệm, thành phẩm. Nhấn mạnh vào trải nghiệm một mình hoặc với gia đình, bạn bè; có thể sử dụng để đội, trang trí hoặc làm quà tặng.
-      <StyledResponsiveVideoEmbed
-        url="https://www.youtube.com/embed/fVGgOCFzaqQ?si=3LsGbpSkMsZkvCok"
-        background="transparent"
-      />
-      //Giới thiệu quy trình: 
-      //Đặt qua web: 1. Chọn mẫu nón lá: kích thước, thiết kế, 2. Đặt lịch, confirm từ Tô nón lá 3. Trải nghiệm
-      //Sau này nếu có cửa hàng: 1. Chọn mẫu nón lá: kích thước, thiết kế, 2. Trải nghiệm
+      //Video giới thiệu: Nguyên liệu, trải nghiệm, thành phẩm. Nhấn mạnh vào
+      trải nghiệm một mình hoặc với gia đình, bạn bè; có thể sử dụng để đội,
+      trang trí hoặc làm quà tặng.
+      <VideoFrame>
+        <StyledResponsiveVideoEmbed
+          url="https://www.youtube.com/embed/fVGgOCFzaqQ?si=3LsGbpSkMsZkvCok"
+          background="transparent"
+        />
+      </VideoFrame>
+      //Giới thiệu quy trình: //Đặt qua web: 1. Chọn mẫu nón lá: kích thước,
+      thiết kế, 2. Đặt lịch, confirm từ Tô nón lá 3. Trải nghiệm //Sau này nếu
+      có cửa hàng: 1. Chọn mẫu nón lá: kích thước, thiết kế, 2. Trải nghiệm
       <MainFeature
-        subheading={<Subheading>Established Since 2014</Subheading>}
+        subheading={""}
         heading={
           <>
-            We've been serving for
-            <wbr /> <HighlightedText>over 5 years.</HighlightedText>
+            Tô nón lá
+            <br />
+            <HighlightedText>như thế nào</HighlightedText>
           </>
         }
         description={
           <Description>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.
+            1. Vào trang web <span tw="text-primary-500">tononla.com</span>
             <br />
+            2. Chọn mẫu thiết kế bạn yêu thích
             <br />
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            3. Đặt hàng, confirm với Tô nón lá
+            <br />
+            4. Chúng tớ sẽ chuẩn bị, việc của bạn là đến và tô
+            <br/>
+            <span tw="text-primary-500 text-base"><span tw="font-bold">Thời gian:</span> Chủ nhật hằng tuần</span>
+            <br/>
+            <span tw="text-primary-500 text-base text-red-500"><span tw="font-bold">Địa điểm:</span> CHƯA BIẾT </span>
           </Description>
         }
         buttonRounded={false}
         textOnLeft={false}
-        primaryButtonText="Latest Offers"
+        primaryButtonText="Trải nghiệm ngay"
         imageSrc={
           "https://images.unsplash.com/photo-1460306855393-0410f61241c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
         }
@@ -80,75 +100,11 @@ export default () => {
       <TabGrid
         heading={
           <>
-            <HighlightedText>Sản phẩm</HighlightedText> của chúng tôi
+            <HighlightedText>Sản phẩm</HighlightedText> của <span tw="text-primary-500">Tô nón lá</span>
           </>
         }
-      />
-      <Features
-        heading={
-          <>
-            Amazing <HighlightedText>Services.</HighlightedText>
-          </>
-        }
-        cards={[
-          {
-            imageSrc: shopIconImageSrc,
-            title: "230+ Locations",
-            description: "Lorem ipsum donor amet siti ceali placeholder text",
-            url: "https://google.com"
-          },
-          {
-            imageSrc: chefIconImageSrc,
-            title: "Professional Chefs",
-            description: "Lorem ipsum donor amet siti ceali placeholder text",
-            url: "https://timerse.com"
-          },
-          {
-            imageSrc: celebrationIconImageSrc,
-            title: "Birthday Catering",
-            description: "Lorem ipsum donor amet siti ceali placeholder text",
-            url: "https://reddit.com"
-          }
-        ]}
-
-        imageContainerCss={tw`p-2!`}
-        imageCss={tw`w-20! h-20!`}
-      />
-      <MainFeature2
-        subheading={<Subheading>A Reputed Brand</Subheading>}
-        heading={<>Why <HighlightedText>Choose Us ?</HighlightedText></>}
-        statistics={[
-          {
-            key: "Orders",
-            value: "94000+",
-          },
-          {
-            key: "Customers",
-            value: "11000+"
-          },
-          {
-            key: "Chefs",
-            value: "1500+"
-          }
-        ]}
-        primaryButtonText="Order Now"
-        primaryButtonUrl="https://order.now.com"
-        imageInsideDiv={false}
-        imageSrc="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzI2fQ&auto=format&fit=crop&w=768&q=80"
-        imageCss={Object.assign(tw`bg-cover`, imageCss)}
-        imageContainerCss={tw`md:w-1/2 h-auto`}
-        imageDecoratorBlob={true}
-        imageDecoratorBlobCss={tw`left-1/2 md:w-32 md:h-32 -translate-x-1/2 opacity-25`}
-        textOnLeft={true}
-      />
-      <Testimonial
-        subheading=""
-        heading={<>Customers <HighlightedText>Love Us.</HighlightedText></>}
-      />
-      <DownloadApp
-        text={<>People around you are ordering delicious meals using the <HighlightedTextInverse>Treact App.</HighlightedTextInverse></>}
       />
       <Footer />
     </AnimationRevealPage>
   );
-}
+};

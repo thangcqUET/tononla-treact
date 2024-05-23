@@ -7,6 +7,7 @@ import HotelTravelLandingPage from "demos/HotelTravelLandingPage.js";
 import AgencyLandingPage from "demos/AgencyLandingPage.js";
 import SaaSProductLandingPage from "demos/SaaSProductLandingPage.js";
 import RestaurantLandingPage from "demos/RestaurantLandingPage.js";
+import Checkout from "demos/Checkout.js";
 import ServiceLandingPage from "demos/ServiceLandingPage.js";
 import HostingCloudLandingPage from "demos/HostingCloudLandingPage.js";
 
@@ -106,6 +107,11 @@ export const components = {
       component: RestaurantLandingPage,
       imageSrc: RestaurantLandingPageImageSrc,
       url: "/components/landingPages/RestaurantLandingPage",
+    },
+    Checkout:{
+      component: Checkout,
+      imageSrc: RestaurantLandingPageImageSrc,
+      url: "/components/landingPages/Checkout",
     },
     HotelTravelLandingPage: {
       component: HotelTravelLandingPage,

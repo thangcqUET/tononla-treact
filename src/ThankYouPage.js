@@ -9,7 +9,8 @@ import GitHubButton from "react-github-btn";
 import { LogoLink } from "components/headers/light.js";
 import { SectionHeading as HeadingBase } from "components/misc/Headings";
 import { SectionDescription as DescriptionBase } from "components/misc/Typography";
-
+import Header from "components/headers/light.js";
+import Footer from "components/footers/FiveColumnWithInputForm.js";
 import logo from "images/logo.svg";
 
 /* Hero */
@@ -44,26 +45,7 @@ export default () => {
     <AnimationRevealPage disabled>
       <Container tw="-mx-8 -mt-8 pt-8 px-8">
         <Content2Xl>
-          <NavRow>
-            <LogoLink href="/">
-              <img src={logo} alt="" />
-              Treact
-            </LogoLink>
-            <div tw="flex flex-col lg:flex-row items-center">
-              <NavLink target="_blank" href="https://owaiskhan.me/post/free-tailwindcss-react-ui-kit">
-                License & Usage
-              </NavLink>
-              <NavLink target="_blank" href="https://twitter.com/owaiswiz">
-                Twitter
-              </NavLink>
-              <NavLink target="_blank" href="https://owaiskhan.me">
-                Who Am I ?
-              </NavLink>
-              <PrimaryNavLink target="_blank" href="https://gum.co/QaruQ">
-                Download Now
-              </PrimaryNavLink>
-            </div>
-          </NavRow>
+          <Header></Header>
           <HeroRow>
             <Heading>Thank You!</Heading>
             <Description tw="mt-12">Your Download Will Begin Shortly. If it does not, <NavLink href={downloadUrl} download>click this link</NavLink>.</Description>
@@ -96,6 +78,7 @@ export default () => {
               </div>
             </div>
           </HeroRow>
+          <Footer />
         </Content2Xl>
       </Container>
     </AnimationRevealPage>

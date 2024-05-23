@@ -9,6 +9,22 @@ import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import { ReactComponent as StarIcon } from "images/star-icon.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-5.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "images/svg-decorator-blob-7.svg";
+import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
+import ReactModalAdapter from "../../helpers/ReactModalAdapter.js";
+import MainFeature from "components/features/TwoColSingleFeatureWithStats3.js";
+
+const StyledModal = styled(ReactModalAdapter)`
+  &.mainHeroModal__overlay {
+    ${tw`fixed inset-0 z-50`}
+  }
+  &.mainHeroModal__content {
+    ${tw`xl:mx-auto m-4 pt-16 px-4 pb-4 sm:m-16 sm:pt-0 max-w-screen-xl absolute inset-0 flex justify-center items-center rounded-lg bg-gray-200 outline-none`}
+  }
+  .content {
+    ${tw`w-full h-full lg:p-16`}
+  }
+`;
+const CloseModalButton = tw.button`absolute top-0 right-0 mt-8 mr-8 hocus:text-primary-500`;
 
 const HeaderRow = tw.div`flex justify-between items-center flex-col xl:flex-row`;
 const Header = tw(SectionHeading)``;
@@ -61,7 +77,7 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
 export default ({
   heading = "Checkout the Menu",
   tabs = {
-    Starters: [
+    "Tất cả": [
       {
         imageSrc:
           "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
@@ -143,9 +159,10 @@ export default ({
         url: "#"
       }
     ],
-    Main: getRandomCards(),
-    Soup: getRandomCards(),
-    Desserts: getRandomCards()
+    'Kiến trúc': getRandomCards(),
+    'Văn hoá': getRandomCards(),
+    'Cờ': getRandomCards(),
+    'Emoji': getRandomCards(),
   }
 }) => {
   /*
@@ -156,6 +173,8 @@ export default ({
   const tabsKeys = Object.keys(tabs);
   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
 
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const toggleModal = () => {setModalIsOpen(!modalIsOpen); console.log("toggle");}
   return (
     <Container>
       <ContentWithPaddingXl>
@@ -190,16 +209,16 @@ export default ({
             animate={activeTab === tabKey ? "current" : "hidden"}
           >
             {tabs[tabKey].map((card, index) => (
-              <CardContainer key={index}>
-                <Card className="group" href={card.url} initial="rest" whileHover="hover" animate="rest">
+              <CardContainer key={index} onClick={toggleModal}>
+                <Card className="group" initial="rest" whileHover="hover" animate="rest">
                   <CardImageContainer imageSrc={card.imageSrc}>
-                    <CardRatingContainer>
+                    {/* <CardRatingContainer>
                       <CardRating>
                         <StarIcon />
                         {card.rating}
                       </CardRating>
                       <CardReview>({card.reviews})</CardReview>
-                    </CardRatingContainer>
+                    </CardRatingContainer> */}
                     <CardHoverOverlay
                       variants={{
                         hover: {
@@ -218,7 +237,7 @@ export default ({
                   </CardImageContainer>
                   <CardText>
                     <CardTitle>{card.title}</CardTitle>
-                    <CardContent>{card.content}</CardContent>
+                    {/* <CardContent>{card.content}</CardContent> */}
                     <CardPrice>{card.price}</CardPrice>
                   </CardText>
                 </Card>
@@ -229,6 +248,20 @@ export default ({
       </ContentWithPaddingXl>
       <DecoratorBlob1 />
       <DecoratorBlob2 />
+      <StyledModal
+          closeTimeoutMS={300}
+          className="mainHeroModal"
+          isOpen={modalIsOpen}
+          onRequestClose={toggleModal}
+          shouldCloseOnOverlayClick={true}
+        >
+          <CloseModalButton onClick={toggleModal}>
+            <CloseIcon tw="w-6 h-6" />
+          </CloseModalButton>
+          <div className="content">
+            <MainFeature></MainFeature>
+          </div>
+        </StyledModal>
     </Container>
   );
 };
