@@ -10,8 +10,7 @@ import TabGrid from "components/cards/EditedTabCardGrid.js";
 import Testimonial from "components/testimonials/ThreeColumnWithProfileImage.js";
 import DownloadApp from "components/cta/DownloadApp.js";
 import Header from "components/headers/light.js";
-import Footer from "components/footers/FiveColumnWithInputForm.js";
-
+import Footer from "components/footers/MiniCenteredFooter.js";
 import chefIconImageSrc from "images/chef-icon.svg";
 import celebrationIconImageSrc from "images/celebration-icon.svg";
 import shopIconImageSrc from "images/shop-icon.svg";
@@ -38,12 +37,12 @@ export default () => {
       <Hero
         heading={
           <>
-            Tô màu Thời trang
-            <br /> Vẽ sắc Thời gian
-            <br /> cùng <HighlightedText>Tô nón lá</HighlightedText>
+            <HighlightedText>Tô nón lá</HighlightedText>
+            <br />Tô màu khoảnh khắc
+            <br /> Vẽ sắc thời trang
           </>
         }
-        description={`"Tô nón lá" là nơi giúp bạn trải nghiệm trang trí chiếc nón lá Việt Nam, tạo ra Sản phẩm thời trang mang Văn hoá Việt và Dấu ấn của riêng bạn.`}
+        description={<><span tw="text-primary-500">Tô nón lá</span> là nơi giúp bạn trải nghiệm trang trí chiếc nón lá Việt Nam, tạo ra Sản phẩm thời trang mang Văn hoá Việt và Dấu ấn của riêng bạn.</>}
         imageSrc="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
         imageCss={imageCss}
         imageDecoratorBlob={true}
@@ -77,7 +76,7 @@ export default () => {
             <br />
             2. Chọn mẫu thiết kế bạn yêu thích
             <br />
-            3. Đặt hàng, confirm với Tô nón lá
+            3. Đặt hàng và xác nhận với <span tw="text-primary-500">Tô nón lá</span>
             <br />
             4. Chúng tớ sẽ chuẩn bị, việc của bạn là đến và tô
             <br/>

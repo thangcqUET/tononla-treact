@@ -6,6 +6,8 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import EmailIllustrationSrc from "images/email-illustration.svg";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-center max-w-screen-xl mx-auto py-20 md:py-24`;
@@ -73,7 +75,9 @@ export default ({
   textOnLeft = true,
 }) => {
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
-
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+  }
   return (
     <Container>
       <TwoColumn>
@@ -121,8 +125,9 @@ export default ({
               <Input type="text" name="phone" required placeholder="Số điện thoại" />
               <Input type="email" name="email" placeholder="Email" />
               <Input type="text" name="name" placeholder="Họ và tên" />
+              {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
               <Textarea name="message" placeholder="Bạn muốn lưu ý cho chúng tớ điều gì không" />
-              <SubmitButton type="submit">{submitButtonText}</SubmitButton>
+              <SubmitButton type="submit" onSubmit={()=>{handleOnSubmit()}}>{submitButtonText}</SubmitButton>
             </Form>
           </TextContent>
         </TextColumn>

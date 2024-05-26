@@ -14,6 +14,9 @@ import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "../../images/svg-decorator-blob-1.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "../../images/dot-pattern.svg";
 import DesignIllustration from "../../images/design-illustration.svg";
+import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css';
+import ReactPixel from 'react-facebook-pixel';
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col lg:flex-row md:items-center max-w-screen-xl mx-auto py-20 md:py-24`;
@@ -92,30 +95,37 @@ export default ({
           </LeftColumn>
           <RightColumn>
             <IllustrationContainer>
-              <img
+              {/* <img
                 css={imageCss}
                 src={imageSrc}
                 alt="Hero"
-              />
+              /> */}
+              <Splide aria-label="My Favorite Images"
+                options={
+                  {
+                    type       : 'loop',
+                    gap        : '1rem',
+                    perPage    : 1,
+                    perMove    : 1,
+                    pagination : true,
+                    arrows     : true,
+                    autoplay   : true,
+                    interval   : 2000,
+                  }
+                }
+              >
+                <SplideSlide>
+                  <img src={imageSrc} css={imageCss} alt="Image 1"/>
+                </SplideSlide>
+                <SplideSlide>
+                  <img src={imageSrc} css={imageCss} alt="Image 2"/>
+                </SplideSlide>
+              </Splide>
               {imageDecoratorBlob && <DecoratorBlob2 />}
             </IllustrationContainer>
           </RightColumn>
         </TwoColumn>
         <DecoratorBlob1 />
-        <StyledModal
-          closeTimeoutMS={300}
-          className="mainHeroModal"
-          isOpen={modalIsOpen}
-          onRequestClose={toggleModal}
-          shouldCloseOnOverlayClick={true}
-        >
-          <CloseModalButton onClick={toggleModal}>
-            <CloseIcon tw="w-6 h-6" />
-          </CloseModalButton>
-          <div className="content">
-            <ResponsiveVideoEmbed url={watchVideoYoutubeUrl} tw="w-full" />
-          </div>
-        </StyledModal>
       </Container>
     </>
   );

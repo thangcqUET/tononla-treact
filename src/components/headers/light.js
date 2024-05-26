@@ -72,14 +72,15 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
    */
   const defaultLinks = [
     <NavLinks key={1}>
-      <NavLink href="/#">About</NavLink>
-      <NavLink href="/#">Blog</NavLink>
-      <NavLink href="/#">Pricing</NavLink>
-      <NavLink href="/#">Contact Us</NavLink>
-      <NavLink href="/#" tw="lg:ml-12!">
+      {/* <NavLink href="/#">About</NavLink> */}
+      <NavLink href="/#">Tô thế nào</NavLink>
+      <NavLink href="/#">Sản phẩm</NavLink>
+      <NavLink href="/#">Liên hệ</NavLink>
+      {/* <NavLink href="/#">Chính sách</NavLink> */}
+      {/* <NavLink href="/#" tw="lg:ml-12!">
         Login
       </NavLink>
-      <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}href="/#">Sign Up</PrimaryLink>
+      <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}href="/#">Sign Up</PrimaryLink> */}
     </NavLinks>
   ];
 

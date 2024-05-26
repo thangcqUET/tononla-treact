@@ -50,7 +50,7 @@ export default ({
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
   primaryButtonText = "Tô hình này",
   price = "100.000đ",
-  primaryButtonUrl = "https://timerse.com",
+  primaryButtonUrl = "/components/landingPages/Checkout",
   imageSrc = StatsIllustrationSrc,
   imageCss = null,
   imageContainerCss = null,
