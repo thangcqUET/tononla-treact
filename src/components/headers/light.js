@@ -73,8 +73,12 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
   const defaultLinks = [
     <NavLinks key={1}>
       {/* <NavLink href="/#">About</NavLink> */}
-      <NavLink onClick={navFunctions[0]}>Tô thế nào?</NavLink>
-      <NavLink onClick={navFunctions[1]}>Sản phẩm</NavLink>
+      {
+        navFunctions?<>
+        <NavLink onClick={navFunctions?.at(0)}>Tô thế nào?</NavLink>
+        <NavLink onClick={navFunctions?.at(1)}>Sản phẩm</NavLink>
+        </>:<></>
+      }
       <NavLink href="/#" >Liên hệ CHƯA CÓ NỘI DUNG</NavLink>
       {/* <NavLink href="/#">Chính sách</NavLink> */}
       {/* <NavLink href="/#" tw="lg:ml-12!">
