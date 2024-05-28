@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
@@ -8,8 +8,9 @@ import StatsIllustrationSrc from "images/stats-illustration.svg";
 import { ReactComponent as SvgDotPattern } from "images/dot-pattern.svg";
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
+import { Link, useNavigate } from "react-router-dom";
 const Container = tw.div`relative`;
-const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
+const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto pt-10 md:pt-5`;
 const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
 const ImageColumn = tw(Column)`md:w-5/12 flex-shrink-0 h-80 md:h-auto relative`;
 const TextColumn = styled(Column)(props => [
@@ -35,7 +36,7 @@ const Value = tw.div`font-bold text-lg sm:text-xl lg:text-2xl text-secondary-500
 const Key = tw.div`font-medium text-primary-700`;
 
 const PrimaryButton = tw(PrimaryButtonBase)`mt-8 md:mt-10 text-sm inline-block mx-auto md:mx-0`;
-
+const ButtonStyle = tw.div`px-8 py-3 font-bold rounded bg-primary-500 text-gray-100 hocus:bg-primary-700 hocus:text-gray-200 focus:shadow-outline focus:outline-none transition duration-300 mt-8 md:mt-10 text-sm inline-block mx-auto md:mx-0`;
 const DecoratorBlob = styled(SvgDotPattern)(props => [
   tw`w-20 h-20 absolute right-0 bottom-0 transform translate-x-1/2 translate-y-1/2 fill-current text-primary-500 -z-10`
 ]);
@@ -78,7 +79,13 @@ export default ({
   ];
 
   if (!statistics) statistics = defaultStatistics;
-
+  const navigate = useNavigate()
+  const handleGotoCheckout = ()=>{
+    navigate(primaryButtonUrl);
+  }
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <Container>
       <TwoColumn css={!imageInsideDiv && tw`md:items-center`}>
@@ -108,7 +115,7 @@ export default ({
                 </Statistic>
               ))}
             </Statistics> */}
-            <PrimaryButton as="a" href={primaryButtonUrl}>
+            <PrimaryButton as="a" onClick={handleGotoCheckout}>
               {primaryButtonText}
             </PrimaryButton>
           </TextContent>

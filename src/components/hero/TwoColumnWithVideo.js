@@ -16,7 +16,6 @@ import { ReactComponent as SvgDecoratorBlob2 } from "../../images/dot-pattern.sv
 import DesignIllustration from "../../images/design-illustration.svg";
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
-import ReactPixel from 'react-facebook-pixel';
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col lg:flex-row md:items-center max-w-screen-xl mx-auto py-20 md:py-24`;
@@ -71,6 +70,7 @@ export default ({
   imageSrc=DesignIllustration,
   imageCss=null,
   imageDecoratorBlob = false,
+  buttonFunction,
 }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -84,7 +84,7 @@ export default ({
             <Heading>{heading}</Heading>
             <Paragraph>{description}</Paragraph>
             <Actions>
-              <PrimaryButton as="a" href={primaryButtonUrl}>{primaryButtonText}</PrimaryButton>
+              <PrimaryButton as="a" onClick={buttonFunction}>{primaryButtonText}</PrimaryButton>
               {/* <WatchVideoButton onClick={toggleModal}>
                 <span className="playIconContainer">
                   <PlayIcon className="playIcon" />

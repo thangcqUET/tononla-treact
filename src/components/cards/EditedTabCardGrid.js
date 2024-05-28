@@ -256,7 +256,7 @@ export default ({
           shouldCloseOnOverlayClick={true}
         >
           <CloseModalButton onClick={toggleModal}>
-            <CloseIcon tw="w-6 h-6" />
+            <CloseIcon tw="w-6 h-6 z-10" />
           </CloseModalButton>
           <div className="content">
             <MainFeature></MainFeature>
