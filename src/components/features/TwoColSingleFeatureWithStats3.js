@@ -80,8 +80,25 @@ export default ({
 
   if (!statistics) statistics = defaultStatistics;
   const navigate = useNavigate()
-  const handleGotoCheckout = ()=>{
+  const handleGotoCheckout = (
+    productId="", 
+    contentCategory='default', 
+    numItems=0, 
+    currency='VND', 
+    value=0
+    )=>{
     navigate(primaryButtonUrl);
+    window.fbq('track', 'InitiateCheckout', {
+      content_ids: [productId],
+      content_category: contentCategory,
+      contents: [{
+        id: productId,
+        quantity: numItems
+      }],
+      num_items: numItems,
+      currency: currency,
+      value: value
+    });
   }
   return (
     <Container>

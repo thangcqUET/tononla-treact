@@ -77,7 +77,18 @@ export default ({
   formMethod = "get",
   formEndpoint = "https://tononla-backend.vercel.app/orders",
   textOnLeft = true,
+  order = {
+    
+  }
 }) => {
+  const {
+    productId="", 
+    productName="", 
+    productType='product', 
+    numItems=0, 
+    currency='VND', 
+    value=0
+  } = order;
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
   const handleOnSubmit = async () => {
     setIsError(false);
@@ -95,6 +106,18 @@ export default ({
       console.log(res.data);
       if(res.status==201){
         setSubmitSuccessfully(true);
+        window.fbq('track', 'Purchase', {
+          content_name: productName,
+          content_ids: [productId],
+          content_type: productType,
+          contents: [{
+            id: productId,
+            quantity: numItems
+          }],
+          num_items: numItems,
+          currency: currency,
+          value: value
+        });
       }
     }).catch((error)=>{
       console.log(error);

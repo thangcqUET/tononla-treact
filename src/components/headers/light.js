@@ -75,11 +75,19 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
       {/* <NavLink href="/#">About</NavLink> */}
       {
         navFunctions?<>
-        <NavLink onClick={navFunctions?.at(0)}>Tô thế nào?</NavLink>
-        <NavLink onClick={navFunctions?.at(1)}>Sản phẩm</NavLink>
+        <NavLink onClick={()=>{
+          navFunctions?.at(0)();
+          window.fbq('track', 'ButtonClick', {content_name: 'Menu:To_the_nao'});
+        }}>Tô thế nào?</NavLink>
+        <NavLink onClick={()=>{
+          navFunctions?.at(1)();
+          window.fbq('track', 'ButtonClick', {content_name: 'Menu:San_pham'});
+        }}>Sản phẩm</NavLink>
         </>:<></>
       }
-      <NavLink href="/#" >Liên hệ CHƯA CÓ NỘI DUNG</NavLink>
+      <NavLink onClick={()=>{
+        window.fbq('track', 'ButtonClick', {content_name: 'Menu:Lien_he'});
+      }}>Liên hệ CHƯA CÓ NỘI DUNG</NavLink>
       {/* <NavLink href="/#">Chính sách</NavLink> */}
       {/* <NavLink href="/#" tw="lg:ml-12!">
         Login
@@ -98,7 +106,9 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
     </LogoLink>
   );
 
-  logoLink = logoLink || defaultLogoLink;
+  logoLink = <div onClick={()=>{
+    window.fbq('track', 'ButtonClick', {content_name: 'Menu:Logo'});
+  }}>{logoLink || defaultLogoLink}</div>;
   links = links || defaultLinks;
 
   return (

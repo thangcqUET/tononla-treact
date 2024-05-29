@@ -174,7 +174,30 @@ export default ({
   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const toggleModal = () => {setModalIsOpen(!modalIsOpen); console.log("toggle");}
+  const toggleModal = (
+    productId="", 
+    productName="", 
+    productType='product', 
+    contentCategory='default', 
+    numItems=0, 
+    currency='VND', 
+    value=0
+    ) => {
+    setModalIsOpen(!modalIsOpen);
+    window.fbq('track', 'AddToCart', {
+      content_name: productName,
+      content_ids: [productId],
+      content_type: productType,
+      content_category: contentCategory,
+      contents: [{
+        id: productId,
+        quantity: numItems
+      }],
+      num_items: numItems,
+      currency: currency,
+      value: value
+    });
+  }
   return (
     <Container>
       <ContentWithPaddingXl>

@@ -64,7 +64,9 @@ export default () => {
       //Video giới thiệu: Nguyên liệu, trải nghiệm, thành phẩm. Nhấn mạnh vào
       trải nghiệm một mình hoặc với gia đình, bạn bè; có thể sử dụng để đội,
       trang trí hoặc làm quà tặng.
-      <VideoFrame ref={refVideo}>
+      <VideoFrame ref={refVideo} onClick={()=>{
+        window.fbq('track', 'ButtonClick', {content_name: 'Video:Play_or_Pause'});
+      }}>
         <StyledResponsiveVideoEmbed
           url="https://www.youtube.com/embed/fVGgOCFzaqQ?si=3LsGbpSkMsZkvCok"
           background="transparent"
@@ -101,7 +103,10 @@ export default () => {
           buttonRounded={false}
           textOnLeft={false}
           primaryButtonText="Trải nghiệm ngay"
-          buttonFunction = {handleScroll(refProductList)}
+          buttonFunction = {()=>{
+            handleScroll(refProductList)();
+            window.fbq('track', 'ButtonClick', {content_name: 'Progress:Trai_nghiem_ngay'});
+          }}
           imageSrc={
             "https://images.unsplash.com/photo-1460306855393-0410f61241c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
           }
