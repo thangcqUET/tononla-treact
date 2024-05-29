@@ -83,9 +83,6 @@ export default ({
   const handleGotoCheckout = ()=>{
     navigate(primaryButtonUrl);
   }
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
   return (
     <Container>
       <TwoColumn css={!imageInsideDiv && tw`md:items-center`}>

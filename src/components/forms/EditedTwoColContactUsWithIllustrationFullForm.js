@@ -75,12 +75,11 @@ export default ({
   submitButtonText = "Send",
   formAction = "#",
   formMethod = "get",
-  formEndpoint = "http://localhost:4000/orders",
+  formEndpoint = "https://tononla-backend.vercel.app/orders",
   textOnLeft = true,
 }) => {
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
   const handleOnSubmit = async () => {
-    console.log("submit");
     setIsError(false);
     if(!phoneNumber){
       setIsError(true);
