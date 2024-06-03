@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import tw from "twin.macro";
 import styled from "styled-components";
@@ -172,31 +172,57 @@ export default ({
    */
   const tabsKeys = Object.keys(tabs);
   const [activeTab, setActiveTab] = useState(tabsKeys[0]);
-
+  useEffect(()=>{
+    setActiveTab(tabsKeys[0]);
+  }, [tabs]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const toggleModal = (
+  const [selectedProduct, setSelectedProduct] = useState({});
+  const toggleModal = ({
     productId="", 
     productName="", 
     productType='product', 
     contentCategory='default', 
     numItems=0, 
     currency='VND', 
-    value=0
-    ) => {
+    value=0,
+    imageSrc=""
+  }
+  ) => {
+    console.log({
+      productId,
+      productName,
+      productType,
+      contentCategory,
+      numItems,
+      currency,
+      value
+    })
+    setSelectedProduct(
+      {
+        productId, 
+        productName, 
+        productType, 
+        contentCategory, 
+        numItems, 
+        currency, 
+        value,
+        imageSrc
+      }
+    );
+    if(!modalIsOpen){
+      window.fbq('track', 'AddToCart', {
+        content_name: productName,
+        content_ids: [productId],
+        content_type: productType,
+        contents: [{
+          id: productId,
+          quantity: numItems
+        }],
+        currency: currency,
+        value: value
+      });
+    };
     setModalIsOpen(!modalIsOpen);
-    window.fbq('track', 'AddToCart', {
-      content_name: productName,
-      content_ids: [productId],
-      content_type: productType,
-      content_category: contentCategory,
-      contents: [{
-        id: productId,
-        quantity: numItems
-      }],
-      num_items: numItems,
-      currency: currency,
-      value: value
-    });
   }
   return (
     <Container>
@@ -232,7 +258,16 @@ export default ({
             animate={activeTab === tabKey ? "current" : "hidden"}
           >
             {tabs[tabKey].map((card, index) => (
-              <CardContainer key={index} onClick={toggleModal}>
+              <CardContainer key={index} onClick={()=>toggleModal({
+                productId: card.id,
+                productName: card.title,
+                productType: 'product',
+                contentCategory: card.type,
+                numItems: 1,
+                currency: 'VND',
+                value: card.price,
+                imageSrc: card.imageSrc
+              })}>
                 <Card className="group" initial="rest" whileHover="hover" animate="rest">
                   <CardImageContainer imageSrc={card.imageSrc}>
                     {/* <CardRatingContainer>
@@ -261,7 +296,7 @@ export default ({
                   <CardText>
                     <CardTitle>{card.title}</CardTitle>
                     {/* <CardContent>{card.content}</CardContent> */}
-                    <CardPrice>{card.price}</CardPrice>
+                    <CardPrice>{`${card.price}${card.currency}`}</CardPrice>
                   </CardText>
                 </Card>
               </CardContainer>
@@ -282,7 +317,18 @@ export default ({
             <CloseIcon tw="w-6 h-6 z-10" />
           </CloseModalButton>
           <div className="content">
-            <MainFeature></MainFeature>
+            <MainFeature
+              heading={selectedProduct.productName}
+              imageSrc={selectedProduct.imageSrc}
+              price={`${selectedProduct.value}${selectedProduct.currency}`}
+              productId={selectedProduct.productId}
+              productName={selectedProduct.productName}
+              productType={selectedProduct.productType}
+              contentCategory={selectedProduct.contentCategory}
+              numItems={selectedProduct.numItems}
+              currency={selectedProduct.currency}
+              value={selectedProduct.value}
+            ></MainFeature>
           </div>
         </StyledModal>
     </Container>

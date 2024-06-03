@@ -50,16 +50,23 @@ export default ({
   ),
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
   primaryButtonText = "Tô hình này",
-  price = "100.000đ",
+  price = "0VND",
   primaryButtonUrl = "/components/landingPages/Checkout",
-  imageSrc = StatsIllustrationSrc,
+  imageSrc = null,
   imageCss = null,
   imageContainerCss = null,
   imageDecoratorBlob = false,
   imageDecoratorBlobCss = null,
   imageInsideDiv = true,
   statistics = null,
-  textOnLeft = false
+  textOnLeft = false,
+  productId,
+  productName,
+  productType,
+  contentCategory,
+  numItems,
+  currency,
+  value
 }) => {
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
   //Change the statistics variable as you like, add or delete objects
@@ -80,17 +87,23 @@ export default ({
 
   if (!statistics) statistics = defaultStatistics;
   const navigate = useNavigate()
-  const handleGotoCheckout = (
-    productId="", 
-    contentCategory='default', 
-    numItems=0, 
-    currency='VND', 
-    value=0
-    )=>{
-    navigate(primaryButtonUrl);
+  const handleGotoCheckout = ()=>{
+    navigate(primaryButtonUrl, {
+      state: {
+        productId: productId,
+        productName: productName,
+        contentCategory:contentCategory, 
+        productType:productType,
+        numItems:numItems, 
+        currency:currency, 
+        value:value,
+        imageSrc:imageSrc
+      }
+    
+    });
     window.fbq('track', 'InitiateCheckout', {
       content_ids: [productId],
-      content_category: contentCategory,
+      // content_category: contentCategory,
       contents: [{
         id: productId,
         quantity: numItems
@@ -129,7 +142,7 @@ export default ({
                 </Statistic>
               ))}
             </Statistics> */}
-            <PrimaryButton as="a" onClick={handleGotoCheckout}>
+            <PrimaryButton as="a" onClick={()=>{handleGotoCheckout()}}>
               {primaryButtonText}
             </PrimaryButton>
           </TextContent>

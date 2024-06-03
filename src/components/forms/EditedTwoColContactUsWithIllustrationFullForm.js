@@ -56,16 +56,6 @@ const CardText = tw.div`p-4 text-gray-900`;
 const CardTitle = tw.h5`text-lg font-semibold group-hover:text-primary-500`;
 const CardContent = tw.p`mt-1 text-sm font-medium text-gray-600`;
 const CardPrice = tw.p`mt-4 text-xl font-bold`;
-const card = {
-  imageSrc:
-    "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-  title: "Veg Mixer",
-  content: "Tomato Salad & Carrot",
-  price: "$5.99",
-  rating: "5.0",
-  reviews: "87",
-  url: "#"
-}
 export default ({
   subheading = "Contact Us",
   heading = <span tw="text-primary-500">Đặt hàng</span>,
@@ -77,9 +67,7 @@ export default ({
   formMethod = "get",
   formEndpoint = "https://tononla-backend.vercel.app/orders",
   textOnLeft = true,
-  order = {
-    
-  }
+  state = {}
 }) => {
   const {
     productId="", 
@@ -87,8 +75,18 @@ export default ({
     productType='product', 
     numItems=0, 
     currency='VND', 
-    value=0
-  } = order;
+    value=0,
+    imageSrc=""
+  } = state;
+  const card = {
+    imageSrc: imageSrc,
+    title: productName,
+    content: productType,
+    price: `${value} ${currency}`,
+    rating: "5.0",
+    reviews: "87",
+    url: "#"
+  }
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
   const handleOnSubmit = async () => {
     setIsError(false);
@@ -103,7 +101,6 @@ export default ({
       email,
       note,
     }).then((res)=>{
-      console.log(res.data);
       if(res.status==201){
         setSubmitSuccessfully(true);
         window.fbq('track', 'Purchase', {
@@ -144,7 +141,7 @@ export default ({
                   </CardRating>
                   <CardReview>({card.reviews})</CardReview>
                 </CardRatingContainer> */}
-                <CardHoverOverlay
+                {/* <CardHoverOverlay
                   variants={{
                     hover: {
                       opacity: 1,
@@ -158,7 +155,7 @@ export default ({
                   transition={{ duration: 0.3 }}
                 >
                   <CardButton>Buy Now</CardButton>
-                </CardHoverOverlay>
+                </CardHoverOverlay> */}
               </CardImageContainer>
               <CardText>
                 <CardTitle>{card.title}</CardTitle>

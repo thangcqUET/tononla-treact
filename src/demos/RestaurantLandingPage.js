@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
@@ -16,6 +16,7 @@ import celebrationIconImageSrc from "images/celebration-icon.svg";
 import shopIconImageSrc from "images/shop-icon.svg";
 import styled from "styled-components";
 import ResponsiveVideoEmbed from "../helpers/ResponsiveVideoEmbed.js";
+import axios from "axios";
 const StyledResponsiveVideoEmbed = styled(ResponsiveVideoEmbed)`
   padding-bottom: 56.25% !important;
   padding-top: 0px !important;
@@ -39,6 +40,39 @@ export default () => {
       ref.current?.scrollIntoView({behavior: 'smooth'});
     }
   }
+  const [designs, setDesigns] = useState([]);
+  //useeffect to load data: list products
+  useEffect(()=>{
+    //fetch data
+    axios.get('https://tononla-backend.vercel.app/designs').then((response)=>{
+      //convert data to other format: tabs = {tabName: [{title, content, imageSrc, price, rating, reviews, id}]}
+      //from [{id, name, type, imageUrl, order}] to {type: [{title, imageSrc, id}]}
+      const designs = response.data.reduce((acc, design)=>{
+        let typeAll = 'Tất cả';
+        let type = design.type?.charAt(0).toUpperCase() + design.type.slice(1);
+        if(!acc[typeAll]){
+          acc[typeAll] = [];
+        }
+        if(!acc[type]){
+          acc[type] = [];
+        }
+        let d = {};
+        //convert field name
+        d.title = design.name?.charAt(0).toUpperCase() + design.name.slice(1);
+        d.imageSrc = design.imageUrl||'https://source.unsplash.com/random';
+        d.id = design.id;
+        d.price = design.price||90000;
+        d.currency = design.currency||'VND';
+        d.type = type;
+        acc[type].push(d);
+        acc[typeAll].push(d);
+        return acc;
+      }, {});
+      setDesigns(designs);
+    }).catch((error)=>{
+      console.log(`Error at fetch designs: ${error}`);
+    });
+  }, []);
   return (
     <>
      <AnimationRevealPage disabled={true}>
@@ -123,6 +157,7 @@ export default () => {
               <HighlightedText>Sản phẩm</HighlightedText> của <span tw="text-primary-500">Tô nón lá</span>
             </>
           }
+          tabs={designs}
         />
       </div>
       <Footer />
