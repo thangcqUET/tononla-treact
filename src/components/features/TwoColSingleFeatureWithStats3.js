@@ -48,9 +48,8 @@ export default ({
       Văn miếu Quốc Tử Giám
     </>
   ),
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  primaryButtonText = "Tô hình này",
-  price = "0VND",
+  description = "",
+  primaryButtonText = "Chọn sản phẩm này",
   primaryButtonUrl = "/components/landingPages/Checkout",
   imageSrc = null,
   imageCss = null,
@@ -66,7 +65,9 @@ export default ({
   contentCategory,
   numItems,
   currency,
-  value
+  value,
+  quantity,
+  compareAtPrice,
 }) => {
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
   //Change the statistics variable as you like, add or delete objects
@@ -123,17 +124,14 @@ export default ({
             <SplideSlide>
               <img src={imageSrc} alt="Image 1"/>
             </SplideSlide>
-            <SplideSlide>
-              <img src={imageSrc} alt="Image 2"/>
-            </SplideSlide>
           </Splide>
         </ImageColumn>
         <TextColumn textOnLeft={textOnLeft}>
           <TextContent>
             {/* {subheading && <Subheading>{subheading}</Subheading>} */}
             <Heading>{heading}</Heading>
-            <CardPrice>{price}</CardPrice>
-            {/* <Description>{description}</Description> */}
+            <CardPrice>{`${value?.toLocaleString().split(',').join('.')} ${currency}`}</CardPrice>
+            <Description>{description}</Description>
             {/* <Statistics>
               {statistics.map((statistic, index) => (
                 <Statistic key={index}>
@@ -142,7 +140,7 @@ export default ({
                 </Statistic>
               ))}
             </Statistics> */}
-            <PrimaryButton as="a" onClick={()=>{handleGotoCheckout()}}>
+            <PrimaryButton onClick={()=>{handleGotoCheckout()}}>
               {primaryButtonText}
             </PrimaryButton>
           </TextContent>

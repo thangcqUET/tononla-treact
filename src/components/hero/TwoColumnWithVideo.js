@@ -67,7 +67,7 @@ export default ({
   primaryButtonUrl="#",
   watchVideoButtonText="Watch Video",
   watchVideoYoutubeUrl="https://www.youtube.com/embed/_GuOjXYl5ew",
-  imageSrc=DesignIllustration,
+  imageSrcs=[DesignIllustration],
   imageCss=null,
   imageDecoratorBlob = false,
   buttonFunction,
@@ -84,7 +84,7 @@ export default ({
             <Heading>{heading}</Heading>
             <Paragraph>{description}</Paragraph>
             <Actions>
-              <PrimaryButton as="a" onClick={()=>{
+              <PrimaryButton onClick={()=>{
                   buttonFunction();
                   window.fbq('track', 'ButtonClick', {content_name: 'Hero:Tim_hieu_ngay'});
                 }}>{primaryButtonText}</PrimaryButton>
@@ -119,12 +119,15 @@ export default ({
                   }
                 }
               >
-                <SplideSlide>
-                  <img src={imageSrc} css={imageCss} alt="Image 1"/>
-                </SplideSlide>
-                <SplideSlide>
-                  <img src={imageSrc} css={imageCss} alt="Image 2"/>
-                </SplideSlide>
+                {
+                  imageSrcs.map((imageSrc, index)=>{
+                    return (
+                      <SplideSlide key={index}>
+                        <img src={imageSrc} css={imageCss} alt={`Image ${index}`}/>
+                      </SplideSlide>
+                    );
+                  })
+                }
               </Splide>
               {imageDecoratorBlob && <DecoratorBlob2 />}
             </IllustrationContainer>

@@ -185,7 +185,10 @@ export default ({
     numItems=0, 
     currency='VND', 
     value=0,
-    imageSrc=""
+    imageSrc="",
+    description,
+    quantity,
+    compareAtPrice,
   }
   ) => {
     console.log({
@@ -195,7 +198,11 @@ export default ({
       contentCategory,
       numItems,
       currency,
-      value
+      value,
+      imageSrc,
+      description,
+      quantity,
+      compareAtPrice
     })
     setSelectedProduct(
       {
@@ -206,7 +213,10 @@ export default ({
         numItems, 
         currency, 
         value,
-        imageSrc
+        imageSrc,
+        description,
+        quantity,
+        compareAtPrice
       }
     );
     if(!modalIsOpen){
@@ -266,7 +276,10 @@ export default ({
                 numItems: 1,
                 currency: 'VND',
                 value: card.price,
-                imageSrc: card.imageSrc
+                imageSrc: card.imageSrc,
+                description: card.description,
+                quantity: card.quantity,
+                compareAtPrice: card.compareAtPrice
               })}>
                 <Card className="group" initial="rest" whileHover="hover" animate="rest">
                   <CardImageContainer imageSrc={card.imageSrc}>
@@ -290,13 +303,13 @@ export default ({
                       }}
                       transition={{ duration: 0.3 }}
                     >
-                      <CardButton>Buy Now</CardButton>
+                      <CardButton>Đặt chỗ</CardButton>
                     </CardHoverOverlay>
                   </CardImageContainer>
                   <CardText>
                     <CardTitle>{card.title}</CardTitle>
                     {/* <CardContent>{card.content}</CardContent> */}
-                    <CardPrice>{`${card.price}${card.currency}`}</CardPrice>
+                    <CardPrice>{`${card.price?.toLocaleString().split(',').join('.')} ${card.currency}`}</CardPrice>
                   </CardText>
                 </Card>
               </CardContainer>
@@ -328,6 +341,9 @@ export default ({
               numItems={selectedProduct.numItems}
               currency={selectedProduct.currency}
               value={selectedProduct.value}
+              description={selectedProduct.description}
+              quantity={selectedProduct.quantity}
+              compareAtPrice={selectedProduct.compareAtPrice}
             ></MainFeature>
           </div>
         </StyledModal>

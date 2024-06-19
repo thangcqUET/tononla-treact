@@ -58,7 +58,7 @@ const CardContent = tw.p`mt-1 text-sm font-medium text-gray-600`;
 const CardPrice = tw.p`mt-4 text-xl font-bold`;
 export default ({
   subheading = "Contact Us",
-  heading = <span tw="text-primary-500">Đặt hàng</span>,
+  heading = <span tw="text-primary-500">Đặt chỗ</span>,
   description = <>
     <span tw="text-primary-500 text-base text-red-500">XEM CẦN NHẮC NHỞ GÌ: KHUYỄN MÃI, THỜI GIAN ĐỊA ĐIỂM</span>
   </>,
@@ -82,7 +82,7 @@ export default ({
     imageSrc: imageSrc,
     title: productName,
     content: productType,
-    price: `${value} ${currency}`,
+    price: `${value?.toLocaleString().split(',').join('.')} ${currency}`,
     rating: "5.0",
     reviews: "87",
     url: "#"
@@ -172,7 +172,7 @@ export default ({
             {description && <Description>{description}</Description>}
             <Form>
               {isError?<ErrorMessage>{errorMessage}</ErrorMessage>:""}
-              {submitSuccessfully?<InfoMessage>{"Đặt hàng thành công"}</InfoMessage>:""}
+              {submitSuccessfully?<InfoMessage>{"Đặt chỗ thành công"}</InfoMessage>:""}
               <Input type="text" name="phone" required placeholder="Số điện thoại (Bắt buộc)" 
               onChange={(e)=>{setPhoneNumber(e.target.value)}}/>
               <Input type="text" name="name" placeholder="Tên bạn là gì" 

@@ -40,14 +40,14 @@ export default () => {
       ref.current?.scrollIntoView({behavior: 'smooth'});
     }
   }
-  const [designs, setDesigns] = useState([]);
+  const [products, setProducts] = useState([]);
   //useeffect to load data: list products
   useEffect(()=>{
     //fetch data
-    axios.get('https://tononla-backend.vercel.app/designs').then((response)=>{
+    axios.get('https://tononla-backend.vercel.app/products').then((response)=>{
       //convert data to other format: tabs = {tabName: [{title, content, imageSrc, price, rating, reviews, id}]}
       //from [{id, name, type, imageUrl, order}] to {type: [{title, imageSrc, id}]}
-      const designs = response.data.reduce((acc, design)=>{
+      const products = response.data.reduce((acc, design)=>{
         let typeAll = 'Tất cả';
         let type = design.type?.charAt(0).toUpperCase() + design.type.slice(1);
         if(!acc[typeAll]){
@@ -56,112 +56,141 @@ export default () => {
         if(!acc[type]){
           acc[type] = [];
         }
-        let d = {};
+        let p = {};
         //convert field name
-        d.title = design.name?.charAt(0).toUpperCase() + design.name.slice(1);
-        d.imageSrc = design.imageUrl||'https://source.unsplash.com/random';
-        d.id = design.id;
-        d.price = design.price||90000;
-        d.currency = design.currency||'VND';
-        d.type = type;
-        acc[type].push(d);
-        acc[typeAll].push(d);
+        p.title = design.name?.charAt(0).toUpperCase() + design.name.slice(1);
+        p.imageSrc = design.imageUrl||'https://source.unsplash.com/random';
+        p.id = design.id;
+        p.price = design.price||70000;
+        p.compareAtPrice = design.compareAtPrice;
+        p.currency = design.unit||'VND';
+        p.type = type;
+        p.description = design.description;
+        p.quantity = design.quantity||0;
+        acc[type].push(p);
+        acc[typeAll].push(p);
         return acc;
       }, {});
-      setDesigns(designs);
+      setProducts(products);
     }).catch((error)=>{
-      console.log(`Error at fetch designs: ${error}`);
+      console.log(`Error at fetch products: ${error}`);
     });
   }, []);
   return (
     <>
-     <AnimationRevealPage disabled={true}>
-      <Header 
-      navFunctions={[handleScroll(refHow), handleScroll(refProductList)]}
-      />
-      <Hero
-        heading={
-          <>
-            <HighlightedText>Tô nón lá</HighlightedText>
-            <br />Tô màu khoảnh khắc
-            <br /> Vẽ sắc thời trang
-          </>
-        }
-        description={<><span tw="text-primary-500">Tô nón lá</span> là nơi giúp bạn trải nghiệm trang trí chiếc nón lá Việt Nam, tạo ra Sản phẩm thời trang mang Văn hoá Việt và Dấu ấn của riêng bạn.</>}
-        imageSrc="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
-        imageCss={imageCss}
-        imageDecoratorBlob={true}
-        primaryButtonText="Tìm hiểu ngay"
-        buttonFunction = {handleScroll(refVideo)}
-        // watchVideoButtonText="Meet The Chefs"
-      />
-      //Video giới thiệu: Nguyên liệu, trải nghiệm, thành phẩm. Nhấn mạnh vào
-      trải nghiệm một mình hoặc với gia đình, bạn bè; có thể sử dụng để đội,
-      trang trí hoặc làm quà tặng.
-      <VideoFrame ref={refVideo} onClick={()=>{
-        window.fbq('track', 'ButtonClick', {content_name: 'Video:Play_or_Pause'});
-      }}>
-        <StyledResponsiveVideoEmbed
-          url="https://www.youtube.com/embed/fVGgOCFzaqQ?si=3LsGbpSkMsZkvCok"
-          background="transparent"
+      <AnimationRevealPage disabled={true}>
+        <Header
+          navFunctions={[handleScroll(refHow), handleScroll(refProductList)]}
         />
-      </VideoFrame>
-      //Giới thiệu quy trình: //Đặt qua web: 1. Chọn mẫu nón lá: kích thước,
-      thiết kế, 2. Đặt lịch, confirm từ Tô nón lá 3. Trải nghiệm //Sau này nếu
-      có cửa hàng: 1. Chọn mẫu nón lá: kích thước, thiết kế, 2. Trải nghiệm
-      <div ref={refHow}>
-        <MainFeature
-          subheading={""}
+        <Hero
           heading={
             <>
-              Tô nón lá
+              <HighlightedText>Tô nón lá</HighlightedText>
               <br />
-              <HighlightedText>như thế nào</HighlightedText>
+              Tô màu khoảnh khắc
+              <br /> Vẽ sắc thời trang
             </>
           }
           description={
-            <Description>
-              1. Vào trang web <span tw="text-primary-500">tononla.com</span>
-              <br />
-              2. Chọn mẫu thiết kế bạn yêu thích
-              <br />
-              3. Đặt hàng và xác nhận với <span tw="text-primary-500">Tô nón lá</span>
-              <br />
-              4. Chúng tớ sẽ chuẩn bị, việc của bạn là đến và tô
-              <br/>
-              <span tw="text-primary-500 text-base"><span tw="font-bold">Thời gian:</span> Chủ nhật hằng tuần</span>
-              <br/>
-              <span tw="text-primary-500 text-base text-red-500"><span tw="font-bold">Địa điểm:</span> CHƯA BIẾT </span>
-            </Description>
-          }
-          buttonRounded={false}
-          textOnLeft={false}
-          primaryButtonText="Trải nghiệm ngay"
-          buttonFunction = {()=>{
-            handleScroll(refProductList)();
-            window.fbq('track', 'ButtonClick', {content_name: 'Progress:Trai_nghiem_ngay'});
-          }}
-          imageSrc={
-            "https://images.unsplash.com/photo-1460306855393-0410f61241c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
-          }
-          imageCss={imageCss}
-          imageDecoratorBlob={true}
-          imageDecoratorBlobCss={tw`left-1/2 -translate-x-1/2 md:w-32 md:h-32 opacity-25`}
-        />
-      </div>
-      {/* TabGrid Component also accepts a tabs prop to customize the tabs and its content directly. Please open the TabGrid component file to see the structure of the tabs props.*/}
-      <div ref={refProductList}>
-        <TabGrid
-          heading={
             <>
-              <HighlightedText>Sản phẩm</HighlightedText> của <span tw="text-primary-500">Tô nón lá</span>
+              <span tw="text-primary-500">Tô nón lá</span> là nơi giúp bạn trải
+              nghiệm trang trí chiếc nón lá Việt Nam, tạo ra Sản phẩm thời trang
+              mang Văn hoá Việt và Dấu ấn của riêng bạn.
             </>
           }
-          tabs={designs}
+          imageSrcs={[
+            "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20Khue%CC%82%20Va%CC%86n%20Ca%CC%81c.webp",
+            "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20cho%CC%9B%CC%A3%20Be%CC%82%CC%81n%20Tha%CC%80nh.webp",
+            "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20chu%CC%80a%20Ca%CC%82%CC%80u.webp",
+            "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20co%CC%9B%CC%80%20Vie%CC%A3%CC%82t%20Nam.webp",
+            "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20hoa%20sen.webp",
+        ]}
+          imageCss={imageCss}
+          imageDecoratorBlob={true}
+          primaryButtonText="Tìm hiểu ngay"
+          buttonFunction={handleScroll(refVideo)}
+          // watchVideoButtonText="Meet The Chefs"
         />
-      </div>
-      <Footer />
-     </AnimationRevealPage>
+        //Video giới thiệu: Nguyên liệu, trải nghiệm, thành phẩm. Nhấn mạnh vào
+        trải nghiệm một mình hoặc với gia đình, bạn bè; có thể sử dụng để đội,
+        trang trí hoặc làm quà tặng.
+        <VideoFrame
+          ref={refVideo}
+          onClick={() => {
+            window.fbq("track", "ButtonClick", {
+              content_name: "Video:Play_or_Pause",
+            });
+          }}
+        >
+          <StyledResponsiveVideoEmbed
+            url="https://www.youtube.com/embed/zS0o_62Vnz0?si=tF8nlKabbAAbVvTe"
+            background="transparent"
+          />
+        </VideoFrame>
+        //Giới thiệu quy trình: //Đặt qua web: 1. Chọn mẫu nón lá: kích thước,
+        thiết kế, 2. Đặt lịch, confirm từ Tô nón lá 3. Trải nghiệm //Sau này nếu
+        có cửa hàng: 1. Chọn mẫu nón lá: kích thước, thiết kế, 2. Trải nghiệm
+        <div ref={refHow}>
+          <MainFeature
+            subheading={""}
+            heading={
+              <>
+                Tô nón lá
+                <br />
+                <HighlightedText>như thế nào</HighlightedText>
+              </>
+            }
+            description={
+              <Description>
+                1. Vào trang web <span tw="text-primary-500">tononla.com</span>
+                <br />
+                2. Chọn mẫu thiết kế bạn yêu thích
+                <br />
+                3. Đặt chỗ và xác nhận với{" "}
+                <span tw="text-primary-500">Tô nón lá</span>
+                <br />
+                4. Chúng tớ sẽ chuẩn bị, việc của bạn là đến và tô
+                <br />
+                <span tw="text-primary-500 text-base">
+                  <span tw="font-bold">Thời gian:</span> Chủ nhật hằng tuần
+                </span>
+                <br />
+                <span tw="text-primary-500 text-base text-red-500">
+                  <span tw="font-bold">Địa điểm:</span> CHƯA BIẾT{" "}
+                </span>
+              </Description>
+            }
+            buttonRounded={false}
+            textOnLeft={false}
+            primaryButtonText="Trải nghiệm ngay"
+            buttonFunction={() => {
+              handleScroll(refProductList)();
+              window.fbq("track", "ButtonClick", {
+                content_name: "Progress:Trai_nghiem_ngay",
+              });
+            }}
+            imageSrc={
+              "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/IMG_4496%20%283%29.webp"
+            }
+            imageCss={imageCss}
+            imageDecoratorBlob={true}
+            imageDecoratorBlobCss={tw`left-1/2 -translate-x-1/2 md:w-32 md:h-32 opacity-25`}
+          />
+        </div>
+        {/* TabGrid Component also accepts a tabs prop to customize the tabs and its content directly. Please open the TabGrid component file to see the structure of the tabs props.*/}
+        <div ref={refProductList}>
+          <TabGrid
+            heading={
+              <>
+                <HighlightedText>Sản phẩm</HighlightedText> của{" "}
+                <span tw="text-primary-500">Tô nón lá</span>
+              </>
+            }
+            tabs={products}
+          />
+        </div>
+        <Footer />
+      </AnimationRevealPage>
     </>
   );
 };
