@@ -60,7 +60,17 @@ export default ({
   subheading = "Contact Us",
   heading = <span tw="text-primary-500">Đặt chỗ</span>,
   description = <>
-    <span tw="text-primary-500 text-base text-red-500">XEM CẦN NHẮC NHỞ GÌ: KHUYỄN MÃI, THỜI GIAN ĐỊA ĐIỂM</span>
+    <span tw="text-primary-500 text-base">
+      <span tw="font-bold">Thời gian:</span> Chủ nhật hằng tuần
+    </span>
+    <br />
+    <span tw="text-primary-500 text-base">
+      <span tw="font-bold">Địa điểm:</span> {"Xung quanh Hồ Hoàn Kiếm (Hồ Gươm) - Chúng tớ sẽ liên hệ với bạn để xác nhận địa điểm cụ thể sau nhé!"}
+    </span>
+    <br />
+    <span tw="text-primary-500 text-base">
+      <span tw="font-bold">Liên hệ:</span> {"0395.188.258"}
+    </span>
   </>,
   submitButtonText = "Send",
   formAction = "#",

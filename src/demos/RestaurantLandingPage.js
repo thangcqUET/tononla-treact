@@ -155,8 +155,12 @@ export default () => {
                   <span tw="font-bold">Thời gian:</span> Chủ nhật hằng tuần
                 </span>
                 <br />
-                <span tw="text-primary-500 text-base text-red-500">
-                  <span tw="font-bold">Địa điểm:</span> CHƯA BIẾT{" "}
+                <span tw="text-primary-500 text-base">
+                  <span tw="font-bold">Địa điểm:</span> {"Xung quanh Hồ Hoàn Kiếm (Hồ Gươm)"}
+                </span>
+                <br />
+                <span tw="text-primary-500 text-base">
+                  <span tw="font-bold">Liên hệ:</span> {"0395.188.258"}
                 </span>
               </Description>
             }

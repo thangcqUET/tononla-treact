@@ -83,11 +83,12 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
           navFunctions?.at(1)();
           window.fbq('track', 'ButtonClick', {content_name: 'Menu:San_pham'});
         }}>Sản phẩm</NavLink>
+        <NavLink onClick={()=>{
+          navFunctions?.at(0)();
+          window.fbq('track', 'ButtonClick', {content_name: 'Menu:Lien_he'});
+        }}>Liên hệ</NavLink>
         </>:<></>
       }
-      <NavLink onClick={()=>{
-        window.fbq('track', 'ButtonClick', {content_name: 'Menu:Lien_he'});
-      }}>Liên hệ CHƯA CÓ NỘI DUNG</NavLink>
       {/* <NavLink href="/#">Chính sách</NavLink> */}
       {/* <NavLink href="/#" tw="lg:ml-12!">
         Login
