@@ -75,7 +75,7 @@ export default ({
   submitButtonText = "Send",
   formAction = "#",
   formMethod = "get",
-  formEndpoint = "https://tononla-backend.vercel.app/orders",
+  formEndpoint = process.env.BACKEND_URL?`${process.env.BACKEND_URL}/orders`:"https://tononla-backend.vercel.app/orders",
   textOnLeft = true,
   state = {}
 }) => {
@@ -110,6 +110,7 @@ export default ({
       name,
       email,
       note,
+      designId: productId,
     }).then((res)=>{
       if(res.status==201){
         setSubmitSuccessfully(true);
