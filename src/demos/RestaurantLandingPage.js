@@ -111,9 +111,6 @@ export default () => {
           buttonFunction={handleScroll(refVideo)}
           // watchVideoButtonText="Meet The Chefs"
         />
-        //Video giới thiệu: Nguyên liệu, trải nghiệm, thành phẩm. Nhấn mạnh vào
-        trải nghiệm một mình hoặc với gia đình, bạn bè; có thể sử dụng để đội,
-        trang trí hoặc làm quà tặng.
         <VideoFrame
           ref={refVideo}
           onClick={() => {
@@ -127,9 +124,6 @@ export default () => {
             background="transparent"
           />
         </VideoFrame>
-        //Giới thiệu quy trình: //Đặt qua web: 1. Chọn mẫu nón lá: kích thước,
-        thiết kế, 2. Đặt lịch, confirm từ Tô nón lá 3. Trải nghiệm //Sau này nếu
-        có cửa hàng: 1. Chọn mẫu nón lá: kích thước, thiết kế, 2. Trải nghiệm
         <div ref={refHow}>
           <MainFeature
             subheading={""}
