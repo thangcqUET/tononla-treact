@@ -131,7 +131,8 @@ export default ({
             {/* {subheading && <Subheading>{subheading}</Subheading>} */}
             <Heading>{heading}</Heading>
             <CardPrice>{`${value?.toLocaleString().split(',').join('.')} ${currency}`}</CardPrice>
-            <PrimaryButton onClick={()=>{handleGotoCheckout()}}>
+            {quantity<=0?<CardPrice>{`Còn lại: ${quantity} sản phẩm`}</CardPrice>:<></>}
+            <PrimaryButton onClick={()=>{if(quantity>0){handleGotoCheckout()}}} style={quantity<=0?{cursor:"default", opacity:0.6}:{}}>
               {primaryButtonText}
             </PrimaryButton>
             <Description>{description}</Description>
