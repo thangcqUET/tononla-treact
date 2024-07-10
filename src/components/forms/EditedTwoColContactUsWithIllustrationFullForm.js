@@ -65,7 +65,7 @@ export default ({
     </span>
     <br />
     <span tw="text-primary-500 text-base">
-      <span tw="font-bold">Địa điểm:</span> {"Xung quanh Hồ Hoàn Kiếm (Hồ Gươm) - Chúng tớ sẽ liên hệ với bạn để xác nhận địa điểm cụ thể sau nhé!"}
+      <span tw="font-bold">Địa điểm:</span> Sẽ được cập nhật trên <a href="https://www.facebook.com/profile.php?id=61558483040026" tw="font-bold">Fanpage của Tô nón lá</a>
     </span>
     <br />
     <span tw="text-primary-500 text-base">
