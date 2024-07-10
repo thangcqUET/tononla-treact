@@ -137,7 +137,7 @@ export default () => {
             }
             description={
               <Description>
-                1. Vào trang web <span tw="text-primary-500">tononla.com</span>
+                1. Vào trang web <span tw="text-primary-500"><a href="www.tononla.com">www.tononla.com</a></span>
                 <br />
                 2. Chọn mẫu thiết kế bạn yêu thích
                 <br />
@@ -151,7 +151,7 @@ export default () => {
                 </span>
                 <br />
                 <span tw="text-primary-500 text-base">
-                  <span tw="font-bold">Địa điểm:</span> {"Xung quanh Hồ Hoàn Kiếm (Hồ Gươm)"}
+                  <span tw="font-bold">Địa điểm:</span> Sẽ được cập nhật trên <a href="https://www.facebook.com/profile.php?id=61558483040026" tw="font-bold">Fanpage của Tô nón lá</a>
                 </span>
                 <br />
                 <span tw="text-primary-500 text-base">
