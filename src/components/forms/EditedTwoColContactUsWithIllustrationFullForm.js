@@ -75,7 +75,7 @@ export default ({
   submitButtonText = "Send",
   formAction = "#",
   formMethod = "get",
-  formEndpoint = process.env.BACKEND_URL?`${process.env.BACKEND_URL}/orders`:"https://tononla-backend-git-staging-thangcquets-projects.vercel.app/orders",
+  formEndpoint = process.env.REACT_APP_BACKEND_URL?`${process.env.REACT_APP_BACKEND_URL}/orders`:"https://default/orders",
   textOnLeft = true,
   state = {}
 }) => {

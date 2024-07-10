@@ -44,7 +44,7 @@ export default () => {
   //useeffect to load data: list products
   useEffect(()=>{
     //fetch data
-    const getProductsEndpoint = process.env.BACKEND_URL?`${process.env.BACKEND_URL}/products`:"https://tononla-backend-git-staging-thangcquets-projects.vercel.app/products";
+    const getProductsEndpoint = process.env.REACT_APP_BACKEND_URL?`${process.env.REACT_APP_BACKEND_URL}/products`:"https://default/products";
     axios.get(getProductsEndpoint).then((response)=>{
       //convert data to other format: tabs = {tabName: [{title, content, imageSrc, price, rating, reviews, id}]}
       //from [{id, name, type, imageUrl, order}] to {type: [{title, imageSrc, id}]}
