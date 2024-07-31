@@ -1,0 +1,23 @@
+.conical_hat_deisgn_container{
+  display: flex;
+  flex-direction: column;
+}
+
+.mesh_list_horizontal_container .mesh_list .mesh_item.selected {
+  border: 1px solid #000;
+}
+
+.texture_list_hoirizontal_container .texture_list{
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  flex-wrap:nowrap;
+  overflow: scroll;
+  min-height: 70px;
+  gap: 10px;
+}
+
+.texture_list_hoirizontal_container .texture_list .texture_item.selected {
+  border: 1px solid #000;
+}

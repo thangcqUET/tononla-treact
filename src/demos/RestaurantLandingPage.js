@@ -17,6 +17,7 @@ import shopIconImageSrc from "images/shop-icon.svg";
 import styled from "styled-components";
 import ResponsiveVideoEmbed from "../helpers/ResponsiveVideoEmbed.js";
 import axios from "axios";
+import DesignConicalHatApp from "components/app/DesignConicalHatApp.js";
 const StyledResponsiveVideoEmbed = styled(ResponsiveVideoEmbed)`
   padding-bottom: 56.25% !important;
   padding-top: 0px !important;
@@ -176,6 +177,7 @@ export default () => {
             imageDecoratorBlobCss={tw`left-1/2 -translate-x-1/2 md:w-32 md:h-32 opacity-25`}
           />
         </div>
+        <DesignConicalHatApp />
         {/* TabGrid Component also accepts a tabs prop to customize the tabs and its content directly. Please open the TabGrid component file to see the structure of the tabs props.*/}
         <div ref={refProductList}>
           <TabGrid
