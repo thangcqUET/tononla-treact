@@ -2,6 +2,7 @@ import React, { forwardRef } from "react";
 import ConicalHatDesigner from "./ConicalHatDesigner";
 import { Canvas } from "@react-three/fiber";
 const ConicalHatDesignerCanvas = forwardRef((props, ref) => {
+  const canvasRef = React.useRef();
   return (
     <Canvas
       camera={{ fov: 30, near: 1, far: 1000, position: [30, 30, 30] }}
@@ -13,8 +14,9 @@ const ConicalHatDesignerCanvas = forwardRef((props, ref) => {
         maxWidth: "400px",
         maxHeight: "400px",
       }}
+      ref={canvasRef}
     >
-      <ConicalHatDesigner {...props} ref={ref}/>
+      <ConicalHatDesigner {...props} canvasRef={canvasRef} ref={ref}/>
     </Canvas>
   );
 });

@@ -63,6 +63,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   console.log("isMobile");
   console.log(isMobile);
 
+  const canvasRect = props.canvasRef.current.getBoundingClientRect();
   //   function removeDecals() {
   //     decals.forEach(function (d) {
   //       scene.remove(d);
@@ -213,7 +214,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   };
   const handlePointerMove = (event) => {
     if (event.isPrimary) {
-      checkIntersection(event.clientX, event.clientY);
+      checkIntersection(event.clientX-canvasRect.left, event.clientY-canvasRect.top);
     }
   };
     const handleTouchDown = (e) => {
