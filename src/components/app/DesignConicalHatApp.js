@@ -60,7 +60,7 @@ function DesignConicalHatApp() {
         direction={"column"}
         spacing={2}
         padding={1}
-        justifyContent={"center"}
+        // justifyContent={"center"}
         alignItems={"center"}
       >
         <ConicalHatDesignerCanvas
@@ -173,6 +173,7 @@ function DesignConicalHatApp() {
                   meshInfo.meshId === selectedMeshId ? "selected" : ""
                 }`}
                 key={index}
+                style={{minWidth: "fit-content"}}
               >
                 <img
                   src={meshInfo.textureImage}
