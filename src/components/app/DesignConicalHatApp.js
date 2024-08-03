@@ -17,7 +17,7 @@ function DesignConicalHatApp() {
   const [textureScale, setTextureScale] = useState(5);
   const [textureRotation, setTextureRotation] = useState(0);
   const [textureImage, setTextureImage] = useState("/focus.png"); //TODO: default image is tononla logo
-  const textureImageList = ["/focus.png", "/logo512.png"];
+  const textureImageList = ["/focus.png", "/logo512.png",`avatar_normal.png`];
   const [meshInfos, setMeshInfos] = useState([]); // data: {mesh, meshId, textureImage}
   const [selectedMeshId, setSelectedMeshId] = useState(null);
   const [selectedTextureIndex, setSelectedTextureIndex] = useState(null);

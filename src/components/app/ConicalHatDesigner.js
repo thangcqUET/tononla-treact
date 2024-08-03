@@ -60,8 +60,6 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   const meshInfos = props.meshInfos;
   const setMeshInfos = props.setMeshInfos;
   const isMobile = props.isMobile;
-  console.log("isMobile");
-  console.log(isMobile);
 
   //   function removeDecals() {
   //     decals.forEach(function (d) {
@@ -160,7 +158,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   const initPreviewMesh = ({ position, orientation, size }) => {
     const material = getDecalMaterial();
     material.opacity = 0.5;
-    material.color.setHex(0x000000);
+    // material.color.setHex(0x000000);
     const m = previewMeshRef.current;
     m.geometry = new DecalGeometry(
       coneMeshRef.current,
@@ -190,7 +188,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     // update material
     m.material = getDecalMaterial();
     m.material.opacity = 0.5;
-    m.material.color.setHex(0x000000);
+    // m.material.color.setHex(0x000000);
   };
   // create throtle function for updatePreviewMesh use lodash
   const updatePreviewMeshThrotle = useCallback(
@@ -336,7 +334,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     const scale = props.textureScale;
     size.set(scale, scale, scale);
     const material = getDecalMaterial();
-    material.color.setHex(0x000000);
+    // material.color.setHex(0x000000);
 
     const m = new THREE.Mesh(
       new DecalGeometry(coneMeshRef.current, position, orientation, size),
