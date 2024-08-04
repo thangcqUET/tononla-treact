@@ -165,7 +165,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
           orientation: new THREE.Euler(meshInfo.o_x, meshInfo.o_y, meshInfo.o_z),
           textureScale: meshInfo.textureScale,
           textureRotation: meshInfo.textureRotation,
-          renderOrder: meshInfo.meshId,
+          renderOrder: i,
           decalMap: savedDecals[i],
         });
       }
@@ -374,12 +374,13 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
         material
       );
       m.renderOrder = renderOrder || props.meshInfos.length; // give decals a fixed render order
+      console.log(props.savedMeshInfos);
       props.setMeshInfos((old)=>[...old, {
         mesh: m,
         meshId: old.length,
-        texture: props.texture,
-        textureScale: props.textureScale,
-        textureRotation: props.textureRotation,
+        texture: props.savedMeshInfos[renderOrder]?.texture  || props.texture,
+        textureScale: textureScale || props.textureScale,
+        textureRotation: textureRotation || props.textureRotation,
         // theta: theta,
         // r: distance_OA,
         x: position.x,
