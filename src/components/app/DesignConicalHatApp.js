@@ -14,6 +14,7 @@ import {
 import InputSlider from "./InputSlider";
 import { Rotate90DegreesCcw, ZoomIn } from "@mui/icons-material";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function DesignConicalHatApp() {
   const [textureScale, setTextureScale] = useState(5);
   const [textureRotation, setTextureRotation] = useState(0);
@@ -37,6 +38,12 @@ function DesignConicalHatApp() {
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMode, setMobileMode] = useState(0); // 0: drag mode, 1: draw mode
   const [isSaved, setIsSaved] = useState(true);
+  const navigate = useNavigate();
+  const primaryButtonUrl = "/components/landingPages/Checkout";
+  const handleGotoCheckout = ()=>{
+    navigate(primaryButtonUrl, );
+    window.fbq('track', 'InitiateCheckout');
+  }
   //check if mobile screen then hide mouse, otherwise show mouse
   useEffect(() => {
     loadData();
@@ -112,8 +119,36 @@ function DesignConicalHatApp() {
     localStorage.setItem("meshInfos", JSON.stringify(data));
     setIsSaved(true);
   };
-  const handleSaveAndOrder = () => {
-
+  const handleSaveAndOrder = async () => {
+    //save to local storage first
+    //call api to save design
+    //redirect to order page
+    handleSave();
+    const getTexturesEndpoint = process.env.REACT_APP_BACKEND_URL?`${process.env.REACT_APP_BACKEND_URL}/designs`:"https://default/textures";
+    const data = meshInfos.map((meshInfo) => {
+      return {
+        meshId: meshInfo.meshId,
+        textureId: meshInfo.texture.id,
+        scale: meshInfo.textureScale,
+        rotation: meshInfo.textureRotation,
+        x: meshInfo.x,
+        y: meshInfo.y,
+        z: meshInfo.z,
+        o_x: meshInfo.o_x,
+        o_y: meshInfo.o_y,
+        o_z: meshInfo.o_z,
+      };
+    });
+    const response = await axios.post(getTexturesEndpoint,{
+      name: "Design",
+      type: "custom",
+      group: "custom",
+      description: "Custom design",
+      data: JSON.stringify(data),
+      order: 0,
+      isShow: false,
+    });
+    handleGotoCheckout();
   }
   return (
     <>
@@ -271,7 +306,7 @@ function DesignConicalHatApp() {
         ) : null}
         <Stack flexDirection={"row"} columnGap={2} justifyContent={"center"}>
           <Button variant="outlined" onClick={handleSave} disabled={isSaved}>Lưu</Button>
-          <Button variant="outlined" >Lưu và Đặt hàng</Button>
+          <Button variant="outlined" onClick={handleSaveAndOrder}>Lưu và Đặt hàng</Button>
         </Stack>
       </Stack>
       <Modal
