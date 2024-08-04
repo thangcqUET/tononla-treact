@@ -13,19 +13,33 @@ import {
 } from "@mui/material";
 import InputSlider from "./InputSlider";
 import { Rotate90DegreesCcw, ZoomIn } from "@mui/icons-material";
+import axios from "axios";
 function DesignConicalHatApp() {
   const [textureScale, setTextureScale] = useState(5);
   const [textureRotation, setTextureRotation] = useState(0);
-  const [textureImage, setTextureImage] = useState("/focus.png"); //TODO: default image is tononla logo
-  const textureImageList = ["/focus.png", "/logo512.png",`avatar_normal.png`];
+  const [texture, setTexture] = useState({
+    id: 0,
+    name: "Logo",
+    imageUrl: "/logo_circle.png",
+  });
+  const [textures, setTextures] = useState([
+    {
+      id: 0,
+      name: "Logo",
+      imageUrl: "/logo_circle.png",
+    }
+  ]);
   const [meshInfos, setMeshInfos] = useState([]); // data: {mesh, meshId, textureImage}
+  const [savedMeshInfos, setSavedMeshInfos] = useState([]);
   const [selectedMeshId, setSelectedMeshId] = useState(null);
-  const [selectedTextureIndex, setSelectedTextureIndex] = useState(null);
+  const [selectedTextureIndex, setSelectedTextureIndex] = useState(0);
   const meshInfosRef = useRef();
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMode, setMobileMode] = useState(0); // 0: drag mode, 1: draw mode
+  const [isSaved, setIsSaved] = useState(true);
   //check if mobile screen then hide mouse, otherwise show mouse
   useEffect(() => {
+    loadData();
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setIsMobile(true);
@@ -39,7 +53,32 @@ function DesignConicalHatApp() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
+  const loadData = async () => {
+    try {
+      const getTexturesEndpoint = process.env.REACT_APP_BACKEND_URL?`${process.env.REACT_APP_BACKEND_URL}/textures`:"https://default/textures";
+      const response = await axios.get(getTexturesEndpoint);
+      const newTextures = [...textures, ...response.data];
+      setTextures(newTextures);
+      //get localstorage data, get meshInfos
+      const data = localStorage.getItem("meshInfos");
+      if (data) {
+        const meshInfos = JSON.parse(data);
+        //add texture to meshInfos
+        meshInfos.forEach((meshInfo) => {
+          const texture = newTextures.find(
+            (texture) => texture.id === meshInfo.textureId
+          );
+          meshInfo.texture = texture;
+        });
+        setSavedMeshInfos(meshInfos);
+      }
+    } catch (error) {
+      console.error(`Error at fetch textures: ${error}`);
+    }
+  };
+  useEffect(() => {
+    setIsSaved(false);
+  }, [meshInfos.length]);
   const [openedModal, setOpenedModal] = React.useState(false);
   const handleOpenModal = () => setOpenedModal(true);
   const handleCloseModal = () => setOpenedModal(false);
@@ -54,6 +93,28 @@ function DesignConicalHatApp() {
     boxShadow: 24,
     p: 4,
   };
+  const handleSave = () => {
+    //save to local storage: meshId, scale, rotation, theta, r
+    const data = meshInfos.map((meshInfo) => {
+      return {
+        meshId: meshInfo.meshId,
+        textureId: meshInfo.texture.id,
+        scale: meshInfo.textureScale,
+        rotation: meshInfo.textureRotation,
+        x: meshInfo.x,
+        y: meshInfo.y,
+        z: meshInfo.z,
+        o_x: meshInfo.o_x,
+        o_y: meshInfo.o_y,
+        o_z: meshInfo.o_z,
+      };
+    });
+    localStorage.setItem("meshInfos", JSON.stringify(data));
+    setIsSaved(true);
+  };
+  const handleSaveAndOrder = () => {
+
+  }
   return (
     <>
       <Stack
@@ -69,10 +130,11 @@ function DesignConicalHatApp() {
           backgroundColor="#f5f5f5"
           textureScale={textureScale}
           textureRotation={textureRotation / 360}
-          textureImage={textureImage}
+          texture={texture}
           isMobile={isMobile}
           mobileMode={mobileMode}
           meshInfos={meshInfos}
+          savedMeshInfos={savedMeshInfos}
           setMeshInfos={setMeshInfos}
           selectedMeshId={selectedMeshId}
           ref={meshInfosRef}
@@ -176,7 +238,7 @@ function DesignConicalHatApp() {
                 style={{minWidth: "fit-content"}}
               >
                 <img
-                  src={meshInfo.textureImage}
+                  src={meshInfo?.texture?.imageUrl}
                   alt={meshInfo.meshId}
                   style={{ width: "50px", height: "50px" }}
                   onClick={() => {
@@ -207,6 +269,10 @@ function DesignConicalHatApp() {
             </Button>
           </>
         ) : null}
+        <Stack flexDirection={"row"} columnGap={2} justifyContent={"center"}>
+          <Button variant="outlined" onClick={handleSave} disabled={isSaved}>Lưu</Button>
+          <Button variant="outlined" >Lưu và Đặt hàng</Button>
+        </Stack>
       </Stack>
       <Modal
         open={openedModal}
@@ -218,7 +284,7 @@ function DesignConicalHatApp() {
           <div className="texture_list_hoirizontal_container">
             <label>Danh sách hoạ tiết</label>
             <div className="texture_list">
-              {textureImageList.map((textureImage, index) => (
+              {textures.map((texture, index) => (
                 <div
                   className={`texture_item ${
                     selectedTextureIndex == index ? "selected" : ""
@@ -226,11 +292,11 @@ function DesignConicalHatApp() {
                   key={index}
                 >
                   <img
-                    src={textureImage}
-                    alt={textureImage}
+                    src={texture.imageUrl}
+                    alt={texture.name}
                     style={{ width: "50px", height: "50px" }}
                     onClick={() => {
-                      setTextureImage(textureImage);
+                      setTexture(texture);
                       if (selectedTextureIndex === index) {
                         setSelectedTextureIndex(null);
                       } else {

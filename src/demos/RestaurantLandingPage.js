@@ -177,7 +177,7 @@ export default () => {
             imageDecoratorBlobCss={tw`left-1/2 -translate-x-1/2 md:w-32 md:h-32 opacity-25`}
           />
         </div>
-        <DesignConicalHatApp />
+        {/* TODO: Add a button direct to design app */}
         {/* TabGrid Component also accepts a tabs prop to customize the tabs and its content directly. Please open the TabGrid component file to see the structure of the tabs props.*/}
         <div ref={refProductList}>
           <TabGrid

@@ -35,7 +35,8 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   const MINIMUM_CLICK_DURATION = 100;
   const clickDuration = useRef(0);
   const { camera, scene, size } = useThree();
-  const decalDiffuse = useLoader(TextureLoader, props.textureImage);
+  const decalDiffuse = useLoader(TextureLoader, props?.texture?.imageUrl||"/logo_circle.png");
+  const savedDecals = useLoader(TextureLoader, props?.savedMeshInfos?.map((meshInfo)=>meshInfo.texture.imageUrl));
   const raycaster = useRef(new THREE.Raycaster());
   const coneMeshRef = useRef();
   const lineRef = useRef();
@@ -83,11 +84,11 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     }
     setMeshInfos([]);
   }
-  function getDecalMaterial() {
-    decalDiffuse.colorSpace = THREE.SRGBColorSpace;
+  function getDecalMaterial(decalMap=decalDiffuse) {
+    decalMap.colorSpace = THREE.SRGBColorSpace;
     const decal = new THREE.MeshPhongMaterial({
       specular: 0x444444,
-      map: decalDiffuse,
+      map: decalMap,
       //   normalMap: decalNormal,
       normalScale: new THREE.Vector2(1, 1),
       shininess: 30,
@@ -124,7 +125,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
         window.removeEventListener("touchmove", handleTouchMove);
     };
   }, [
-    props.textureImage,
+    props.texture,
     props.textureScale,
     props.textureRotation,
     props.isMobile,
@@ -155,6 +156,21 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
       }
     }
   }, [props.selectedMeshId]);
+  useEffect(() => {
+    if (props.savedMeshInfos) {
+      for (let i = 0; i < props.savedMeshInfos.length; i++) {
+        const meshInfo = props.savedMeshInfos[i];
+        shoot({
+          position: new THREE.Vector3(meshInfo.x, meshInfo.y, meshInfo.z),
+          orientation: new THREE.Euler(meshInfo.o_x, meshInfo.o_y, meshInfo.o_z),
+          textureScale: meshInfo.textureScale,
+          textureRotation: meshInfo.textureRotation,
+          renderOrder: meshInfo.meshId,
+          decalMap: savedDecals[i],
+        });
+      }
+    }
+  }, [savedDecals]);
   const initPreviewMesh = ({ position, orientation, size }) => {
     const material = getDecalMaterial();
     material.opacity = 0.5;
@@ -193,7 +209,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   // create throtle function for updatePreviewMesh use lodash
   const updatePreviewMeshThrotle = useCallback(
     throttle(updatePreviewMesh, 100),
-    [props.textureScale, props.textureImage]
+    [props.textureScale, props.texture]
   );
   const handlePointerDown = (e) => {
     console.log("pointerdown");
@@ -292,64 +308,92 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
       };
     }
   };
-  const shoot = () => {
-    const position = new THREE.Vector3();
-    const orientation = new THREE.Euler();
-    const size = new THREE.Vector3(10, 10, 10);
-    const mouseHelper = mouseHelperRef.current;
-    position.copy(intersectionRef.current.point);
-    let A = new THREE.Vector3(position.x, position.y, position.z);
-    let Ax_xy = Math.abs((position.y * RADIUS) / HEIGHT);
-    let Ay_xy = position.y;
-    let Az_xy = 0;
-    let A_xy = new THREE.Vector3(Ax_xy, Ay_xy, Az_xy);
-    let square_distance_A_Axy = square_distance3d(
-      A_xy.x,
-      A_xy.y,
-      A_xy.z,
-      A.x,
-      A.y,
-      A.z
-    );
-    let cos_theta = 1 - square_distance_A_Axy / (2 * A_xy.x ** 2);
-    console.log("cos_theta");
-    console.log(cos_theta);
-    //caculate theta
-    let theta =
-      A.z > 0 ? Math.acos(cos_theta) : 2 * Math.PI - Math.acos(cos_theta);
-    console.log("theta");
-    console.log((theta * 180) / Math.PI);
-    let theta_unwrap = (theta * RADIUS) / Math.sqrt(HEIGHT ** 2 + RADIUS ** 2);
-    console.log("theta_unwrap");
-    console.log((theta_unwrap * 180) / Math.PI);
-    let distance_OA = Math.abs(
-      Math.sqrt(position.x ** 2 + position.y ** 2 + position.z ** 2)
-    );
-    console.log("distance_OA");
-    console.log(distance_OA);
-    orientation.copy(mouseHelperRef.current.rotation);
-    orientation.z = orientation.z + props.textureRotation * 2 * Math.PI;
-
-    // if (params.rotate) orientation.z = Math.random() * 2 * Math.PI;
-    const scale = props.textureScale;
-    size.set(scale, scale, scale);
-    const material = getDecalMaterial();
-    // material.color.setHex(0x000000);
-
-    const m = new THREE.Mesh(
-      new DecalGeometry(coneMeshRef.current, position, orientation, size),
-      material
-    );
-    m.renderOrder = props.meshInfos.length; // give decals a fixed render order
-    const meshInfo = {
-      mesh: m,
-      meshId: props.meshInfos.length,
-      textureImage: props.textureImage,
-    };
-    props.setMeshInfos([...props.meshInfos, meshInfo]);
-    scene.add(m);
+  const shoot = ({
+    position,
+    orientation,
+    textureScale,
+    textureRotation,
+    renderOrder,
+    decalMap,
+  }={}) => {
+    try {
+      
+      // const position = new THREE.Vector3();
+      // const orientation = new THREE.Euler();
+      const size = new THREE.Vector3(10, 10, 10);
+      textureRotation || (textureRotation = props.textureRotation);
+      textureScale || (textureScale = props.textureScale);
+      const mouseHelper = mouseHelperRef.current;
+      if(!position){
+        position = new THREE.Vector3();
+        position.copy(intersectionRef.current.point); 
+      }
+      let A = new THREE.Vector3(position.x, position.y, position.z);
+      let Ax_xy = Math.abs((position.y * RADIUS) / HEIGHT);
+      let Ay_xy = position.y;
+      let Az_xy = 0;
+      let A_xy = new THREE.Vector3(Ax_xy, Ay_xy, Az_xy);
+      let square_distance_A_Axy = square_distance3d(
+        A_xy.x,
+        A_xy.y,
+        A_xy.z,
+        A.x,
+        A.y,
+        A.z
+      );
+      let cos_theta = 1 - square_distance_A_Axy / (2 * A_xy.x ** 2);
+      console.log("cos_theta");
+      console.log(cos_theta);
+      //caculate theta
+      let theta =
+        A.z > 0 ? Math.acos(cos_theta) : 2 * Math.PI - Math.acos(cos_theta);
+      console.log("theta");
+      console.log((theta * 180) / Math.PI);
+      let theta_unwrap = (theta * RADIUS) / Math.sqrt(HEIGHT ** 2 + RADIUS ** 2);
+      console.log("theta_unwrap");
+      console.log((theta_unwrap * 180) / Math.PI);
+      let distance_OA = Math.abs(
+        Math.sqrt(position.x ** 2 + position.y ** 2 + position.z ** 2)
+      );
+      console.log("distance_OA");
+      console.log(distance_OA);
+      if(!orientation){
+        orientation = new THREE.Euler();
+        orientation.copy(mouseHelperRef.current.rotation);
+      }
+      orientation.z = orientation.z + textureRotation * 2 * Math.PI;
+  
+      // if (params.rotate) orientation.z = Math.random() * 2 * Math.PI;
+      const scale = textureScale;
+      size.set(scale, scale, scale);
+      const material = getDecalMaterial(decalMap);
+      // material.color.setHex(0x000000);
+  
+      const m = new THREE.Mesh(
+        new DecalGeometry(coneMeshRef.current, position, orientation, size),
+        material
+      );
+      m.renderOrder = renderOrder || props.meshInfos.length; // give decals a fixed render order
+      props.setMeshInfos((old)=>[...old, {
+        mesh: m,
+        meshId: old.length,
+        texture: props.texture,
+        textureScale: props.textureScale,
+        textureRotation: props.textureRotation,
+        // theta: theta,
+        // r: distance_OA,
+        x: position.x,
+        y: position.y,
+        z: position.z,
+        o_x: orientation.x,
+        o_y: orientation.y,
+        o_z: orientation.z,
+      }]);
+      scene.add(m);
+    } catch (error) {
+      console.log("error at shoot: ", error);
+    }
   };
-  const preview = () => {};
   const square_distance3d = (x1, y1, z1, x2, y2, z2) => {
     return (x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2;
   };
