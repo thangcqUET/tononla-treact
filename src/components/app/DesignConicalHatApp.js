@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import ConicalHatDesignerCanvas from "./ConicalHatDesignerCanvas";
+import Header from "components/headers/light.js";
+import Footer from "components/footers/MiniCenteredFooter.js";
+import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import "./DesignConicalHatApp.css";
 import Button from "@mui/material/Button";
 import {
@@ -40,8 +43,12 @@ function DesignConicalHatApp() {
   const [isSaved, setIsSaved] = useState(true);
   const navigate = useNavigate();
   const primaryButtonUrl = "/components/landingPages/Checkout";
-  const handleGotoCheckout = ()=>{
-    navigate(primaryButtonUrl, );
+  const handleGotoCheckout = (designId)=>{
+    navigate(primaryButtonUrl, {
+      state:{
+        designId: designId
+      }
+    });
     window.fbq('track', 'InitiateCheckout');
   }
   //check if mobile screen then hide mouse, otherwise show mouse
@@ -116,14 +123,22 @@ function DesignConicalHatApp() {
         o_z: meshInfo.o_z,
       };
     });
+    if (data.length === 0) {
+      alert("Bạn chưa vẽ gì cả!");
+      return false;
+    }
     localStorage.setItem("meshInfos", JSON.stringify(data));
     setIsSaved(true);
+    return true;
   };
   const handleSaveAndOrder = async () => {
     //save to local storage first
     //call api to save design
     //redirect to order page
-    handleSave();
+    const saveResule = handleSave();
+    if (!saveResule) {
+      return;
+    }
     const getTexturesEndpoint = process.env.REACT_APP_BACKEND_URL?`${process.env.REACT_APP_BACKEND_URL}/designs`:"https://default/textures";
     const data = meshInfos.map((meshInfo) => {
       return {
@@ -148,14 +163,17 @@ function DesignConicalHatApp() {
       order: 0,
       isShow: false,
     });
-    handleGotoCheckout();
+    const designId = response.data.id;
+    handleGotoCheckout(designId);
   }
   return (
-    <>
+    <AnimationRevealPage disabled={true}>
+      <Header></Header>
       <Stack
         direction={"column"}
         spacing={2}
         padding={1}
+        paddingBottom={5}
         // justifyContent={"center"}
         alignItems={"center"}
       >
@@ -309,6 +327,7 @@ function DesignConicalHatApp() {
           <Button variant="outlined" onClick={handleSaveAndOrder}>Lưu và Đặt hàng</Button>
         </Stack>
       </Stack>
+      <Footer></Footer>
       <Modal
         open={openedModal}
         onClose={handleCloseModal}
@@ -345,7 +364,7 @@ function DesignConicalHatApp() {
           </div>
         </Box>
       </Modal>
-    </>
+    </AnimationRevealPage>
   );
 }
 
