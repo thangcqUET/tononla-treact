@@ -163,8 +163,8 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
         shoot({
           position: new THREE.Vector3(meshInfo.x, meshInfo.y, meshInfo.z),
           orientation: new THREE.Euler(meshInfo.o_x, meshInfo.o_y, meshInfo.o_z),
-          textureScale: meshInfo.textureScale,
-          textureRotation: meshInfo.textureRotation,
+          textureScale: meshInfo.scale,
+          textureRotation: meshInfo.rotation,
           renderOrder: i,
           decalMap: savedDecals[i],
         });
