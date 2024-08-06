@@ -123,20 +123,16 @@ function DesignConicalHatApp() {
         o_z: meshInfo.o_z,
       };
     });
-    if (data.length === 0) {
-      alert("Bạn chưa vẽ gì cả!");
-      return false;
-    }
     localStorage.setItem("meshInfos", JSON.stringify(data));
     setIsSaved(true);
-    return true;
   };
   const handleSaveAndOrder = async () => {
     //save to local storage first
     //call api to save design
     //redirect to order page
-    const saveResule = handleSave();
-    if (!saveResule) {
+    handleSave();
+    if (meshInfos.length === 0) {
+      alert("Bạn chưa vẽ gì cả!");
       return;
     }
     const getTexturesEndpoint = process.env.REACT_APP_BACKEND_URL?`${process.env.REACT_APP_BACKEND_URL}/designs`:"https://default/textures";
