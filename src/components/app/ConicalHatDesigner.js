@@ -280,7 +280,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
       const orientation = new THREE.Euler(
         mouseHelperRef.current.rotation.x,
         mouseHelperRef.current.rotation.y,
-        mouseHelperRef.current.rotation.z + props.textureRotation * 2 * Math.PI
+        mouseHelperRef.current.rotation.z + (props.textureRotation/360) * 2 * Math.PI
       );
       // update position for previewmesh
       if (isInitPreviewMesh.current) {
@@ -317,7 +317,14 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     decalMap,
   }={}) => {
     try {
-      
+      console.log({
+        position,
+        orientation,
+        textureScale,
+        textureRotation,
+        renderOrder,
+        decalMap,
+      })
       // const position = new THREE.Vector3();
       // const orientation = new THREE.Euler();
       const size = new THREE.Vector3(10, 10, 10);
@@ -360,8 +367,8 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
       if(!orientation){
         orientation = new THREE.Euler();
         orientation.copy(mouseHelperRef.current.rotation);
+        orientation.z = orientation.z + (textureRotation / 360)*2*Math.PI;
       }
-      orientation.z = orientation.z + textureRotation * 2 * Math.PI;
   
       // if (params.rotate) orientation.z = Math.random() * 2 * Math.PI;
       const scale = textureScale;

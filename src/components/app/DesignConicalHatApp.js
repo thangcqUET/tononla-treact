@@ -114,7 +114,7 @@ function DesignConicalHatApp() {
         meshId: meshInfo.meshId,
         textureId: meshInfo.texture.id,
         scale: meshInfo.textureScale,
-        rotation: meshInfo.textureRotation,
+        rotation: meshInfo.textureRotation ,//* (180/Math.PI),
         x: meshInfo.x,
         y: meshInfo.y,
         z: meshInfo.z,
@@ -178,7 +178,7 @@ function DesignConicalHatApp() {
           height="400px"
           backgroundColor="#f5f5f5"
           textureScale={textureScale}
-          textureRotation={textureRotation / 360}
+          textureRotation={textureRotation}
           texture={texture}
           isMobile={isMobile}
           mobileMode={mobileMode}
