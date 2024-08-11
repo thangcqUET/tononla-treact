@@ -31,7 +31,7 @@ export default () => {
   const Subheading = tw.span`tracking-wider text-sm font-medium`;
   const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 transform -skew-x-12 inline-block`;
   const HighlightedTextInverse = tw.span`bg-gray-100 text-primary-500 px-4 transform -skew-x-12 inline-block`;
-  const Description = tw.span`inline-block mt-8`;
+  const Description = tw.span`flex flex-col mt-4 text-gray-700 text-base max-w-sm gap-y-2 items-center md:items-start`;
   const PrimaryButton = tw.button`font-bold px-8 lg:px-10 py-3 rounded bg-primary-500 text-gray-100 hocus:bg-primary-700 focus:shadow-outline focus:outline-none transition duration-300`;
   const VideoFrame = tw.div`pt-6 pb-6 mx-auto max-w-screen-xl`;
   const imageCss = tw`rounded-4xl`;
@@ -98,7 +98,7 @@ export default () => {
           description={
             <>
               <span tw="text-primary-500">Tô nón lá</span> là nơi giúp bạn thiết
-              kế và trang trí chiếc nón lá Việt Nam, tạo ra Sản phẩm thời trang
+              kế, trang trí chiếc nón lá Việt Nam, tạo ra Sản phẩm thời trang
               mang Văn hoá Việt và Dấu ấn của riêng bạn.
             </>
           }
@@ -129,7 +129,7 @@ export default () => {
           />
         </VideoFrame>
         <GetStarted
-          text="Thiết kế chiếc nón của bạn ngay tại đây"
+          text="Công cụ 3D giúp thiết kế chiếc nón lá của riêng bạn, thử ngay tại đây!"
           primaryLinkText="BẮT ĐẦU"
           secondaryLinkText="Tìm hiểu thêm"
           primaryLinkUrl="/design-app"
@@ -148,45 +148,45 @@ export default () => {
             }
             description={
               <Description>
-                1. Vào trang web{" "}
-                <span tw="text-primary-500">
-                  <a href="www.tononla.com">www.tononla.com</a>
-                </span>
-                <br />
-                2. Chọn mẫu thiết kế bạn yêu thích
-                <br />
-                3. Đặt chỗ và xác nhận với{" "}
-                <span tw="text-primary-500">Tô nón lá</span>
-                <br />
-                4. Chúng tớ sẽ chuẩn bị, việc của bạn là đến và tô
-                <br />
+                <p>
+                  1. THIẾT KẾ chiếc nón lá của riêng bạn với 
+                  <a href="/design-app" target="_blank" rel="noopener noreferrer" tw="text-primary-500"> công cụ 3D của Tô nón lá</a>
+                </p>
+                <p>
+                  2. LƯU thiết kế, ĐẶT CHỖ và XÁC NHẬN với{" "}
+                  <span tw="text-primary-500">Tô nón lá</span>
+                </p>
+                <p>3. ĐẾN điểm hẹn, nhận nguyên liệu và công cụ để HOÀN THIỆN sản phẩm</p>
                 <span tw="text-primary-500 text-base">
                   <span tw="font-bold">Thời gian:</span> Chủ nhật hằng tuần
                 </span>
-                <br />
                 <span tw="text-primary-500 text-base">
                   <span tw="font-bold">Địa điểm:</span> Sẽ được cập nhật trên{" "}
                   <a
                     href="https://www.facebook.com/profile.php?id=61558483040026"
                     tw="font-bold"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    Fanpage của Tô nón lá
+                    Fanpage của Tô nón lá! 
                   </a>
+                <span> Bạn hãy Follow page để cập nhật nhé! </span>
                 </span>
-                <br />
                 <span tw="text-primary-500 text-base">
                   <span tw="font-bold">Liên hệ:</span> {"0395.188.258"}
                 </span>
+                <br></br>
               </Description>
             }
             buttonRounded={false}
             textOnLeft={false}
             primaryButtonText="Trải nghiệm ngay"
             buttonFunction={() => {
-              handleScroll(refProductList)();
-              window.fbq("track", "ButtonClick", {
-                content_name: "Progress:Trai_nghiem_ngay",
-              });
+              // handleScroll(refProductList)();
+              // window.fbq("track", "ButtonClick", {
+              //   content_name: "Progress:Trai_nghiem_ngay",
+              // });
+              window.open("/design-app", "_blank");
             }}
             imageSrc={
               "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/IMG_4496%20%283%29.webp"
@@ -203,7 +203,7 @@ export default () => {
           <TabGrid
             heading={
               <>
-                <HighlightedText>Sản phẩm</HighlightedText> của{" "}
+                <HighlightedText>Thiết kế</HighlightedText> của{" "}
                 <span tw="text-primary-500">Tô nón lá</span>
               </>
             }
