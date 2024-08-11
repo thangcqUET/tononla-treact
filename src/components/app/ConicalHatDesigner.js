@@ -160,6 +160,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   useEffect(() => {
     if (props.savedMeshInfos) {
       for (let i = 0; i < props.savedMeshInfos.length; i++) {
+        let ratio = savedDecals[i].image.width / savedDecals[i].image.height;
         const meshInfo = props.savedMeshInfos[i];
         shoot({
           position: new THREE.Vector3(meshInfo.x, meshInfo.y, meshInfo.z),
@@ -168,6 +169,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
           textureRotation: meshInfo.rotation,
           renderOrder: i,
           decalMap: savedDecals[i],
+          ratio: ratio,
         });
       }
     }
@@ -316,6 +318,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     textureRotation,
     renderOrder,
     decalMap,
+    ratio=ratio,
   }={}) => {
     try {
       console.log({
@@ -325,6 +328,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
         textureRotation,
         renderOrder,
         decalMap,
+        ratio,
       })
       // const position = new THREE.Vector3();
       // const orientation = new THREE.Euler();
