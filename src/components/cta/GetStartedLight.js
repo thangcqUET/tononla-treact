@@ -37,12 +37,12 @@ export default ({
       <PrimaryBackgroundContainer>
         <Row>
           <TextContainer>
-            {subheading && <Subheading>{subheading}</Subheading>}
+            {/* {subheading && <Subheading>{subheading}</Subheading>} */}
             <Heading>{heading}</Heading>
           </TextContainer>
           <LinksContainer>
             <PrimaryLink href={primaryLinkUrl}>{primaryLinkText}</PrimaryLink>
-            <SecondaryLink href={secondaryLinkUrl}>{secondaryLinkText}</SecondaryLink>
+            {/* <SecondaryLink href={secondaryLinkUrl}>{secondaryLinkText}</SecondaryLink> */}
           </LinksContainer>
         </Row>
         <DecoratorBlobContainer>

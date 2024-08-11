@@ -17,6 +17,8 @@ import shopIconImageSrc from "images/shop-icon.svg";
 import styled from "styled-components";
 import ResponsiveVideoEmbed from "../helpers/ResponsiveVideoEmbed.js";
 import axios from "axios";
+import DesignConicalHatApp from "components/app/DesignConicalHatApp.js";
+import GetStarted from "components/cta/GetStarted.js";
 const StyledResponsiveVideoEmbed = styled(ResponsiveVideoEmbed)`
   padding-bottom: 56.25% !important;
   padding-top: 0px !important;
@@ -30,6 +32,7 @@ export default () => {
   const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 transform -skew-x-12 inline-block`;
   const HighlightedTextInverse = tw.span`bg-gray-100 text-primary-500 px-4 transform -skew-x-12 inline-block`;
   const Description = tw.span`inline-block mt-8`;
+  const PrimaryButton = tw.button`font-bold px-8 lg:px-10 py-3 rounded bg-primary-500 text-gray-100 hocus:bg-primary-700 focus:shadow-outline focus:outline-none transition duration-300`;
   const VideoFrame = tw.div`pt-6 pb-6 mx-auto max-w-screen-xl`;
   const imageCss = tw`rounded-4xl`;
   const refVideo = useRef();
@@ -94,8 +97,8 @@ export default () => {
           }
           description={
             <>
-              <span tw="text-primary-500">Tô nón lá</span> là nơi giúp bạn trải
-              nghiệm trang trí chiếc nón lá Việt Nam, tạo ra Sản phẩm thời trang
+              <span tw="text-primary-500">Tô nón lá</span> là nơi giúp bạn thiết
+              kế và trang trí chiếc nón lá Việt Nam, tạo ra Sản phẩm thời trang
               mang Văn hoá Việt và Dấu ấn của riêng bạn.
             </>
           }
@@ -105,7 +108,7 @@ export default () => {
             "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20chu%CC%80a%20Ca%CC%82%CC%80u.webp",
             "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20co%CC%9B%CC%80%20Vie%CC%A3%CC%82t%20Nam.webp",
             "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20hoa%20sen.webp",
-        ]}
+          ]}
           imageCss={imageCss}
           imageDecoratorBlob={true}
           primaryButtonText="Tìm hiểu ngay"
@@ -125,6 +128,14 @@ export default () => {
             background="transparent"
           />
         </VideoFrame>
+        <GetStarted
+          text="Thiết kế chiếc nón của bạn ngay tại đây"
+          primaryLinkText="BẮT ĐẦU"
+          secondaryLinkText="Tìm hiểu thêm"
+          primaryLinkUrl="/design-app"
+          pushDownFooter={false}
+          buttonFunction={handleScroll(refHow)}
+        ></GetStarted>
         <div ref={refHow}>
           <MainFeature
             subheading={""}
@@ -137,7 +148,10 @@ export default () => {
             }
             description={
               <Description>
-                1. Vào trang web <span tw="text-primary-500"><a href="www.tononla.com">www.tononla.com</a></span>
+                1. Vào trang web{" "}
+                <span tw="text-primary-500">
+                  <a href="www.tononla.com">www.tononla.com</a>
+                </span>
                 <br />
                 2. Chọn mẫu thiết kế bạn yêu thích
                 <br />
@@ -151,7 +165,13 @@ export default () => {
                 </span>
                 <br />
                 <span tw="text-primary-500 text-base">
-                  <span tw="font-bold">Địa điểm:</span> Sẽ được cập nhật trên <a href="https://www.facebook.com/profile.php?id=61558483040026" tw="font-bold">Fanpage của Tô nón lá</a>
+                  <span tw="font-bold">Địa điểm:</span> Sẽ được cập nhật trên{" "}
+                  <a
+                    href="https://www.facebook.com/profile.php?id=61558483040026"
+                    tw="font-bold"
+                  >
+                    Fanpage của Tô nón lá
+                  </a>
                 </span>
                 <br />
                 <span tw="text-primary-500 text-base">
@@ -176,6 +196,8 @@ export default () => {
             imageDecoratorBlobCss={tw`left-1/2 -translate-x-1/2 md:w-32 md:h-32 opacity-25`}
           />
         </div>
+        {/* TODO: Add a button direct to design app */}
+
         {/* TabGrid Component also accepts a tabs prop to customize the tabs and its content directly. Please open the TabGrid component file to see the structure of the tabs props.*/}
         <div ref={refProductList}>
           <TabGrid

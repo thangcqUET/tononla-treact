@@ -59,78 +59,78 @@ const CardPrice = tw.p`mt-4 text-xl font-bold`;
 export default ({
   subheading = "Contact Us",
   heading = <span tw="text-primary-500">Đặt chỗ</span>,
-  description = <>
-    <span tw="text-primary-500 text-base">
-      <span tw="font-bold">Thời gian:</span> Chủ nhật hằng tuần
-    </span>
-    <br />
-    <span tw="text-primary-500 text-base">
-      <span tw="font-bold">Địa điểm:</span> Sẽ được cập nhật trên <a href="https://www.facebook.com/profile.php?id=61558483040026" tw="font-bold">Fanpage của Tô nón lá</a>
-    </span>
-    <br />
-    <span tw="text-primary-500 text-base">
-      <span tw="font-bold">Liên hệ:</span> {"0395.188.258"}
-    </span>
-  </>,
+  description = (
+    <>
+      <span tw="text-primary-500 text-base">
+        <span tw="font-bold">Thời gian:</span> Chủ nhật hằng tuần
+      </span>
+      <br />
+      <span tw="text-primary-500 text-base">
+        <span tw="font-bold">Địa điểm:</span> Sẽ được cập nhật trên{" "}
+        <a
+          href="https://www.facebook.com/profile.php?id=61558483040026"
+          tw="font-bold"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Fanpage của Tô nón lá
+        </a>
+      </span>
+      <br />
+      <span tw="text-primary-500 text-base">
+        <span tw="font-bold">Liên hệ:</span> {"0395.188.258"}
+      </span>
+    </>
+  ),
   submitButtonText = "Send",
   formAction = "#",
   formMethod = "get",
-  formEndpoint = process.env.REACT_APP_BACKEND_URL?`${process.env.REACT_APP_BACKEND_URL}/orders`:"https://default/orders",
+  formEndpoint = process.env.REACT_APP_BACKEND_URL
+    ? `${process.env.REACT_APP_BACKEND_URL}/orders`
+    : "https://default/orders",
   textOnLeft = true,
-  state = {}
+  state = {},
 }) => {
-  const {
-    productId="", 
-    productName="", 
-    productType='product', 
-    numItems=0, 
-    currency='VND', 
-    value=0,
-    imageSrc=""
-  } = state;
-  const card = {
-    imageSrc: imageSrc,
-    title: productName,
-    content: productType,
-    price: `${value?.toLocaleString().split(',').join('.')} ${currency}`,
-    rating: "5.0",
-    reviews: "87",
-    url: "#"
-  }
+  const { designId = "" } = state;
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
   const handleOnSubmit = async () => {
     setIsError(false);
-    if(!phoneNumber){
+    if (!phoneNumber) {
       setIsError(true);
-      setErrorMessage("Bạn hãy điền số điện thoại để chúng tớ có thể xác nhận lại nhé!");
+      setErrorMessage(
+        "Bạn hãy điền số điện thoại để chúng tớ có thể xác nhận lại nhé!"
+      );
       return;
     }
-    axios.post(formEndpoint,{
-      phoneNumber,
-      name,
-      email,
-      note,
-      designId: productId,
-    }).then((res)=>{
-      if(res.status==201){
-        setSubmitSuccessfully(true);
-        window.fbq('track', 'Purchase', {
-          content_name: productName,
-          content_ids: [productId],
-          content_type: productType,
-          contents: [{
-            id: productId,
-            quantity: numItems
-          }],
-          num_items: numItems,
-          currency: currency,
-          value: value
-        });
-      }
-    }).catch((error)=>{
-      console.log(error);
-    })
-  }
+    axios
+      .post(formEndpoint, {
+        phoneNumber,
+        name,
+        email,
+        note,
+        designId: designId,
+      })
+      .then((res) => {
+        if (res.status == 201) {
+          setSubmitSuccessfully(true);
+          window.fbq("track", "Purchase", {
+            // content_name: productName,
+            // content_ids: [productId],
+            // content_type: productType,
+            // contents: [{
+            //   id: productId,
+            //   quantity: numItems
+            // }],
+            // num_items: numItems,
+            // currency: currency,
+            // value: value
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const [phoneNumber, setPhoneNumber] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -141,59 +141,60 @@ export default ({
   return (
     <Container>
       <TwoColumn>
-        <TextColumn>
-          <CardContainer key={1}>
-            <Card className="group" initial="rest" whileHover="hover" animate="rest">
-              <CardImageContainer imageSrc={card.imageSrc}>
-                {/* <CardRatingContainer>
-                  <CardRating>
-                    <StarIcon />
-                    {card.rating}
-                  </CardRating>
-                  <CardReview>({card.reviews})</CardReview>
-                </CardRatingContainer> */}
-                {/* <CardHoverOverlay
-                  variants={{
-                    hover: {
-                      opacity: 1,
-                      height: "auto"
-                    },
-                    rest: {
-                      opacity: 0,
-                      height: 0
-                    }
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <CardButton>Buy Now</CardButton>
-                </CardHoverOverlay> */}
-              </CardImageContainer>
-              <CardText>
-                <CardTitle>{card.title}</CardTitle>
-                {/* <CardContent>{card.content}</CardContent> */}
-                <CardPrice>{card.price}</CardPrice>
-              </CardText>
-            </Card>
-          </CardContainer>
-        </TextColumn>
         <TextColumn textOnLeft={textOnLeft}>
           <TextContent>
             {/* {subheading && <Subheading>{subheading}</Subheading>} */}
             <Heading>{heading}</Heading>
             {description && <Description>{description}</Description>}
             <Form>
-              {isError?<ErrorMessage>{errorMessage}</ErrorMessage>:""}
-              {submitSuccessfully?<InfoMessage>{"Đặt chỗ thành công"}</InfoMessage>:""}
-              <Input type="text" name="phone" required placeholder="Số điện thoại (Bắt buộc)" 
-              onChange={(e)=>{setPhoneNumber(e.target.value)}}/>
-              <Input type="text" name="name" placeholder="Tên bạn là gì" 
-              onChange={(e)=>{setName(e.target.value)}}/>
-              <Input type="email" name="email" placeholder="Email (Nhận thông tin mới nhất qua email)" 
-              onChange={(e)=>{setEmail(e.target.value)}}/>
+              {isError ? <ErrorMessage>{errorMessage}</ErrorMessage> : ""}
+              {submitSuccessfully ? (
+                <InfoMessage>{"Đặt chỗ thành công"}</InfoMessage>
+              ) : (
+                ""
+              )}
+              <Input
+                type="text"
+                name="phone"
+                required
+                placeholder="Số điện thoại (Bắt buộc)"
+                onChange={(e) => {
+                  setPhoneNumber(e.target.value);
+                }}
+              />
+              <Input
+                type="text"
+                name="name"
+                placeholder="Tên bạn là gì"
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
+              <Input
+                type="email"
+                name="email"
+                placeholder="Email (Nhận thông tin mới nhất qua email)"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
               {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
-              <Textarea name="message" placeholder="Bạn muốn lưu ý điều gì cho chúng tớ không?" 
-              onChange={(e)=>{setNote(e.target.value)}}/>
-              <SubmitButton type="submit" onClick={()=>{handleOnSubmit()}} disabled={submitSuccessfully}>{submitButtonText}</SubmitButton>
+              <Textarea
+                name="message"
+                placeholder="Bạn muốn lưu ý điều gì cho chúng tớ không?"
+                onChange={(e) => {
+                  setNote(e.target.value);
+                }}
+              />
+              <SubmitButton
+                type="submit"
+                onClick={() => {
+                  handleOnSubmit();
+                }}
+                disabled={submitSuccessfully}
+              >
+                {submitButtonText}
+              </SubmitButton>
             </Form>
           </TextContent>
         </TextColumn>
