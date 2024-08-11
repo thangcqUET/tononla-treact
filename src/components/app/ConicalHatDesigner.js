@@ -191,8 +191,8 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   const updatePreviewMesh = ({ position, orientation, size }) => {
     const m = previewMeshRef.current;
     const tempSize = new THREE.Vector3(
+      props.textureScale*ratio,
       props.textureScale,
-      props.textureScale/ratio,
       props.textureScale
     );
     //create new decal geometry
@@ -286,7 +286,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
       // update position for previewmesh
       if (isInitPreviewMesh.current) {
         const scale = props.textureScale;
-        const size = new THREE.Vector3(scale, scale/ratio, scale);
+        const size = new THREE.Vector3(scale*ratio, scale, scale);
         updatePreviewMeshThrotle({
           position: intersectionRef.current.point,
           orientation: orientation,
@@ -294,7 +294,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
         });
       } else {
         const scale = props.textureScale;
-        const size = new THREE.Vector3(scale, scale/ratio, scale);
+        const size = new THREE.Vector3(scale*ratio, scale, scale);
 
         initPreviewMesh({
           position: intersectionRef.current.point,
@@ -373,7 +373,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   
       // if (params.rotate) orientation.z = Math.random() * 2 * Math.PI;
       const scale = textureScale;
-      size.set(scale, scale/ratio, scale);
+      size.set(scale*ratio, scale, scale);
       const material = getDecalMaterial(decalMap);
       // material.color.setHex(0x000000);
   

@@ -25,12 +25,14 @@ function DesignConicalHatApp() {
     id: 0,
     name: "Logo",
     imageUrl: "/logo_circle.png",
+    thumbnailUrl: "/logo_circle.png",
   });
   const [textures, setTextures] = useState([
     {
       id: 0,
       name: "Logo",
       imageUrl: "/logo_circle.png",
+      thumbnailUrl: "/logo_circle.png",
     }
   ]);
   const [meshInfos, setMeshInfos] = useState([]); // data: {mesh, meshId, textureImage}
@@ -287,7 +289,7 @@ function DesignConicalHatApp() {
                 style={{minWidth: "fit-content"}}
               >
                 <img
-                  src={meshInfo?.texture?.imageUrl}
+                  src={meshInfo?.texture?.thumbnailUrl}
                   alt={meshInfo.meshId}
                   style={{ width: "50px", height: "50px" }}
                   onClick={() => {
@@ -342,7 +344,7 @@ function DesignConicalHatApp() {
                   key={index}
                 >
                   <img
-                    src={texture.imageUrl}
+                    src={texture.thumbnailUrl}
                     alt={texture.name}
                     style={{ width: "50px", height: "50px" }}
                     onClick={() => {
