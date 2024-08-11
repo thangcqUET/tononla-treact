@@ -36,6 +36,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   const clickDuration = useRef(0);
   const { camera, scene, size } = useThree();
   const decalDiffuse = useLoader(TextureLoader, props?.texture?.imageUrl||"/logo_circle.png");
+  const ratio = decalDiffuse.image.width / decalDiffuse.image.height;
   const savedDecals = useLoader(TextureLoader, props?.savedMeshInfos?.map((meshInfo)=>meshInfo.texture.imageUrl));
   const raycaster = useRef(new THREE.Raycaster());
   const coneMeshRef = useRef();
@@ -191,7 +192,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     const m = previewMeshRef.current;
     const tempSize = new THREE.Vector3(
       props.textureScale,
-      props.textureScale,
+      props.textureScale/ratio,
       props.textureScale
     );
     //create new decal geometry
@@ -285,7 +286,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
       // update position for previewmesh
       if (isInitPreviewMesh.current) {
         const scale = props.textureScale;
-        const size = new THREE.Vector3(scale, scale, scale);
+        const size = new THREE.Vector3(scale, scale/ratio, scale);
         updatePreviewMeshThrotle({
           position: intersectionRef.current.point,
           orientation: orientation,
@@ -293,7 +294,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
         });
       } else {
         const scale = props.textureScale;
-        const size = new THREE.Vector3(scale, scale, scale);
+        const size = new THREE.Vector3(scale, scale/ratio, scale);
 
         initPreviewMesh({
           position: intersectionRef.current.point,
@@ -372,7 +373,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   
       // if (params.rotate) orientation.z = Math.random() * 2 * Math.PI;
       const scale = textureScale;
-      size.set(scale, scale, scale);
+      size.set(scale, scale/ratio, scale);
       const material = getDecalMaterial(decalMap);
       // material.color.setHex(0x000000);
   
