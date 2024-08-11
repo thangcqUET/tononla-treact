@@ -160,6 +160,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   useEffect(() => {
     if (props.savedMeshInfos) {
       for (let i = 0; i < props.savedMeshInfos.length; i++) {
+        let ratio = savedDecals[i].image.width / savedDecals[i].image.height;
         const meshInfo = props.savedMeshInfos[i];
         shoot({
           position: new THREE.Vector3(meshInfo.x, meshInfo.y, meshInfo.z),
@@ -168,6 +169,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
           textureRotation: meshInfo.rotation,
           renderOrder: i,
           decalMap: savedDecals[i],
+          ratioLocal: ratio,
         });
       }
     }
@@ -190,11 +192,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   };
   const updatePreviewMesh = ({ position, orientation, size }) => {
     const m = previewMeshRef.current;
-    const tempSize = new THREE.Vector3(
-      props.textureScale*ratio,
-      props.textureScale,
-      props.textureScale
-    );
+    const tempSize = new THREE.Vector3(size.x, size.y, size.z);
     //create new decal geometry
     m.geometry = new DecalGeometry(
       coneMeshRef.current,
@@ -316,6 +314,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     textureRotation,
     renderOrder,
     decalMap,
+    ratioLocal=ratio,
   }={}) => {
     try {
       console.log({
@@ -325,12 +324,14 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
         textureRotation,
         renderOrder,
         decalMap,
+        ratio,
       })
       // const position = new THREE.Vector3();
       // const orientation = new THREE.Euler();
       const size = new THREE.Vector3(10, 10, 10);
       textureRotation || (textureRotation = props.textureRotation);
       textureScale || (textureScale = props.textureScale);
+      // ratioLocal || (ratioLocal = ratio);
       const mouseHelper = mouseHelperRef.current;
       if(!position){
         position = new THREE.Vector3();
@@ -373,7 +374,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   
       // if (params.rotate) orientation.z = Math.random() * 2 * Math.PI;
       const scale = textureScale;
-      size.set(scale*ratio, scale, scale);
+      size.set(scale*ratioLocal, scale, scale);
       const material = getDecalMaterial(decalMap);
       // material.color.setHex(0x000000);
   
