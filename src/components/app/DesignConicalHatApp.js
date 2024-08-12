@@ -98,6 +98,9 @@ function DesignConicalHatApp() {
   const [openedModal, setOpenedModal] = React.useState(false);
   const handleOpenModal = () => setOpenedModal(true);
   const handleCloseModal = () => setOpenedModal(false);
+  const handleDrawTexture = () => {
+    console.log("draw texture");
+  };
   const modalStyle = {
     position: "absolute",
     top: "50%",
@@ -194,21 +197,22 @@ function DesignConicalHatApp() {
           className="options"
           direction={"row"}
           justifyContent={"space-around"}
+          gap={2}
         >
           {isMobile ? (
-            <div className="mobile_mode_container">
-              <FormControlLabel
-                control={<Checkbox defaultChecked />}
-                label="Bật để vẽ"
-                checked={mobileMode === 1}
-                onChange={() => {
-                  setMobileMode(1 - mobileMode);
+            <>
+              <Button
+                variant="contained"
+                onClick={()=>{
+                  meshInfosRef.current.shootPreview();
                 }}
-              />
-            </div>
+              >
+                Nhấn để vẽ
+              </Button>
+            </>
           ) : null}
           <Button
-            variant="outlined"
+            variant="contained"
             onClick={handleOpenModal}
             style={{
               background:
@@ -322,7 +326,7 @@ function DesignConicalHatApp() {
         ) : null}
         <Stack flexDirection={"row"} columnGap={2} justifyContent={"center"}>
           <Button variant="outlined" onClick={handleSave} disabled={isSaved}>Lưu</Button>
-          <Button variant="outlined" onClick={handleSaveAndOrder}>Lưu và Đặt hàng</Button>
+          <Button variant="contained" onClick={handleSaveAndOrder}>Lưu và Đặt hàng</Button>
         </Stack>
       </Stack>
       <Footer></Footer>
