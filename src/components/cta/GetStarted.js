@@ -40,7 +40,7 @@ export default ({
             <Text>{text}</Text>
           </TextContainer>
           <LinksContainer>
-            <PrimaryLink href={primaryLinkUrl}>{primaryLinkText}</PrimaryLink>
+            <PrimaryLink href={primaryLinkUrl} target="_blank" rel="noopener noreferrer">{primaryLinkText}</PrimaryLink>
             <SecondaryLink onClick={buttonFunction}>{secondaryLinkText}</SecondaryLink>
           </LinksContainer>
         </Row>

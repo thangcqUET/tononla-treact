@@ -72,6 +72,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     removeMeshInfo,
     removeAllMeshInfo,
+    shootPreview,
   }));
   function removeMeshInfo(id) {
     // remove in meshInfos and scene
@@ -84,6 +85,25 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
       scene.remove(meshInfo.mesh);
     }
     setMeshInfos([]);
+  }
+  function shootPreview() {
+    //get mesh from previewMeshRef
+    const intersection = intersectionRef.current;
+    const mouseHelper = mouseHelperRef.current;
+    const orientation = new THREE.Euler(
+      mouseHelperRef.current.rotation.x,
+      mouseHelperRef.current.rotation.y,
+      mouseHelperRef.current.rotation.z + (props.textureRotation/360) * 2 * Math.PI
+    );
+    shoot({
+      position: intersection.point,
+      orientation: orientation,
+      textureScale: props.textureScale,
+      textureRotation: props.textureRotation,
+      renderOrder: props.meshInfos.length,
+      decalMap: decalDiffuse,
+      ratioLocal: ratio,
+    });
   }
   function getDecalMaterial(decalMap=decalDiffuse) {
     decalMap.colorSpace = THREE.SRGBColorSpace;
@@ -189,6 +209,8 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     m.renderOrder = props.meshInfos.length; // give decals a fixed render order //TODO: haven't understand yet
     // setPreviewMesh(m);
     isInitPreviewMesh.current = true;
+    console.log("init preview mesh");
+    console.log(m);
   };
   const updatePreviewMesh = ({ position, orientation, size }) => {
     const m = previewMeshRef.current;
@@ -203,6 +225,8 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     // update material
     m.material = getDecalMaterial();
     m.material.opacity = 0.5;
+    console.log("update preview mesh");
+    console.log(m);
     // m.material.color.setHex(0x000000);
   };
   // create throtle function for updatePreviewMesh use lodash

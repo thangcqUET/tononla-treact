@@ -66,7 +66,7 @@ export default ({
       </span>
       <br />
       <span tw="text-primary-500 text-base">
-        <span tw="font-bold">Địa điểm:</span> Sẽ được cập nhật trên{" "}
+        <span tw="font-bold">Địa điểm:</span> Sẽ được cập nhật hằng tuần trên{" "}
         <a
           href="https://www.facebook.com/profile.php?id=61558483040026"
           tw="font-bold"
