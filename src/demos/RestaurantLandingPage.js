@@ -103,10 +103,10 @@ export default () => {
           imageCss={imageCss}
           imageDecoratorBlob={true}
           primaryButtonText="Tìm hiểu ngay"
-          buttonFunction={handleScroll(refVideo)}
+          buttonFunction={handleScroll(refHow)}
           // watchVideoButtonText="Meet The Chefs"
         />
-        <VideoFrame
+        {/* <VideoFrame
           ref={refVideo}
           onClick={() => {
             window.fbq("track", "ButtonClick", {
@@ -118,7 +118,7 @@ export default () => {
             url="https://www.youtube.com/embed/zS0o_62Vnz0?si=tF8nlKabbAAbVvTe"
             background="transparent"
           />
-        </VideoFrame>
+        </VideoFrame> */}
         <GetStarted
           text="Công cụ 3D giúp thiết kế chiếc nón lá của riêng bạn, thử ngay tại đây!"
           primaryLinkText="BẮT ĐẦU"
