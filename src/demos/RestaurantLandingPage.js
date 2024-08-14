@@ -46,6 +46,7 @@ export default () => {
   const VideoFrame = tw.div`pt-6 pb-6 mx-auto max-w-screen-xl`;
   const imageCss = tw`rounded-4xl`;
   const refVideo = useRef();
+  const refTool = useRef();
   const refTemplates = useRef();
   const refHow = useRef();
   const handleScroll = (ref)=>{
@@ -103,7 +104,7 @@ export default () => {
           imageCss={imageCss}
           imageDecoratorBlob={true}
           primaryButtonText="Tìm hiểu ngay"
-          buttonFunction={handleScroll(refHow)}
+          buttonFunction={handleScroll(refTool)}
           // watchVideoButtonText="Meet The Chefs"
         />
         {/* <VideoFrame
@@ -119,6 +120,9 @@ export default () => {
             background="transparent"
           />
         </VideoFrame> */}
+        <div
+          ref={refTool}
+        >
         <GetStarted
           text="Công cụ 3D giúp thiết kế chiếc nón lá của riêng bạn, thử ngay tại đây!"
           primaryLinkText="BẮT ĐẦU"
@@ -127,6 +131,7 @@ export default () => {
           pushDownFooter={false}
           buttonFunction={handleScroll(refTemplates)}
         ></GetStarted>
+        </div>
         <div ref={refHow}>
           <MainFeature
             subheading={""}
