@@ -139,11 +139,11 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   useEffect(() => {
     window.addEventListener("pointermove", handlePointerMove);
     window.addEventListener("resize", handleResize);
-    window.addEventListener("touchmove", handleTouchMove);
+    // window.addEventListener("touchmove", handleTouchMove);
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("resize", handleResize);
-        window.removeEventListener("touchmove", handleTouchMove);
+        // window.removeEventListener("touchmove", handleTouchMove);
     };
   }, [
     props.texture,
@@ -249,6 +249,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     }
   };
   const handlePointerMove = (event) => {
+    // console.log("pointermove");
     if (event.isPrimary) {
       const canvasRect = props.canvasRef.current.getBoundingClientRect();
       checkIntersection(event.clientX-canvasRect.left, event.clientY-canvasRect.top);
@@ -263,7 +264,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
         if(props.mobileMode === 1 && intersectionRef.current.intersects) shoot();
     };
     const handleTouchMove = (e) => {
-        console.log("touchmove");
+        // console.log("touchmove");
     };
 
   const handleResize = () => {
@@ -282,8 +283,6 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
       [coneMeshRef.current],
       false
     );
-    console.log('intersects');
-    console.log(intersects);
     if (intersects.length > 0) {
       const { point } = intersects[0];
       mouseHelperRef.current.position.copy(point);
@@ -327,13 +326,11 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
         });
       }
     } else {
-      intersectionRef.current = {
-        intersects: false,
-        point: null,
-      };
+      // intersectionRef.current = {
+      //   intersects: false,
+      //   point: null,
+      // };
     }
-    console.log("intersectionRef.current");
-    console.log(intersectionRef.current);
   };
   const shoot = ({
     position,
