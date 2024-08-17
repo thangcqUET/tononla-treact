@@ -249,6 +249,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     }
   };
   const handlePointerMove = (event) => {
+    console.log("pointermove");
     if (event.isPrimary) {
       const canvasRect = props.canvasRef.current.getBoundingClientRect();
       checkIntersection(event.clientX-canvasRect.left, event.clientY-canvasRect.top);
@@ -327,10 +328,10 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
         });
       }
     } else {
-      intersectionRef.current = {
-        intersects: false,
-        point: null,
-      };
+      // intersectionRef.current = {
+      //   intersects: false,
+      //   point: null,
+      // };
     }
     console.log("intersectionRef.current");
     console.log(intersectionRef.current);
