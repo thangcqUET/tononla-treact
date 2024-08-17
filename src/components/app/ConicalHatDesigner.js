@@ -282,6 +282,8 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
       [coneMeshRef.current],
       false
     );
+    console.log('intersects');
+    console.log(intersects);
     if (intersects.length > 0) {
       const { point } = intersects[0];
       mouseHelperRef.current.position.copy(point);
@@ -330,6 +332,8 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
         point: null,
       };
     }
+    console.log("intersectionRef.current");
+    console.log(intersectionRef.current);
   };
   const shoot = ({
     position,
