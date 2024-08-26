@@ -193,24 +193,18 @@ function DesignConicalHatApp() {
           selectedMeshId={selectedMeshId}
           ref={meshInfosRef}
         />
+        {isMobile ? (
+          <>
+            <div>Chạm vào nón để hiện ra hình tạm thời</div>
+            <div>Nhấn nút "Nhấn để vẽ" để vẽ lên nón</div>
+          </>
+        ) : null}
         <Stack
           className="options"
           direction={"row"}
           justifyContent={"space-around"}
           gap={2}
         >
-          {isMobile ? (
-            <>
-              <Button
-                variant="contained"
-                onClick={()=>{
-                  meshInfosRef.current.shootPreview();
-                }}
-              >
-                Nhấn để vẽ
-              </Button>
-            </>
-          ) : null}
           <Button
             variant="contained"
             onClick={handleOpenModal}
@@ -222,6 +216,18 @@ function DesignConicalHatApp() {
           >
             Danh sách hoạ tiết
           </Button>
+          {isMobile ? (
+            <>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  meshInfosRef.current.shootPreview();
+                }}
+              >
+                Nhấn để vẽ
+              </Button>
+            </>
+          ) : null}
         </Stack>
         <Stack direction={"row"} columnGap={"20px"} flexWrap={"wrap"}>
           <InputSlider
@@ -290,7 +296,7 @@ function DesignConicalHatApp() {
                   meshInfo.meshId === selectedMeshId ? "selected" : ""
                 }`}
                 key={index}
-                style={{minWidth: "fit-content"}}
+                style={{ minWidth: "fit-content" }}
               >
                 <img
                   src={meshInfo?.texture?.thumbnailUrl}
@@ -325,8 +331,12 @@ function DesignConicalHatApp() {
           </>
         ) : null}
         <Stack flexDirection={"row"} columnGap={2} justifyContent={"center"}>
-          <Button variant="outlined" onClick={handleSave} disabled={isSaved}>Lưu</Button>
-          <Button variant="contained" onClick={handleSaveAndOrder}>Lưu và Đặt hàng</Button>
+          <Button variant="outlined" onClick={handleSave} disabled={isSaved}>
+            Lưu
+          </Button>
+          <Button variant="contained" onClick={handleSaveAndOrder}>
+            Lưu và Đặt hàng
+          </Button>
         </Stack>
       </Stack>
       <Footer></Footer>
@@ -336,7 +346,7 @@ function DesignConicalHatApp() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={modalStyle}>
+        <Box sx={modalStyle} alignItems={"center"}>
           <div className="texture_list_hoirizontal_container">
             <label>Danh sách hoạ tiết</label>
             <div className="texture_list">
@@ -364,6 +374,9 @@ function DesignConicalHatApp() {
               ))}
             </div>
           </div>
+          <Button onClick={handleCloseModal} variant="contained">
+            Chọn
+          </Button>
         </Box>
       </Modal>
     </AnimationRevealPage>
