@@ -234,7 +234,7 @@ function DesignConicalHatApp() {
             value={textureScale}
             setValue={setTextureScale}
             label="Kích thước hoạ tiết"
-            min={1}
+            min={5}
             max={10}
             step={1}
             icon={<ZoomIn />}
