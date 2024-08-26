@@ -346,7 +346,7 @@ function DesignConicalHatApp() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={modalStyle} alignItems={"center"}>
+        <Box sx={modalStyle} display={'flex'} flexDirection={'column'} alignItems={"center"} rowGap={'10'}>
           <div className="texture_list_hoirizontal_container">
             <label>Danh sách hoạ tiết</label>
             <div className="texture_list">
