@@ -49,6 +49,7 @@ export default () => {
   const refTool = useRef();
   const refTemplates = useRef();
   const refHow = useRef();
+  const refInfography = useRef();
   const handleScroll = (ref)=>{
     return ()=>{
       ref.current?.scrollIntoView({behavior: 'smooth'});
@@ -153,11 +154,11 @@ export default () => {
                   <span tw="text-primary-500">Tô nón lá</span>
                 </p>
                 <p>3. ĐẾN điểm hẹn, nhận nguyên liệu và công cụ để HOÀN THIỆN sản phẩm</p>
-                <span tw="text-primary-500 text-base">
+                {/* <span tw="text-primary-500 text-base">
                   <span tw="font-bold">Thời gian:</span> Chủ nhật hằng tuần
-                </span>
+                </span> */}
                 <span tw="text-primary-500 text-base">
-                  <span tw="font-bold">Địa điểm:</span> Sẽ được cập nhật hằng tuần trên{" "}
+                  <span tw="font-bold">Thời gian, Địa điểm:</span> Sẽ được cập nhật hằng tuần trên{" "}
                   <a
                     href="https://www.facebook.com/profile.php?id=61558483040026"
                     tw="font-bold"
@@ -176,13 +177,17 @@ export default () => {
             }
             buttonRounded={false}
             textOnLeft={false}
-            primaryButtonText="Trải nghiệm ngay"
+            primaryButtonText="Thiết kế ngay"
             buttonFunction={() => {
               // handleScroll(refTemplates)();
               // window.fbq("track", "ButtonClick", {
               //   content_name: "Progress:Trai_nghiem_ngay",
               // });
               window.open("/design-app", "_blank");
+            }}
+            secondaryButtonText="Chi tiết - Infography"
+            secondaryButtonFunction={() => {
+              handleScroll(refInfography)();
             }}
             imageSrc={
               "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/IMG_4496%20%283%29.webp"
@@ -225,6 +230,9 @@ export default () => {
                 ))}
               </TabContent>
             </ContentWithPaddingXl>
+          </Container>
+          <Container ref={refInfography}>
+            <img style={{width:'100%', maxWidth:'50rem', margin:'auto'}} src="https://ipfs.filebase.io/ipfs/QmdCkC5wtmVTH4hTwGJNV8xQhQbsxKQXcs9AAdEAeyrHpj"></img>
           </Container>
         </div>
         <Footer />
