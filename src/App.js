@@ -105,6 +105,7 @@ import ComponentRenderer from "ComponentRenderer.js";
 import ThankYouPage from "ThankYouPage.js";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import DesignConicalHatApp from "components/app/DesignConicalHatApp";
 
 export default function App() {
   // If you want to disable the animation just use the disabled `prop` like below on your page's component
@@ -119,6 +120,7 @@ export default function App() {
           <Route path="/components/:type/:subtype/:name" element={<ComponentRenderer />} />
           <Route path="/components/:type/:name" element={<ComponentRenderer />} />
           <Route path="/thank-you" element={<ThankYouPage />} />
+          <Route path="/design-app" element={<DesignConicalHatApp />} />
           <Route path="/" element={<RestaurantLandingPage />} />
         </Routes>
       </Router>

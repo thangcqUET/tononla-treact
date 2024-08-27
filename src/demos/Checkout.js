@@ -3,25 +3,29 @@ import Header from "components/headers/light.js";
 import Footer from "components/footers/MiniCenteredFooter";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { useLocation } from "react-router-dom";
+import GetStartedLight from "components/cta/GetStartedLight";
 export default function Checkout() {
   const location = useLocation();
-  const {productId, productName, productType, numItems, currency, value, imageSrc} = location.state;
-  console.log("productId, productName, productType, numItems, currency, value, imageSrc");
-  console.log(productId, productName, productType, numItems, currency, value, imageSrc);
+  const {designId} = location.state || {};
+  console.log("designId", designId);
   return (
     <AnimationRevealPage>
         <Header></Header>
-        <TwoColContactUsWithIllustrationFullForm
-          state={{
-            productId: productId,
-            productName: productName,
-            productType: productType,
-            numItems: numItems,
-            currency: currency,
-            value: value,
-            imageSrc: imageSrc
-          }}
-        ></TwoColContactUsWithIllustrationFullForm>
+        {
+          (designId)?
+          <TwoColContactUsWithIllustrationFullForm
+            state={{
+              designId: designId
+            }}
+          ></TwoColContactUsWithIllustrationFullForm>
+          :<GetStartedLight
+            heading="Bạn chưa có thiết kế nào để đặt hàng"
+            primaryLinkText="Tạo thiết kế ngay"
+            primaryLinkUrl="/design-app"
+            secondaryLinkText="Tìm hiểu thêm"
+            secondaryLinkUrl="/"
+          ></GetStartedLight>
+        }
         <Footer></Footer>
     </AnimationRevealPage>
   )
