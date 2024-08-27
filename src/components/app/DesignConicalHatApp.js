@@ -196,6 +196,7 @@ function DesignConicalHatApp() {
         {isMobile ? (
           <>
             <div>Chạm vào nón để hiện ra hình tạm thời</div>
+            <div>Chọn hoạ tiết tại "Danh sách hoạ tiết"</div>
             <div>Nhấn nút "Nhấn để vẽ" để vẽ lên nón</div>
           </>
         ) : null}
