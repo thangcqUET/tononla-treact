@@ -190,7 +190,7 @@ export default () => {
               handleScroll(refInfography)();
             }}
             imageSrc={
-              "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/IMG_4496%20%283%29.webp"
+              "https://ipfs.filebase.io/ipfs/QmTsWde4ANkvVDzRT4b3PN2FGLSLw4ob1kMb1SJRQ3VeVH"
             }
             imageCss={imageCss}
             imageDecoratorBlob={true}
