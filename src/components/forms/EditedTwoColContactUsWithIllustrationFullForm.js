@@ -61,12 +61,12 @@ export default ({
   heading = <span tw="text-primary-500">Đặt chỗ</span>,
   description = (
     <>
-      <span tw="text-primary-500 text-base">
+      {/* <span tw="text-primary-500 text-base">
         <span tw="font-bold">Thời gian:</span> Chủ nhật hằng tuần
-      </span>
-      <br />
+      </span> */}
+      {/* <br /> */}
       <span tw="text-primary-500 text-base">
-        <span tw="font-bold">Địa điểm:</span> Sẽ được cập nhật hằng tuần trên{" "}
+        <span tw="font-bold">Thời gian, Địa điểm:</span> Sẽ được cập nhật hằng tuần trên{" "}
         <a
           href="https://www.facebook.com/profile.php?id=61558483040026"
           tw="font-bold"

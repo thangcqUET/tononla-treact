@@ -46,7 +46,7 @@ export default () => {
             <Link href="#">Reviews</Link>
           </LinksContainer>
           <SocialLinksContainer>
-            <SocialLink href="https://facebook.com">
+            <SocialLink href="https://www.facebook.com/profile.php?id=61558483040026">
               <FacebookIcon />
             </SocialLink>
             {/* <SocialLink href="https://twitter.com">
