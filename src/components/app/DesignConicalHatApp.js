@@ -192,6 +192,7 @@ function DesignConicalHatApp() {
           mobileMode={mobileMode}
           meshInfos={meshInfos}
           savedMeshInfos={savedMeshInfos}
+          setSavedMeshInfos={setSavedMeshInfos}
           setMeshInfos={setMeshInfos}
           selectedMeshId={selectedMeshId}
           ref={meshInfosRef}

@@ -193,6 +193,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
           ratioLocal: ratio,
         });
       }
+      props.setSavedMeshInfos([]);
     }
   }, [savedDecals]);
   const initPreviewMesh = ({ position, orientation, size }) => {
