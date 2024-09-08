@@ -183,6 +183,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
         let ratio = savedDecals[i].image.width / savedDecals[i].image.height;
         const meshInfo = props.savedMeshInfos[i];
         shoot({
+          meshId: meshInfo.meshId,
           position: new THREE.Vector3(meshInfo.x, meshInfo.y, meshInfo.z),
           orientation: new THREE.Euler(meshInfo.o_x, meshInfo.o_y, meshInfo.o_z),
           textureScale: meshInfo.scale,
@@ -333,6 +334,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     }
   };
   const shoot = ({
+    meshId=null,
     position,
     orientation,
     textureScale,
@@ -343,6 +345,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   }={}) => {
     try {
       console.log({
+        meshId,
         position,
         orientation,
         textureScale,
@@ -409,21 +412,23 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
       );
       m.renderOrder = renderOrder || props.meshInfos.length; // give decals a fixed render order
       console.log(props.savedMeshInfos);
-      props.setMeshInfos((old)=>[...old, {
-        mesh: m,
-        meshId: old.length,
-        texture: props.savedMeshInfos[renderOrder]?.texture  || props.texture,
-        textureScale: textureScale || props.textureScale,
-        textureRotation: textureRotation || props.textureRotation,
-        // theta: theta,
-        // r: distance_OA,
-        x: position.x,
-        y: position.y,
-        z: position.z,
-        o_x: orientation.x,
-        o_y: orientation.y,
-        o_z: orientation.z,
-      }]);
+      props.setMeshInfos((old)=>{
+        return [...old, {
+          mesh: m,
+          meshId: meshId || Date.now(),
+          texture: props.savedMeshInfos[renderOrder]?.texture  || props.texture,
+          textureScale: textureScale || props.textureScale,
+          textureRotation: textureRotation || props.textureRotation,
+          // theta: theta,
+          // r: distance_OA,
+          x: position.x,
+          y: position.y,
+          z: position.z,
+          o_x: orientation.x,
+          o_y: orientation.y,
+          o_z: orientation.z,
+        }]
+      });
       scene.add(m);
     } catch (error) {
       console.log("error at shoot: ", error);
