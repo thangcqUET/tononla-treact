@@ -80,8 +80,9 @@ export default () => {
             <>
               <HighlightedText>Tô nón lá</HighlightedText>
               <br />
-              Tô màu khoảnh khắc
-              <br /> Vẽ sắc thời trang
+              <span style={{color: '#c13346'}}>MIỄN PHÍ TÔ NÓN LÁ</span>
+              <br /> <span style={{color: '#c13346'}}> 2 NGÀY 2-3/9</span>
+              <br/> <span style={{color: '#c13346'}}>tại Đống Đa - Hà Nội</span>
             </>
           }
           description={
@@ -190,7 +191,7 @@ export default () => {
               handleScroll(refInfography)();
             }}
             imageSrc={
-              "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/IMG_4496%20%283%29.webp"
+              "https://ipfs.filebase.io/ipfs/QmTsWde4ANkvVDzRT4b3PN2FGLSLw4ob1kMb1SJRQ3VeVH"
             }
             imageCss={imageCss}
             imageDecoratorBlob={true}
