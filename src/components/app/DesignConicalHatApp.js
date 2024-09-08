@@ -13,6 +13,7 @@ import {
   Box,
   Typography,
   Divider,
+  Paper,
 } from "@mui/material";
 import InputSlider from "./InputSlider";
 import { Rotate90DegreesCcw, ZoomIn } from "@mui/icons-material";
@@ -193,13 +194,26 @@ function DesignConicalHatApp() {
           selectedMeshId={selectedMeshId}
           ref={meshInfosRef}
         />
-        {isMobile ? (
+        <Paper variant="outlined" square={false} style={{padding:'1rem'}}>
           <>
-            <div>Chạm vào nón để hiện ra hình tạm thời</div>
-            <div>Chọn hoạ tiết tại "Danh sách hoạ tiết"</div>
-            <div>Nhấn nút "Nhấn để vẽ" để vẽ lên nón</div>
+          <div>1. Chọn hoạ tiết tại "Danh sách hoạ tiết"</div>
           </>
-        ) : null}
+          {isMobile ? (
+            <>
+              <div>2. Chạm vào nón để hiện ra hình tạm thời</div>
+              <div>3. Vẽ: Đặt vào vị trí thích hợp, nhấn nút "Nhấn để vẽ"</div>
+            </>
+          ) : (
+            <>
+            <div>2. Di chuyển chuột trên bề mặt nón để hiện ra hình tạm thời</div>
+            <div>3. Vẽ: Di chuyển hình tạm thời vào vị trí thích hợp, nhấn chuột trái để vẽ</div>
+            </>
+          )}
+          <>
+          <div>4. Xoá: Chọn hoạ tiết muốn xoá ở mục Hoạ tiết đã vẽ. Bấm nút xoá</div>
+          </>
+
+        </Paper>
         <Stack
           className="options"
           direction={"row"}
@@ -327,7 +341,7 @@ function DesignConicalHatApp() {
                 }
               }}
             >
-              Delete
+              Xoá hoạ tiết
             </Button>
           </>
         ) : null}
