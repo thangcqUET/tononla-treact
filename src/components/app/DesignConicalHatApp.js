@@ -34,6 +34,8 @@ function DesignConicalHatApp() {
       name: "Logo",
       imageUrl: "/logo_circle.png",
       thumbnailUrl: "/logo_circle.png",
+      minScale: 5,
+      maxScale: 10,
     }
   ]);
   const [meshInfos, setMeshInfos] = useState([]); // data: {mesh, meshId, textureImage}
@@ -249,8 +251,8 @@ function DesignConicalHatApp() {
             value={textureScale}
             setValue={setTextureScale}
             label="Kích thước hoạ tiết"
-            min={5}
-            max={10}
+            min={textures?.at(selectedTextureIndex)?.minScale || 5}
+            max={textures?.at(selectedTextureIndex)?.maxScale || 10}
             step={1}
             icon={<ZoomIn />}
           ></InputSlider>
@@ -382,6 +384,8 @@ function DesignConicalHatApp() {
                         setSelectedTextureIndex(null);
                       } else {
                         setSelectedTextureIndex(index);
+                        //set texture scale to min scale
+                        setTextureScale(texture.minScale);
                       }
                     }}
                   />
