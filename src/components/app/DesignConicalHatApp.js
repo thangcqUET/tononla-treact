@@ -278,7 +278,7 @@ function DesignConicalHatApp() {
             alignItems={"center"}
           >
             <Typography id="input-slider" gutterBottom={false}>
-              Danh sách hoạ tiết đã vẽ lên nón
+              Hoạ tiết đã vẽ
             </Typography>
             <Button
               variant="outlined"
