@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { motion } from "framer-motion";
@@ -9,6 +9,7 @@ import EmailIllustrationSrc from "images/email-illustration.svg";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
+import { InputLabel, Select } from "@mui/material";
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-center max-w-screen-xl mx-auto pb-10 md:py-10`;
@@ -66,6 +67,7 @@ export default ({
       </span> */}
       {/* <br /> */}
       <span tw="text-primary-500 text-base">
+        <span tw="font-bold">Mỗi lần đặt sẽ tính 1 nón</span><br/>
         <span tw="font-bold">Thời gian, Địa điểm:</span> Sẽ được cập nhật hằng tuần trên{" "}
         <a
           href="https://www.facebook.com/profile.php?id=61558483040026"
@@ -91,6 +93,20 @@ export default ({
   textOnLeft = true,
   state = {},
 }) => {
+
+  const [visitTimeOptions, setVisitTimeOptions] = useState([]);
+  useEffect(() => {
+    const visitTimeOptionsKey = "visit_time_options";
+    const getDynamicContentsEndpoint = process.env.REACT_APP_BACKEND_URL?`${process.env.REACT_APP_BACKEND_URL}/dynamic-contents`:"https://default/dynamic-contents";;
+    axios.get(getDynamicContentsEndpoint).then((res) => {
+      const dynamicContents = res.data;
+      const visitTimeOptionsStr = dynamicContents.filter((content) => content.key === visitTimeOptionsKey);
+      const visitTimeOptions = JSON.parse(visitTimeOptionsStr[0].value);
+      const defaultVisitTime = "Bạn chưa chọn thời gian";
+      setVisitTimeOptions([defaultVisitTime,...visitTimeOptions]);
+      setVisitTime(defaultVisitTime);
+    });
+  }, []);
   const { designId = "" } = state;
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
   const handleOnSubmit = async () => {
@@ -104,6 +120,7 @@ export default ({
     }
     axios
       .post(formEndpoint, {
+        visitTime,
         phoneNumber,
         name,
         email,
@@ -135,6 +152,7 @@ export default ({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [note, setNote] = useState("");
+  const [visitTime, setVisitTime] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isError, setIsError] = useState(false);
   const [submitSuccessfully, setSubmitSuccessfully] = useState(false);
@@ -153,6 +171,26 @@ export default ({
               ) : (
                 ""
               )}
+              <InputLabel htmlFor="visit-time">Bạn sẽ đến hôm nào</InputLabel>
+              <Select 
+              native
+              value={visitTime}
+              onChange={(e) => {
+                setVisitTime(e.target.value);
+              }}
+              inputProps={{
+                name: 'visitTime',
+                id: 'visit-time',
+              }}
+              >
+                {visitTimeOptions?.map((option, index) => {
+                  return (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  );
+                })}
+              </Select>
               <Input
                 type="text"
                 name="phone"

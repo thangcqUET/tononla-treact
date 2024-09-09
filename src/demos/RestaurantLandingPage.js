@@ -68,6 +68,11 @@ export default () => {
     }).catch((error)=>{
       console.log(`Error at fetch products: ${error}`);
     });
+    //get hash on url to scroll to the right section
+    const hash = window.location.hash;
+    if(hash === "#templates"){
+      handleScroll(refTemplates)();
+    }
   }, []);
   return (
     <>

@@ -13,6 +13,8 @@ import {
   Box,
   Typography,
   Divider,
+  Paper,
+  Chip,
 } from "@mui/material";
 import InputSlider from "./InputSlider";
 import { Rotate90DegreesCcw, ZoomIn } from "@mui/icons-material";
@@ -33,8 +35,19 @@ function DesignConicalHatApp() {
       name: "Logo",
       imageUrl: "/logo_circle.png",
       thumbnailUrl: "/logo_circle.png",
+      minScale: 5,
+      maxScale: 10,
     }
   ]);
+  const [textureTypes, setTextureTypes] = useState([]);
+  const [selectedTextureType, setSelectedTextureType] = useState(null);
+  const keyToTextOfTextureTypes = {
+    "architecture": "Kiến trúc",
+    "culture": "Văn hóa",
+    "cute": "Dễ thương",
+    "foreground": "Hoa văn",
+    "emoji": "Emoji",
+  };
   const [meshInfos, setMeshInfos] = useState([]); // data: {mesh, meshId, textureImage}
   const [savedMeshInfos, setSavedMeshInfos] = useState([]);
   const [selectedMeshId, setSelectedMeshId] = useState(null);
@@ -75,6 +88,8 @@ function DesignConicalHatApp() {
       const response = await axios.get(getTexturesEndpoint);
       const newTextures = [...textures, ...response.data];
       setTextures(newTextures);
+      const newTextureTypes = Array.from(new Set(newTextures.map((texture) => texture.type)));
+      setTextureTypes(newTextureTypes);
       //get localstorage data, get meshInfos
       const data = localStorage.getItem("meshInfos");
       if (data) {
@@ -189,17 +204,31 @@ function DesignConicalHatApp() {
           mobileMode={mobileMode}
           meshInfos={meshInfos}
           savedMeshInfos={savedMeshInfos}
+          setSavedMeshInfos={setSavedMeshInfos}
           setMeshInfos={setMeshInfos}
           selectedMeshId={selectedMeshId}
           ref={meshInfosRef}
         />
-        {isMobile ? (
+        <Paper variant="outlined" square={false} style={{padding:'1rem'}}>
           <>
-            <div>Chạm vào nón để hiện ra hình tạm thời</div>
-            <div>Chọn hoạ tiết tại "Danh sách hoạ tiết"</div>
-            <div>Nhấn nút "Nhấn để vẽ" để vẽ lên nón</div>
+          <div>1. Chọn hoạ tiết tại "Danh sách hoạ tiết"</div>
           </>
-        ) : null}
+          {isMobile ? (
+            <>
+              <div>2. Chạm vào nón để hiện ra hình tạm thời</div>
+              <div>3. <span style={{color:"#1976d2"}}>Vẽ</span>: Đặt vào vị trí thích hợp, nhấn nút "Nhấn để vẽ"</div>
+            </>
+          ) : (
+            <>
+            <div>2. Di chuyển chuột trên bề mặt nón để hiện ra hình tạm thời</div>
+            <div>3. <span style={{color:"#1976d2"}}>Vẽ</span>: Di chuyển hình tạm thời vào vị trí thích hợp, nhấn chuột trái để vẽ</div>
+            </>
+          )}
+          <>
+          <div>4. <span style={{color:"#d32f2f"}}>Xoá</span>: Chọn hoạ tiết muốn xoá ở mục Hoạ tiết đã vẽ. Bấm nút xoá</div>
+          </>
+
+        </Paper>
         <Stack
           className="options"
           direction={"row"}
@@ -235,8 +264,8 @@ function DesignConicalHatApp() {
             value={textureScale}
             setValue={setTextureScale}
             label="Kích thước hoạ tiết"
-            min={5}
-            max={10}
+            min={textures?.at(selectedTextureIndex)?.minScale || 5}
+            max={textures?.at(selectedTextureIndex)?.maxScale || 10}
             step={1}
             icon={<ZoomIn />}
           ></InputSlider>
@@ -264,7 +293,7 @@ function DesignConicalHatApp() {
             alignItems={"center"}
           >
             <Typography id="input-slider" gutterBottom={false}>
-              Danh sách hoạ tiết đã vẽ lên nón
+              Hoạ tiết đã vẽ
             </Typography>
             <Button
               variant="outlined"
@@ -327,7 +356,7 @@ function DesignConicalHatApp() {
                 }
               }}
             >
-              Delete
+              Xoá hoạ tiết
             </Button>
           </>
         ) : null}
@@ -350,8 +379,30 @@ function DesignConicalHatApp() {
         <Box sx={modalStyle} display={'flex'} flexDirection={'column'} alignItems={"center"} rowGap={'10'}>
           <div className="texture_list_hoirizontal_container">
             <label>Danh sách hoạ tiết</label>
+            <div className="texture_type_list">
+              {textureTypes.map((type, index) => {
+                if(!type) return null;
+                return <Chip 
+                key={index} 
+                label={keyToTextOfTextureTypes[type]||"Hoạ tiết"} 
+                onClick={() => {
+                  if(selectedTextureType && selectedTextureType === type){
+                    setSelectedTextureType(null);
+                  }else{
+                    setSelectedTextureType(type);
+                  }
+                  setSelectedTextureIndex(0);
+                }}
+                variant={`${selectedTextureType === type ? "filled" : "outlined"}`}
+                color="primary"
+                />;
+              })}
+            </div>
             <div className="texture_list">
-              {textures.map((texture, index) => (
+              {textures.filter((texture) => {
+                  if (!selectedTextureType) return true;
+                  return texture.type === selectedTextureType;
+                }).map((texture, index) => (
                 <div
                   className={`texture_item ${
                     selectedTextureIndex == index ? "selected" : ""
@@ -368,6 +419,8 @@ function DesignConicalHatApp() {
                         setSelectedTextureIndex(null);
                       } else {
                         setSelectedTextureIndex(index);
+                        //set texture scale to min scale
+                        setTextureScale(texture.minScale);
                       }
                     }}
                   />
