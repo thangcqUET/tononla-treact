@@ -216,16 +216,16 @@ function DesignConicalHatApp() {
           {isMobile ? (
             <>
               <div>2. Chạm vào nón để hiện ra hình tạm thời</div>
-              <div>3. Vẽ: Đặt vào vị trí thích hợp, nhấn nút "Nhấn để vẽ"</div>
+              <div>3. <span style={{color:"#1976d2"}}>Vẽ</span>: Đặt vào vị trí thích hợp, nhấn nút "Nhấn để vẽ"</div>
             </>
           ) : (
             <>
             <div>2. Di chuyển chuột trên bề mặt nón để hiện ra hình tạm thời</div>
-            <div>3. Vẽ: Di chuyển hình tạm thời vào vị trí thích hợp, nhấn chuột trái để vẽ</div>
+            <div>3. <span style={{color:"#1976d2"}}>Vẽ</span>: Di chuyển hình tạm thời vào vị trí thích hợp, nhấn chuột trái để vẽ</div>
             </>
           )}
           <>
-          <div>4. Xoá: Chọn hoạ tiết muốn xoá ở mục Hoạ tiết đã vẽ. Bấm nút xoá</div>
+          <div>4. <span style={{color:"#d32f2f"}}>Xoá</span>: Chọn hoạ tiết muốn xoá ở mục Hoạ tiết đã vẽ. Bấm nút xoá</div>
           </>
 
         </Paper>
