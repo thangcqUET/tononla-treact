@@ -14,6 +14,7 @@ import {
   Typography,
   Divider,
   Paper,
+  Chip,
 } from "@mui/material";
 import InputSlider from "./InputSlider";
 import { Rotate90DegreesCcw, ZoomIn } from "@mui/icons-material";
@@ -38,6 +39,15 @@ function DesignConicalHatApp() {
       maxScale: 10,
     }
   ]);
+  const [textureTypes, setTextureTypes] = useState([]);
+  const [selectedTextureType, setSelectedTextureType] = useState(null);
+  const keyToTextOfTextureTypes = {
+    "architecture": "Kiến trúc",
+    "culture": "Văn hóa",
+    "cute": "Dễ thương",
+    "foreground": "Hoa văn",
+    "emoji": "Emoji",
+  };
   const [meshInfos, setMeshInfos] = useState([]); // data: {mesh, meshId, textureImage}
   const [savedMeshInfos, setSavedMeshInfos] = useState([]);
   const [selectedMeshId, setSelectedMeshId] = useState(null);
@@ -78,6 +88,8 @@ function DesignConicalHatApp() {
       const response = await axios.get(getTexturesEndpoint);
       const newTextures = [...textures, ...response.data];
       setTextures(newTextures);
+      const newTextureTypes = Array.from(new Set(newTextures.map((texture) => texture.type)));
+      setTextureTypes(newTextureTypes);
       //get localstorage data, get meshInfos
       const data = localStorage.getItem("meshInfos");
       if (data) {
@@ -367,8 +379,30 @@ function DesignConicalHatApp() {
         <Box sx={modalStyle} display={'flex'} flexDirection={'column'} alignItems={"center"} rowGap={'10'}>
           <div className="texture_list_hoirizontal_container">
             <label>Danh sách hoạ tiết</label>
+            <div className="texture_type_list">
+              {textureTypes.map((type, index) => {
+                if(!type) return null;
+                return <Chip 
+                key={index} 
+                label={keyToTextOfTextureTypes[type]||"Hoạ tiết"} 
+                onClick={() => {
+                  if(selectedTextureType && selectedTextureType === type){
+                    setSelectedTextureType(null);
+                  }else{
+                    setSelectedTextureType(type);
+                  }
+                  setSelectedTextureIndex(0);
+                }}
+                variant={`${selectedTextureType === type ? "filled" : "outlined"}`}
+                color="primary"
+                />;
+              })}
+            </div>
             <div className="texture_list">
-              {textures.map((texture, index) => (
+              {textures.filter((texture) => {
+                  if (!selectedTextureType) return true;
+                  return texture.type === selectedTextureType;
+                }).map((texture, index) => (
                 <div
                   className={`texture_item ${
                     selectedTextureIndex == index ? "selected" : ""
