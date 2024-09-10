@@ -85,9 +85,9 @@ export default () => {
             <>
               <HighlightedText>Tô nón lá</HighlightedText>
               <br />
-              <br />
-              Tô màu khoảnh khắc
-              <br /> Vẽ sắc thời trang
+              <span style={{color: '#c13346'}}>Cùng TÔ NÓN LÁ</span>
+              <br /> <span style={{color: '#c13346'}}> Trích 50% doanh thu tuần này</span>
+              <br/> <span style={{color: '#c13346'}}>Ủng hộ bà con vùng lũ</span>
             </>
           }
           description={
