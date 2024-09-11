@@ -50,6 +50,19 @@ export default () => {
   const refTemplates = useRef();
   const refHow = useRef();
   const refInfography = useRef();
+  const galleryImages = [
+    "https://ipfs.filebase.io/ipfs/QmTLfvA6jdSPZS3kkKzYS7gap6BYN1WBWcrqTt8VzgBSPB/IMG_4905.JPG",
+    "https://ipfs.filebase.io/ipfs/QmTLfvA6jdSPZS3kkKzYS7gap6BYN1WBWcrqTt8VzgBSPB/IMG_4907.JPG",
+    "https://ipfs.filebase.io/ipfs/QmTLfvA6jdSPZS3kkKzYS7gap6BYN1WBWcrqTt8VzgBSPB/IMG_4908.JPG",
+    "https://ipfs.filebase.io/ipfs/QmTLfvA6jdSPZS3kkKzYS7gap6BYN1WBWcrqTt8VzgBSPB/IMG_4943.JPG",
+    "https://ipfs.filebase.io/ipfs/QmTLfvA6jdSPZS3kkKzYS7gap6BYN1WBWcrqTt8VzgBSPB/IMG_4944.JPG",
+    "https://ipfs.filebase.io/ipfs/QmTLfvA6jdSPZS3kkKzYS7gap6BYN1WBWcrqTt8VzgBSPB/IMG_4959.JPG",
+    "https://ipfs.filebase.io/ipfs/QmTLfvA6jdSPZS3kkKzYS7gap6BYN1WBWcrqTt8VzgBSPB/IMG_4961.JPG",
+    "https://ipfs.filebase.io/ipfs/QmTLfvA6jdSPZS3kkKzYS7gap6BYN1WBWcrqTt8VzgBSPB/IMG_4974.JPG",
+    "https://ipfs.filebase.io/ipfs/QmTLfvA6jdSPZS3kkKzYS7gap6BYN1WBWcrqTt8VzgBSPB/IMG_4975.JPG",
+    "https://ipfs.filebase.io/ipfs/QmTLfvA6jdSPZS3kkKzYS7gap6BYN1WBWcrqTt8VzgBSPB/IMG_5090.JPG",
+    "https://ipfs.filebase.io/ipfs/QmTLfvA6jdSPZS3kkKzYS7gap6BYN1WBWcrqTt8VzgBSPB/IMG_5102.JPG"
+  ];
   const handleScroll = (ref)=>{
     return ()=>{
       ref.current?.scrollIntoView({behavior: 'smooth'});
@@ -97,17 +110,18 @@ export default () => {
               mang Văn hoá Việt và Dấu ấn của riêng bạn.
             </>
           }
-          imageSrcs={[
-            "https://ipfs.filebase.io/ipfs/QmZzgSyy5g4sa879AZ8XHWSeHNU4d571NAkmZyvhJWyECY",
-            "https://ipfs.filebase.io/ipfs/QmXvu2ymfrFbxujnAp9fe1zYUB3YMhybZfZXkCPCCza3CM",
-            "https://ipfs.filebase.io/ipfs/QmTr73EfD1ux8mWgFJnBd6v6rsiECd8bfqwRb9fn9LT4ep",
-            "https://ipfs.filebase.io/ipfs/QmcfiY9sH7ETkQQAJYXiHWTB2BUqGhuGQzZXpi5Siax6f7",
-            "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20Khue%CC%82%20Va%CC%86n%20Ca%CC%81c.webp",
-            "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20cho%CC%9B%CC%A3%20Be%CC%82%CC%81n%20Tha%CC%80nh.webp",
-            "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20chu%CC%80a%20Ca%CC%82%CC%80u.webp",
-            // "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20co%CC%9B%CC%80%20Vie%CC%A3%CC%82t%20Nam.webp",
-            // "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20hoa%20sen.webp",
-          ]}
+          imageSrcs={galleryImages}
+          // imageSrcs={[
+          //   "https://ipfs.filebase.io/ipfs/QmZzgSyy5g4sa879AZ8XHWSeHNU4d571NAkmZyvhJWyECY",
+          //   "https://ipfs.filebase.io/ipfs/QmXvu2ymfrFbxujnAp9fe1zYUB3YMhybZfZXkCPCCza3CM",
+          //   "https://ipfs.filebase.io/ipfs/QmTr73EfD1ux8mWgFJnBd6v6rsiECd8bfqwRb9fn9LT4ep",
+          //   "https://ipfs.filebase.io/ipfs/QmcfiY9sH7ETkQQAJYXiHWTB2BUqGhuGQzZXpi5Siax6f7",
+          //   "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20Khue%CC%82%20Va%CC%86n%20Ca%CC%81c.webp",
+          //   "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20cho%CC%9B%CC%A3%20Be%CC%82%CC%81n%20Tha%CC%80nh.webp",
+          //   "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20chu%CC%80a%20Ca%CC%82%CC%80u.webp",
+          //   // "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20co%CC%9B%CC%80%20Vie%CC%A3%CC%82t%20Nam.webp",
+          //   // "https://ipfs.filebase.io/ipfs/QmTibKpU6MkJ9nbJFhBYvyiSYUR9Xy6Lru4iNjQsD3JzUF/No%CC%81n%20hoa%20sen.webp",
+          // ]}
           imageCss={imageCss}
           imageDecoratorBlob={true}
           primaryButtonText="Tìm hiểu ngay"
