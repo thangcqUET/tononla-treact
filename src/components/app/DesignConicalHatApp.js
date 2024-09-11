@@ -41,13 +41,6 @@ function DesignConicalHatApp() {
   ]);
   const [textureTypes, setTextureTypes] = useState([]);
   const [selectedTextureType, setSelectedTextureType] = useState(null);
-  const keyToTextOfTextureTypes = {
-    "architecture": "Kiến trúc",
-    "culture": "Văn hóa",
-    "cute": "Dễ thương",
-    "foreground": "Hoa văn",
-    "emoji": "Emoji",
-  };
   const [meshInfos, setMeshInfos] = useState([]); // data: {mesh, meshId, textureImage}
   const [savedMeshInfos, setSavedMeshInfos] = useState([]);
   const [selectedMeshId, setSelectedMeshId] = useState(null);
@@ -384,7 +377,7 @@ function DesignConicalHatApp() {
                 if(!type) return null;
                 return <Chip 
                 key={index} 
-                label={keyToTextOfTextureTypes[type]||"Hoạ tiết"} 
+                label={type||"Hoạ tiết"} 
                 onClick={() => {
                   if(selectedTextureType && selectedTextureType === type){
                     setSelectedTextureType(null);
