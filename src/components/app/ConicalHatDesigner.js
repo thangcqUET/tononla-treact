@@ -242,19 +242,29 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     setIsMoving(false);
   };
   const handlePointerUp = (e) => {
-    console.log("pointerup");
-    clickDuration.current = Date.now() - clickDuration.current;
-    if (clickDuration.current < MINIMUM_CLICK_DURATION || isMoving === false) {
-      checkIntersection(e.offsetX, e.offsetY);
-
-      if (intersectionRef.current.intersects) shoot();
+    try {
+      console.log("pointerup");
+      clickDuration.current = Date.now() - clickDuration.current;
+      if (clickDuration.current < MINIMUM_CLICK_DURATION || isMoving === false) {
+        checkIntersection(e.offsetX, e.offsetY);
+  
+        if (intersectionRef.current.intersects) shoot();
+      }
+    } catch (error) {
+      console.log("error at handlePointerUp");
+      console.log(error);
     }
   };
   const handlePointerMove = (event) => {
-    // console.log("pointermove");
-    if (event.isPrimary) {
-      const canvasRect = props.canvasRef.current.getBoundingClientRect();
-      checkIntersection(event.clientX-canvasRect.left, event.clientY-canvasRect.top);
+    try {
+      // console.log("pointermove");
+      if (event.isPrimary) {
+        const canvasRect = props?.canvasRef?.current?.getBoundingClientRect();
+        checkIntersection(event.clientX-canvasRect.left, event.clientY-canvasRect.top);
+      }
+    }catch(e){
+      console.log("error at handlePointerMove");
+      console.log(e);
     }
   };
     const handleTouchDown = (e) => {

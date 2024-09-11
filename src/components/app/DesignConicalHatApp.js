@@ -264,8 +264,8 @@ function DesignConicalHatApp() {
             value={textureScale}
             setValue={setTextureScale}
             label="Kích thước hoạ tiết"
-            min={textures?.at(selectedTextureIndex)?.minScale || 5}
-            max={textures?.at(selectedTextureIndex)?.maxScale || 10}
+            min={texture?.minScale || 5}
+            max={texture?.maxScale || 10}
             step={1}
             icon={<ZoomIn />}
           ></InputSlider>

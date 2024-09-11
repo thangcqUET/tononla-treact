@@ -85,9 +85,9 @@ export default () => {
             <>
               <HighlightedText>Tô nón lá</HighlightedText>
               <br />
-              <span style={{color: '#c13346'}}>MIỄN PHÍ TÔ NÓN LÁ</span>
-              <br /> <span style={{color: '#c13346'}}> 2 NGÀY 2-3/9</span>
-              <br/> <span style={{color: '#c13346'}}>tại Đống Đa - Hà Nội</span>
+              <span style={{color: '#c13346'}}>Cùng TÔ NÓN LÁ</span>
+              <br /> <span style={{color: '#c13346'}}> Trích 50% doanh thu tuần này</span>
+              <br/> <span style={{color: '#c13346'}}>Ủng hộ bà con vùng lũ</span>
             </>
           }
           description={
