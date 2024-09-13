@@ -98,15 +98,15 @@ export default () => {
             <>
               <HighlightedText>Tô nón lá</HighlightedText>
               <br />
-              <span style={{color: '#c13346'}}>Cùng TÔ NÓN LÁ</span>
-              <br /> <span style={{color: '#c13346'}}> Trích 50% doanh thu tuần này</span>
-              <br/> <span style={{color: '#c13346'}}>Ủng hộ bà con vùng lũ</span>
+              <span style={{color: '#c13346'}}>CÙNG TÔ NÓN LÁ</span>
+              <br /> <span style={{color: '#c13346'}}> PHÁ CỖ TRUNG THU </span>
+              {/* <br/> <span style={{color: '#c13346'}}>Ủng hộ bà con vùng lũ</span> */}
             </>
           }
           description={
             <>
               <span tw="text-primary-500">Tô nón lá</span> là nơi giúp bạn thiết
-              kế, trang trí chiếc nón lá Việt Nam bằng công cụ 3D, tạo ra Sản phẩm thời trang
+              kế, trang trí chiếc nón lá Việt Nam bằng công cụ 3D, cung cấp hoạ cụ cần thiết để dễ dàng tạo ra Sản phẩm thời trang
               mang Văn hoá Việt và Dấu ấn của riêng bạn.
             </>
           }
