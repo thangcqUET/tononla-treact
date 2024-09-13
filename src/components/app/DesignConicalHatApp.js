@@ -78,15 +78,37 @@ function DesignConicalHatApp() {
   const loadData = async () => {
     try {
       const getTexturesEndpoint = process.env.REACT_APP_BACKEND_URL?`${process.env.REACT_APP_BACKEND_URL}/textures`:"https://default/textures";
-      const response = await axios.get(getTexturesEndpoint);
-      const newTextures = [...textures, ...response.data];
+      //get template id from url
+      const templateId = new URLSearchParams(window.location.search).get("templateId") || 5;
+      console.log("templateId", templateId);
+      let getTemplateEndpoint = null;
+      let templateResponsePr = null;
+      if (templateId) {
+        getTemplateEndpoint = process.env.REACT_APP_BACKEND_URL?`${process.env.REACT_APP_BACKEND_URL}/templates/${templateId}`:"https://default/templates";
+        console.log("getTemplateEndpoint", getTemplateEndpoint);
+        templateResponsePr = axios.get(getTemplateEndpoint);
+      }
+      const texturesResponsePr = axios.get(getTexturesEndpoint);
+      //use promise all settle
+      const [templateResponse, texturesResponse] = await Promise.allSettled([
+        templateResponsePr,
+        texturesResponsePr,
+      ]);
+      console.log("templateResponse", templateResponse);
+      console.log("texturesResponse", texturesResponse);
+      const templateValue = templateResponse.value;
+      const texturesValue = texturesResponse.value;
+      console.log("templateValue", templateValue);
+      const newTextures = [...textures, ...texturesValue.data];
       setTextures(newTextures);
       const newTextureTypes = Array.from(new Set(newTextures.map((texture) => texture.type)));
       setTextureTypes(newTextureTypes);
-      //get localstorage data, get meshInfos
-      const data = localStorage.getItem("meshInfos");
-      if (data) {
-        const meshInfos = JSON.parse(data);
+      //get localstorage data, get meshInfos if templateResponse is not null or undefined
+      if (templateValue && templateValue?.data?.designData) {
+        const template = templateValue.data;
+        //check if template is object or string
+          
+        const meshInfos = JSON.parse(template.designData);
         //add texture to meshInfos
         meshInfos.forEach((meshInfo) => {
           const texture = newTextures.find(
@@ -95,6 +117,19 @@ function DesignConicalHatApp() {
           meshInfo.texture = texture;
         });
         setSavedMeshInfos(meshInfos);
+      }else{
+        const data = localStorage.getItem("meshInfos");
+        if (data) {
+          const meshInfos = JSON.parse(data);
+          //add texture to meshInfos
+          meshInfos.forEach((meshInfo) => {
+            const texture = newTextures.find(
+              (texture) => texture.id === meshInfo.textureId
+            );
+            meshInfo.texture = texture;
+          });
+          setSavedMeshInfos(meshInfos);
+        }
       }
     } catch (error) {
       console.error(`Error at fetch textures: ${error}`);
