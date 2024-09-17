@@ -79,7 +79,7 @@ function DesignConicalHatApp() {
     try {
       const getTexturesEndpoint = process.env.REACT_APP_BACKEND_URL?`${process.env.REACT_APP_BACKEND_URL}/textures`:"https://default/textures";
       //get template id from url
-      const templateId = new URLSearchParams(window.location.search).get("templateId") || 5;
+      const templateId = new URLSearchParams(window.location.search).get("templateId");
       console.log("templateId", templateId);
       let getTemplateEndpoint = null;
       let templateResponsePr = null;
