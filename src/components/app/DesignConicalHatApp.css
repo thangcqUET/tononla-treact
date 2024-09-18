@@ -35,3 +35,16 @@
 .texture_list_hoirizontal_container .texture_list .texture_item.selected {
   border: 1px solid #000;
 }
+
+.template_list_hoirizontal_container .template_list{
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  flex-wrap:wrap;
+  overflow: scroll;
+  gap: 10px;
+}
+.template_list_hoirizontal_container .template_list .template_item.selected {
+  border: 1px solid #000;
+}
