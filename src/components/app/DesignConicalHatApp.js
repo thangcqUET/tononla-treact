@@ -39,12 +39,14 @@ function DesignConicalHatApp() {
       maxScale: 10,
     }
   ]);
+  const [templates, setTemplates] = useState([]);
   const [textureTypes, setTextureTypes] = useState([]);
   const [selectedTextureType, setSelectedTextureType] = useState(null);
   const [meshInfos, setMeshInfos] = useState([]); // data: {mesh, meshId, textureImage}
   const [savedMeshInfos, setSavedMeshInfos] = useState([]);
   const [selectedMeshId, setSelectedMeshId] = useState(null);
   const [selectedTextureIndex, setSelectedTextureIndex] = useState(0);
+  const [selectedTemplateId, setSelectedTemplateId] = useState(1);
   const meshInfosRef = useRef();
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMode, setMobileMode] = useState(0); // 0: drag mode, 1: draw mode
@@ -78,6 +80,7 @@ function DesignConicalHatApp() {
   const loadData = async () => {
     try {
       const getTexturesEndpoint = process.env.REACT_APP_BACKEND_URL?`${process.env.REACT_APP_BACKEND_URL}/textures`:"https://default/textures";
+      const getTemplatesEndpoint = process.env.REACT_APP_BACKEND_URL?`${process.env.REACT_APP_BACKEND_URL}/templates`:"https://default/templates";
       //get template id from url
       const templateId = new URLSearchParams(window.location.search).get("templateId");
       console.log("templateId", templateId);
@@ -89,18 +92,19 @@ function DesignConicalHatApp() {
         templateResponsePr = axios.get(getTemplateEndpoint);
       }
       const texturesResponsePr = axios.get(getTexturesEndpoint);
+      const templatesResponsePr = axios.get(getTemplatesEndpoint);
       //use promise all settle
-      const [templateResponse, texturesResponse] = await Promise.allSettled([
+      const [templateResponse, texturesResponse, templatesResponse] = await Promise.allSettled([
         templateResponsePr,
         texturesResponsePr,
+        templatesResponsePr,
       ]);
-      console.log("templateResponse", templateResponse);
-      console.log("texturesResponse", texturesResponse);
       const templateValue = templateResponse.value;
       const texturesValue = texturesResponse.value;
-      console.log("templateValue", templateValue);
+      const templatesValue = templatesResponse.value;
       const newTextures = [...textures, ...texturesValue.data];
       setTextures(newTextures);
+      setTemplates(templatesValue.data);
       const newTextureTypes = Array.from(new Set(newTextures.map((texture) => texture.type)));
       setTextureTypes(newTextureTypes);
       //get localstorage data, get meshInfos if templateResponse is not null or undefined
@@ -138,9 +142,13 @@ function DesignConicalHatApp() {
   useEffect(() => {
     setIsSaved(false);
   }, [meshInfos.length]);
-  const [openedModal, setOpenedModal] = React.useState(false);
-  const handleOpenModal = () => setOpenedModal(true);
-  const handleCloseModal = () => setOpenedModal(false);
+  const [openedTextureListModal, setOpenedTextureListModal] = React.useState(false);
+  const [openedTemplateListModal, setOpenedTemplateListModal] = React.useState(checkIsFirstTime());
+  const handleOpenTextureListModal = () => setOpenedTextureListModal(true);
+  const handleCloseTextureListModal = () => setOpenedTextureListModal(false);
+  const handleOpenTemplateListModal = () => setOpenedTemplateListModal(true);
+  const handleCloseTemplateListModal = () => setOpenedTemplateListModal(false);
+  const handleGoToTemplate = () => window.location.replace(`/design-app?templateId=${selectedTemplateId}`);
   const handleDrawTexture = () => {
     console.log("draw texture");
   };
@@ -210,6 +218,14 @@ function DesignConicalHatApp() {
     const designId = response.data.id;
     handleGotoCheckout(designId);
   }
+  function checkIsFirstTime() {
+    const isFirstTime = localStorage.getItem("isFirstTime");
+    if (!isFirstTime) {
+      localStorage.setItem("isFirstTime", "false");
+      return true;
+    }
+    return false;
+  }
   return (
     <AnimationRevealPage disabled={true}>
       <Header></Header>
@@ -258,34 +274,54 @@ function DesignConicalHatApp() {
 
         </Paper>
         <Stack
+        direction={"column"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        gap={2}
+        >
+          <Stack
           className="options"
           direction={"row"}
           justifyContent={"space-around"}
           gap={2}
-        >
+          >
+            <Button
+              variant="contained"
+              onClick={handleOpenTextureListModal}
+              style={{
+                background:
+                  "linear-gradient(21deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%)",
+                color: "black",
+              }}
+            >
+              Danh sách hoạ tiết
+            </Button>
+            {isMobile ? (
+              <>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    meshInfosRef.current.shootPreview();
+                  }}
+                >
+                  Nhấn để vẽ
+                </Button>
+              </>
+            ) : null}
+          </Stack>
+
           <Button
-            variant="contained"
-            onClick={handleOpenModal}
+            variant="outlined"
+            onClick={handleOpenTemplateListModal}
             style={{
-              background:
-                "linear-gradient(21deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%)",
-              color: "black",
+              // background:
+              //   "linear-gradient(21deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%)",
+              // color: "black",
+              width: "100%",
             }}
           >
-            Danh sách hoạ tiết
+            Mẫu có sẵn
           </Button>
-          {isMobile ? (
-            <>
-              <Button
-                variant="contained"
-                onClick={() => {
-                  meshInfosRef.current.shootPreview();
-                }}
-              >
-                Nhấn để vẽ
-              </Button>
-            </>
-          ) : null}
         </Stack>
         <Stack direction={"row"} columnGap={"20px"} flexWrap={"wrap"}>
           <InputSlider
@@ -388,77 +424,148 @@ function DesignConicalHatApp() {
             </Button>
           </>
         ) : null}
-        <Stack flexDirection={"row"} columnGap={2} justifyContent={"center"}>
+        <Stack 
+        flexDirection={"row"} 
+        columnGap={2} 
+        justifyContent={"center"}
+        position={isMobile?"fixed":"relative"}
+        backgroundColor={isMobile?"rgb(245 245 245)":null}
+        width={"100%"}
+        padding={"1rem"}
+        bottom={0}
+        zIndex={100}
+        >
           <Button variant="outlined" onClick={handleSave} disabled={isSaved}>
             Lưu
           </Button>
           <Button variant="contained" onClick={handleSaveAndOrder}>
-            Lưu và Đặt hàng
+            Lưu và Đặt chỗ
           </Button>
         </Stack>
       </Stack>
       <Footer></Footer>
       <Modal
-        open={openedModal}
-        onClose={handleCloseModal}
+        open={openedTextureListModal}
+        onClose={handleCloseTextureListModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle} display={'flex'} flexDirection={'column'} alignItems={"center"} rowGap={'10'}>
-          <div className="texture_list_hoirizontal_container">
+          <Stack
+            direction={"column"}
+            gap={2}
+            alignItems={"center"}
+          >
             <label>Danh sách hoạ tiết</label>
-            <div className="texture_type_list">
-              {textureTypes.map((type, index) => {
-                if(!type) return null;
-                return <Chip 
-                key={index} 
-                label={type||"Hoạ tiết"} 
-                onClick={() => {
-                  if(selectedTextureType && selectedTextureType === type){
-                    setSelectedTextureType(null);
-                  }else{
-                    setSelectedTextureType(type);
-                  }
-                  setSelectedTextureIndex(0);
-                }}
-                variant={`${selectedTextureType === type ? "filled" : "outlined"}`}
-                color="primary"
-                />;
-              })}
+            <div className="texture_list_hoirizontal_container">
+              <div className="texture_type_list">
+                {textureTypes.map((type, index) => {
+                  if(!type) return null;
+                  return <Chip 
+                  key={index} 
+                  label={type||"Hoạ tiết"} 
+                  onClick={() => {
+                    if(selectedTextureType && selectedTextureType === type){
+                      setSelectedTextureType(null);
+                    }else{
+                      setSelectedTextureType(type);
+                    }
+                    setSelectedTextureIndex(0);
+                  }}
+                  variant={`${selectedTextureType === type ? "filled" : "outlined"}`}
+                  color="primary"
+                  />;
+                })}
+              </div>
+              <div className="texture_list">
+                {textures.filter((texture) => {
+                    if (!selectedTextureType) return true;
+                    return texture.type === selectedTextureType;
+                  }).map((texture, index) => (
+                  <div
+                    className={`texture_item ${
+                      selectedTextureIndex == index ? "selected" : ""
+                    }`}
+                    key={index}
+                  >
+                    <img
+                      src={texture.thumbnailUrl}
+                      alt={texture.name}
+                      style={{ width: "50px", height: "50px" }}
+                      onClick={() => {
+                        setTexture(texture);
+                        if (selectedTextureIndex === index) {
+                          setSelectedTextureIndex(null);
+                        } else {
+                          setSelectedTextureIndex(index);
+                          //set texture scale to min scale
+                          setTextureScale(texture.minScale);
+                        }
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="texture_list">
-              {textures.filter((texture) => {
-                  if (!selectedTextureType) return true;
-                  return texture.type === selectedTextureType;
-                }).map((texture, index) => (
-                <div
-                  className={`texture_item ${
-                    selectedTextureIndex == index ? "selected" : ""
-                  }`}
-                  key={index}
-                >
-                  <img
-                    src={texture.thumbnailUrl}
-                    alt={texture.name}
-                    style={{ width: "50px", height: "50px" }}
-                    onClick={() => {
-                      setTexture(texture);
-                      if (selectedTextureIndex === index) {
-                        setSelectedTextureIndex(null);
-                      } else {
-                        setSelectedTextureIndex(index);
-                        //set texture scale to min scale
-                        setTextureScale(texture.minScale);
-                      }
-                    }}
-                  />
-                </div>
-              ))}
+            <Button onClick={handleCloseTextureListModal} variant="contained">
+              Chọn
+            </Button>
+          </Stack>
+        </Box>
+      </Modal>
+      <Modal
+        open={openedTemplateListModal}
+        onClose={handleCloseTemplateListModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle} display={'flex'} flexDirection={'column'} alignItems={"center"} rowGap={'10'}>
+          <Stack
+            direction={"column"}
+            gap={2}
+            alignItems={"center"}
+          >
+            <label>Mẫu có sẵn</label>
+            <div className="template_list_hoirizontal_container">
+              <div className="template_list">
+                {templates.map((template, index) => (
+                  <div
+                    className={`template_item ${
+                      selectedTemplateId == template.id ? "selected" : ""
+                    }`}
+                    key={template.id}
+                    style={{ width: "100px"}}
+                  >
+                    <img
+                      src={template.imageUrl}
+                      alt={texture.name}
+                      style={{ width: "100px", height: "100px" }}
+                      onClick={() => {
+                        if (selectedTemplateId === template.id) {
+                          setSelectedTemplateId(null);
+                        } else {
+                          setSelectedTemplateId(template.id);
+                        }
+                      }}
+                    />
+                    <p>{template.name}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-          <Button onClick={handleCloseModal} variant="contained">
-            Chọn
-          </Button>
+            <Stack
+              direction={"row"}
+              gap={2}
+              justifyContent={"center"}
+            >
+              <Button onClick={handleCloseTemplateListModal} variant="outlined">
+                Tự thiết kế
+              </Button>
+              <Button onClick={handleGoToTemplate} variant="contained">
+                Sử dụng mẫu này
+              </Button>
+            </Stack>
+          </Stack>
         </Box>
       </Modal>
     </AnimationRevealPage>
