@@ -315,7 +315,7 @@ function DesignConicalHatApp() {
                 <Button
                   variant="contained"
                   onClick={() => {
-                    tracking.clickPressToDrawOnDesignApp(texture.id);
+                    tracking.clickPressToDrawOnDesignApp(texture.id, textureScale, textureRotation);
                     meshInfosRef.current.shootPreview();
                   }}
                 >
@@ -342,7 +342,7 @@ function DesignConicalHatApp() {
           <InputSlider
             value={textureScale}
             setValue={(size)=>{
-              tracking.clickToResizeTextureOnDesignApp(texture.id, size);
+              // tracking.clickToResizeTextureOnDesignApp(texture.id, size);
               setTextureScale(size)
             }}
             label="Kích thước hoạ tiết"
@@ -355,7 +355,7 @@ function DesignConicalHatApp() {
           <InputSlider
             value={textureRotation}
             setValue={(degree)=>{
-              tracking.clickToRotateTextureOnDesignApp(texture.id, degree);
+              // tracking.clickToRotateTextureOnDesignApp(texture.id, degree);
               setTextureRotation(degree);
             }}
             label="Xoay hoạ tiết"
@@ -540,6 +540,8 @@ function DesignConicalHatApp() {
               </div>
             </div>
             <Button onClick={()=>{
+              console.log("texture.id");
+              console.log(texture.id);
               tracking.clickToSelectTextureOnDesignApp(texture.id);
               handleCloseTextureListModal();
             }} 

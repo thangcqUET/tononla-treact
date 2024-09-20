@@ -42,10 +42,12 @@ function clickToSelectTextureOnDesignApp(textureId) {
         texture_id: textureId
     });
 }
-function clickPressToDrawOnDesignApp(textureId) {
+function clickPressToDrawOnDesignApp(textureId, size, degree) {
     window.dataLayer.push({
         event: 'press_to_draw',
-        texture_id: textureId
+        texture_id: textureId,
+        size: size,
+        degree: degree,
     });
 }
 function clickToOpenSelectingTemplateOnDesignApp() {
