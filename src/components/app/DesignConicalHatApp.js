@@ -5,6 +5,7 @@ import Footer from "components/footers/MiniCenteredFooter.js";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import "./DesignConicalHatApp.css";
 import Button from "@mui/material/Button";
+import tracking from "../../tracking/GTM";
 import {
   Checkbox,
   FormControlLabel,
@@ -144,11 +145,24 @@ function DesignConicalHatApp() {
   }, [meshInfos.length]);
   const [openedTextureListModal, setOpenedTextureListModal] = React.useState(false);
   const [openedTemplateListModal, setOpenedTemplateListModal] = React.useState(checkIsFirstTime());
-  const handleOpenTextureListModal = () => setOpenedTextureListModal(true);
-  const handleCloseTextureListModal = () => setOpenedTextureListModal(false);
-  const handleOpenTemplateListModal = () => setOpenedTemplateListModal(true);
-  const handleCloseTemplateListModal = () => setOpenedTemplateListModal(false);
-  const handleGoToTemplate = () => window.location.replace(`/design-app?templateId=${selectedTemplateId}`);
+  const handleOpenTextureListModal = () => {
+    tracking.clickToOpenSelectingTextureOnDesignApp();
+    setOpenedTextureListModal(true);
+  }
+  const handleCloseTextureListModal = () => {
+    setOpenedTextureListModal(false);
+  }
+  const handleOpenTemplateListModal = () => {
+    tracking.clickToOpenSelectingTemplateOnDesignApp();
+    setOpenedTemplateListModal(true);
+  }
+  const handleCloseTemplateListModal = () => {
+    setOpenedTemplateListModal(false);
+  }
+  const handleGoToTemplate = () => {
+    tracking.clickToSelectTemplateOnDesignApp(selectedTemplateId);
+    window.location.replace(`/design-app?templateId=${selectedTemplateId}`)
+  };
   const handleDrawTexture = () => {
     console.log("draw texture");
   };
@@ -301,6 +315,7 @@ function DesignConicalHatApp() {
                 <Button
                   variant="contained"
                   onClick={() => {
+                    tracking.clickPressToDrawOnDesignApp(texture.id, textureScale, textureRotation);
                     meshInfosRef.current.shootPreview();
                   }}
                 >
@@ -326,7 +341,10 @@ function DesignConicalHatApp() {
         <Stack direction={"row"} columnGap={"20px"} flexWrap={"wrap"}>
           <InputSlider
             value={textureScale}
-            setValue={setTextureScale}
+            setValue={(size)=>{
+              // tracking.clickToResizeTextureOnDesignApp(texture.id, size);
+              setTextureScale(size)
+            }}
             label="Kích thước hoạ tiết"
             min={texture?.minScale || 5}
             max={texture?.maxScale || 10}
@@ -336,7 +354,10 @@ function DesignConicalHatApp() {
           {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
           <InputSlider
             value={textureRotation}
-            setValue={setTextureRotation}
+            setValue={(degree)=>{
+              // tracking.clickToRotateTextureOnDesignApp(texture.id, degree);
+              setTextureRotation(degree);
+            }}
             label="Xoay hoạ tiết"
             min={0}
             max={360}
@@ -364,6 +385,7 @@ function DesignConicalHatApp() {
               color="error"
               size="small"
               onClick={() => {
+                tracking.clickToRemoveAllTextureOnDesignApp();
                 meshInfosRef.current.removeAllMeshInfo();
                 setSelectedMeshId(null);
               }}
@@ -415,6 +437,7 @@ function DesignConicalHatApp() {
               color="error"
               onClick={() => {
                 if (selectedMeshId || selectedMeshId === 0) {
+                  tracking.clickToRemoveTextureOnDesignApp(meshInfos[selectedMeshId]?.texture?.id||null);
                   meshInfosRef.current.removeMeshInfo(selectedMeshId);
                   setSelectedMeshId(null);
                 }
@@ -435,10 +458,18 @@ function DesignConicalHatApp() {
         bottom={0}
         zIndex={100}
         >
-          <Button variant="outlined" onClick={handleSave} disabled={isSaved}>
+          <Button variant="outlined" onClick={
+            ()=>{
+              tracking.clickToSaveDesignOnDesignApp();
+              handleSave()
+            }}
+            disabled={isSaved}>
             Lưu
           </Button>
-          <Button variant="contained" onClick={handleSaveAndOrder}>
+          <Button variant="contained" onClick={()=>{
+            tracking.clickToSaveAndOrderOnDesignApp();
+            handleSaveAndOrder();
+          }}>
             Lưu và Đặt chỗ
           </Button>
         </Stack>
@@ -468,6 +499,7 @@ function DesignConicalHatApp() {
                     if(selectedTextureType && selectedTextureType === type){
                       setSelectedTextureType(null);
                     }else{
+                      tracking.clickToSelectTextureTypeOnDesignApp(type);
                       setSelectedTextureType(type);
                     }
                     setSelectedTextureIndex(0);
@@ -507,7 +539,13 @@ function DesignConicalHatApp() {
                 ))}
               </div>
             </div>
-            <Button onClick={handleCloseTextureListModal} variant="contained">
+            <Button onClick={()=>{
+              console.log("texture.id");
+              console.log(texture.id);
+              tracking.clickToSelectTextureOnDesignApp(texture.id);
+              handleCloseTextureListModal();
+            }} 
+            variant="contained">
               Chọn
             </Button>
           </Stack>
@@ -515,7 +553,10 @@ function DesignConicalHatApp() {
       </Modal>
       <Modal
         open={openedTemplateListModal}
-        onClose={handleCloseTemplateListModal}
+        onClose={()=>{
+          tracking.clickToCloseSelectingTemplateOnDesignApp();
+          handleCloseTemplateListModal();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -558,10 +599,16 @@ function DesignConicalHatApp() {
               gap={2}
               justifyContent={"center"}
             >
-              <Button onClick={handleCloseTemplateListModal} variant="outlined">
+              <Button onClick={()=>{
+                  tracking.clickToSelectBlankTemplateOnDesignApp();
+                  handleCloseTemplateListModal();
+                }} variant="outlined">
                 Tự thiết kế
               </Button>
-              <Button onClick={handleGoToTemplate} variant="contained">
+              <Button onClick={()=>{
+                tracking.clickToSelectTemplateOnDesignApp(selectedTemplateId);
+                handleGoToTemplate();
+              }} variant="contained">
                 Sử dụng mẫu này
               </Button>
             </Stack>
