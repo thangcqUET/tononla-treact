@@ -578,7 +578,7 @@ function DesignConicalHatApp() {
                     style={{ width: "100px"}}
                   >
                     <img
-                      src={template.imageUrl}
+                      src={template.thumbnailUrl}
                       alt={texture.name}
                       style={{ width: "100px", height: "100px" }}
                       onClick={() => {
