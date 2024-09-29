@@ -60,7 +60,6 @@ function DesignConicalHatApp() {
         designId: designId
       }
     });
-    window.fbq('track', 'InitiateCheckout');
   }
   //check if mobile screen then hide mouse, otherwise show mouse
   useEffect(() => {
@@ -230,6 +229,7 @@ function DesignConicalHatApp() {
       isShow: false,
     });
     const designId = response.data.id;
+    tracking.beginCheckout(designId);
     handleGotoCheckout(designId);
   }
   function checkIsFirstTime() {
@@ -315,7 +315,6 @@ function DesignConicalHatApp() {
                 <Button
                   variant="contained"
                   onClick={() => {
-                    tracking.clickPressToDrawOnDesignApp(texture.id, textureScale, textureRotation);
                     meshInfosRef.current.shootPreview();
                   }}
                 >
@@ -461,6 +460,7 @@ function DesignConicalHatApp() {
           <Button variant="outlined" onClick={
             ()=>{
               tracking.clickToSaveDesignOnDesignApp();
+              tracking.addToWishlist();
               handleSave()
             }}
             disabled={isSaved}>
