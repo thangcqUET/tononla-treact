@@ -10,6 +10,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { InputLabel, Select } from "@mui/material";
+import tracking from "tracking/GTM";
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-center max-w-screen-xl mx-auto pb-10 md:py-10`;
@@ -130,18 +131,7 @@ export default ({
       .then((res) => {
         if (res.status == 201) {
           setSubmitSuccessfully(true);
-          window.fbq("track", "Purchase", {
-            // content_name: productName,
-            // content_ids: [productId],
-            // content_type: productType,
-            // contents: [{
-            //   id: productId,
-            //   quantity: numItems
-            // }],
-            // num_items: numItems,
-            // currency: currency,
-            // value: value
-          });
+          tracking.purchase(designId, `T_${designId}_${Math.floor(Math.random() * 1000000)}`)
         }
       })
       .catch((error) => {

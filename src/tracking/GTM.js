@@ -97,6 +97,33 @@ function clickToSelectTextureTypeOnDesignApp(textureType) {
     });
 }
 
+function addToWishlist() {
+    window.dataLayer.push({
+        event: 'add_to_wishlist',
+    });
+}
+
+function beginCheckout(design_id) {
+    window.dataLayer.push({
+        event: 'begin_checkout',
+        items: [{
+            item_id: design_id,
+            item_name: 'Custom Design',
+        }],
+    });
+}
+
+function purchase(design_id, transaction_id) {
+    window.dataLayer.push({
+        event: 'purchase',
+        transaction_id: transaction_id,
+        items: [{
+            item_id: design_id,
+            item_name: 'Custom Design',
+        }],
+    });
+}
+
 export default {
     clickToSelectTemplateOnDesignApp,
     clickToCloseSelectingTemplateOnDesignApp,
@@ -112,4 +139,7 @@ export default {
     clickToSaveDesignOnDesignApp,
     clickToSaveAndOrderOnDesignApp,
     clickToSelectTextureTypeOnDesignApp,
+    addToWishlist,
+    beginCheckout,
+    purchase,
 }

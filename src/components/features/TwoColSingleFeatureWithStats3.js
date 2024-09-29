@@ -102,17 +102,6 @@ export default ({
       }
     
     });
-    window.fbq('track', 'InitiateCheckout', {
-      content_ids: [productId],
-      // content_category: contentCategory,
-      contents: [{
-        id: productId,
-        quantity: numItems
-      }],
-      num_items: numItems,
-      currency: currency,
-      value: value
-    });
   }
   return (
     <Container>
