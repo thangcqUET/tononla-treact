@@ -14,6 +14,7 @@ import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
+import tracking from "tracking/GTM";
 const ConicalHatDesigner = forwardRef((props, ref) => {
   // Properties
   // - cone
@@ -62,6 +63,10 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
   const meshInfos = props.meshInfos;
   const setMeshInfos = props.setMeshInfos;
   const isMobile = props.isMobile;
+
+  const SHOOT_FROM = {
+    SAVED: "saved",
+  };
 
   //   function removeDecals() {
   //     decals.forEach(function (d) {
@@ -191,6 +196,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
           renderOrder: i,
           decalMap: savedDecals[i],
           ratioLocal: ratio,
+          shootFrom: SHOOT_FROM.SAVED,
         });
       }
       props.setSavedMeshInfos([]);
@@ -353,6 +359,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     renderOrder,
     decalMap,
     ratioLocal=ratio,
+    shootFrom=null,
   }={}) => {
     try {
       console.log({
@@ -441,6 +448,9 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
         }]
       });
       scene.add(m);
+      if(shootFrom !== SHOOT_FROM.SAVED){
+        tracking.clickPressToDrawOnDesignApp(props.texture.id, textureScale, textureRotation);
+      }
     } catch (error) {
       console.log("error at shoot: ", error);
     }

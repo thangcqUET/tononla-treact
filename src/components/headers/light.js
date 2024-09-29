@@ -80,17 +80,14 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
         <NavLink onClick={()=>{
           navFunctions?.at(0)();
           toggleNavbar();
-          window.fbq('track', 'ButtonClick', {content_name: 'Menu:To_the_nao'});
         }}>Tô thế nào?</NavLink>
         <NavLink onClick={()=>{
           navFunctions?.at(1)();
           toggleNavbar();
-          window.fbq('track', 'ButtonClick', {content_name: 'Menu:Template'});
         }}>Mẫu có sẵn</NavLink>
         <NavLink onClick={()=>{
           navFunctions?.at(0)();
           toggleNavbar();
-          window.fbq('track', 'ButtonClick', {content_name: 'Menu:Lien_he'});
         }}>Liên hệ</NavLink>
         </>:<></>
       }
@@ -111,7 +108,6 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
   );
 
   logoLink = <div onClick={()=>{
-    window.fbq('track', 'ButtonClick', {content_name: 'Menu:Logo'});
   }}>{logoLink || defaultLogoLink}</div>;
   links = links || defaultLinks;
 

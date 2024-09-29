@@ -130,10 +130,6 @@ export default () => {
         />
         {/* <VideoFrame
           ref={refVideo}
-          onClick={() => {
-            window.fbq("track", "ButtonClick", {
-              content_name: "Video:Play_or_Pause",
-            });
           }}
         >
           <StyledResponsiveVideoEmbed
@@ -200,9 +196,6 @@ export default () => {
             primaryButtonText="Thiết kế ngay"
             buttonFunction={() => {
               // handleScroll(refTemplates)();
-              // window.fbq("track", "ButtonClick", {
-              //   content_name: "Progress:Trai_nghiem_ngay",
-              // });
               window.open("/design-app", "_blank");
             }}
             secondaryButtonText="Chi tiết - Infography"

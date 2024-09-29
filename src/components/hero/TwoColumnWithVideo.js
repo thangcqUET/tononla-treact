@@ -86,7 +86,6 @@ export default ({
             <Actions>
               <PrimaryButton onClick={()=>{
                   buttonFunction();
-                  window.fbq('track', 'ButtonClick', {content_name: 'Hero:Tim_hieu_ngay'});
                 }}>{primaryButtonText}</PrimaryButton>
               {/* <WatchVideoButton onClick={toggleModal}>
                 <span className="playIconContainer">
@@ -98,7 +97,6 @@ export default ({
           </LeftColumn>
           <RightColumn>
             <IllustrationContainer onClick={()=>{
-              window.fbq('track', 'ButtonClick', {content_name: 'Hero:Images'});
             }}>
               {/* <img
                 css={imageCss}

@@ -219,19 +219,6 @@ export default ({
         compareAtPrice
       }
     );
-    if(!modalIsOpen){
-      window.fbq('track', 'AddToCart', {
-        content_name: productName,
-        content_ids: [productId],
-        content_type: productType,
-        contents: [{
-          id: productId,
-          quantity: numItems
-        }],
-        currency: currency,
-        value: value
-      });
-    };
     setModalIsOpen(!modalIsOpen);
   }
   return (
