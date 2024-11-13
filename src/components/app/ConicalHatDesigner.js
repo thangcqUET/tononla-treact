@@ -78,6 +78,7 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     removeMeshInfo,
     removeAllMeshInfo,
     shootPreview,
+    updateMeshPropertiesThrotle,
   }));
   function removeMeshInfo(id) {
     // remove in meshInfos and scene
@@ -350,6 +351,27 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
       // };
     }
   };
+  const updateMeshProperties = ({ textureRotation, textureScale }) => {
+    const orientation = new THREE.Euler(
+      mouseHelperRef.current.rotation.x,
+      mouseHelperRef.current.rotation.y,
+      mouseHelperRef.current.rotation.z + (textureRotation/360) * 2 * Math.PI
+    );
+    // update position for previewmesh
+    if (isInitPreviewMesh.current) {
+      const scale = textureScale;
+      const size = new THREE.Vector3(scale*ratio, scale, scale);
+      updatePreviewMeshThrotle({
+        position: intersectionRef.current.point,
+        orientation: orientation,
+        size: size,
+      });
+    }
+  }
+  const updateMeshPropertiesThrotle = useCallback(
+    throttle(updateMeshProperties, 200),
+    [mouseHelperRef.current,isInitPreviewMesh.current,intersectionRef.current, ratio]
+  );
   const shoot = ({
     meshId=null,
     position,
