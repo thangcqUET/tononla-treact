@@ -343,6 +343,7 @@ function DesignConicalHatApp() {
             setValue={(size)=>{
               // tracking.clickToResizeTextureOnDesignApp(texture.id, size);
               setTextureScale(size)
+              meshInfosRef.current.updateMeshPropertiesThrotle({textureScale: size, textureRotation: textureRotation});
             }}
             label="Kích thước hoạ tiết"
             min={texture?.minScale || 5}
@@ -356,6 +357,7 @@ function DesignConicalHatApp() {
             setValue={(degree)=>{
               // tracking.clickToRotateTextureOnDesignApp(texture.id, degree);
               setTextureRotation(degree);
+              meshInfosRef.current.updateMeshPropertiesThrotle({textureScale: textureScale, textureRotation: degree});
             }}
             label="Xoay hoạ tiết"
             min={0}
