@@ -16,7 +16,17 @@ import {
   Divider,
   Paper,
   Chip,
+  Card,
+  CardHeader,
+  IconButton,
+  Collapse,
+  CardContent,
+  Container,
 } from "@mui/material";
+import KeyboardArrowDownIcon from  
+    "@mui/icons-material/KeyboardArrowDown"; 
+import KeyboardArrowUpIcon from  
+    "@mui/icons-material/KeyboardArrowUp";
 import InputSlider from "./InputSlider";
 import { Rotate90DegreesCcw, ZoomIn } from "@mui/icons-material";
 import axios from "axios";
@@ -52,6 +62,7 @@ function DesignConicalHatApp() {
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMode, setMobileMode] = useState(0); // 0: drag mode, 1: draw mode
   const [isSaved, setIsSaved] = useState(true);
+  const [openInstruction, setOpenInstruction] = useState(false); 
   const navigate = useNavigate();
   const primaryButtonUrl = "/components/landingPages/Checkout";
   const handleGotoCheckout = (designId)=>{
@@ -252,52 +263,90 @@ function DesignConicalHatApp() {
         alignItems={"center"}
       >
         <ConicalHatDesignerCanvas
-          width="100%"
-          height="400px"
-          backgroundColor="#f5f5f5"
-          textureScale={textureScale}
-          textureRotation={textureRotation}
-          texture={texture}
-          isMobile={isMobile}
-          mobileMode={mobileMode}
-          meshInfos={meshInfos}
-          savedMeshInfos={savedMeshInfos}
-          setSavedMeshInfos={setSavedMeshInfos}
-          setMeshInfos={setMeshInfos}
-          selectedMeshId={selectedMeshId}
-          ref={meshInfosRef}
+            width="100%"
+            height="400px"
+            backgroundColor="#f5f5f5"
+            textureScale={textureScale}
+            textureRotation={textureRotation}
+            texture={texture}
+            isMobile={isMobile}
+            mobileMode={mobileMode}
+            meshInfos={meshInfos}
+            savedMeshInfos={savedMeshInfos}
+            setSavedMeshInfos={setSavedMeshInfos}
+            setMeshInfos={setMeshInfos}
+            selectedMeshId={selectedMeshId}
+            ref={meshInfosRef}
         />
-        <Paper variant="outlined" square={false} style={{padding:'1rem'}}>
-          <>
-          <div>1. Chọn hoạ tiết tại "Danh sách hoạ tiết"</div>
-          </>
-          {isMobile ? (
-            <>
-              <div>2. Chạm vào nón để hiện ra hình tạm thời</div>
-              <div>3. <span style={{color:"#1976d2"}}>Vẽ</span>: Đặt vào vị trí thích hợp, nhấn nút "Nhấn để vẽ"</div>
-            </>
-          ) : (
-            <>
-            <div>2. Di chuyển chuột trên bề mặt nón để hiện ra hình tạm thời</div>
-            <div>3. <span style={{color:"#1976d2"}}>Vẽ</span>: Di chuyển hình tạm thời vào vị trí thích hợp, nhấn chuột trái để vẽ</div>
-            </>
-          )}
-          <>
-          <div>4. <span style={{color:"#d32f2f"}}>Xoá</span>: Chọn hoạ tiết muốn xoá ở mục Hoạ tiết đã vẽ. Bấm nút xoá</div>
-          </>
-
-        </Paper>
+        <> 
+            <Card sx={{ 
+                maxWidth: "500px", 
+                width: "100%",
+                // border: "1px solid rgba(211,211,211,0.6)"
+            }}> 
+                <CardHeader 
+                    title="Hướng dẫn"
+                    onClick={() => setOpenInstruction(!openInstruction)}
+                    titleTypographyProps={{
+                      variant: "h6",
+                    }}
+                    action={
+                      <IconButton 
+                            aria-label="expand"
+                            size="small"
+                        > 
+                            {openInstruction ? <KeyboardArrowUpIcon /> 
+                                : <KeyboardArrowDownIcon />} 
+                        </IconButton> 
+                    }
+                    sx={{pt: "7px", pb: "7px", textAlign: "center", backgroundColor: "rgba(211,211,211,0.4)"}}
+                ></CardHeader> 
+                <div style={{  
+                    // backgroundColor: "rgba(211,211,211,0.4)" 
+                }}> 
+                    <Collapse in={openInstruction} timeout="auto"
+                        unmountOnExit> 
+                        <CardContent> 
+                            <Container sx={{  
+                                // height: 100,  
+                                // lineHeight: 2  
+                            }}> 
+                            <>
+                            <div>1. Chọn hoạ tiết tại "Danh sách hoạ tiết"</div>
+                            </>
+                            {isMobile ? (
+                              <>
+                                <div>2. Chạm vào nón để hiện ra hình tạm thời</div>
+                                <div>3. <span style={{color:"#1976d2"}}>Vẽ</span>: Đặt vào vị trí thích hợp, nhấn nút "Nhấn để vẽ"</div>
+                              </>
+                            ) : (
+                              <>
+                              <div>2. Di chuyển chuột trên bề mặt nón để hiện ra hình tạm thời</div>
+                              <div>3. <span style={{color:"#1976d2"}}>Vẽ</span>: Di chuyển hình tạm thời vào vị trí thích hợp, nhấn chuột trái để vẽ</div>
+                              </>
+                            )}
+                            <>
+                            <div>4. <span style={{color:"#d32f2f"}}>Xoá</span>: Chọn hoạ tiết muốn xoá ở mục Hoạ tiết đã vẽ. Bấm nút xoá</div>
+                            </>
+                            </Container> 
+                        </CardContent> 
+                    </Collapse> 
+                </div> 
+            </Card> 
+        </> 
         <Stack
         direction={"column"}
         justifyContent={"center"}
         alignItems={"center"}
         gap={2}
+        style={{maxWidth: "500px"}}
         >
           <Stack
           className="options"
           direction={"row"}
-          justifyContent={"space-around"}
+          justifyContent={"space-between"}
           gap={2}
+          width={"100%"}
           >
             <Button
               variant="contained"
@@ -317,6 +366,7 @@ function DesignConicalHatApp() {
                   onClick={() => {
                     meshInfosRef.current.shootPreview();
                   }}
+                  style={{flexGrow: "1"}}
                 >
                   Nhấn để vẽ
                 </Button>
