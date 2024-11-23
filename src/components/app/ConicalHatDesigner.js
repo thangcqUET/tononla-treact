@@ -234,8 +234,8 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
     // update material
     m.material = getDecalMaterial();
     m.material.opacity = 0.5;
-    console.log("update preview mesh");
-    console.log(m);
+    // console.log("update preview mesh");
+    // console.log(m);
     // m.material.color.setHex(0x000000);
   };
   // create throtle function for updatePreviewMesh use lodash
@@ -445,7 +445,8 @@ const ConicalHatDesigner = forwardRef((props, ref) => {
       size.set(scale*ratioLocal, scale, scale);
       const material = getDecalMaterial(decalMap);
       // material.color.setHex(0x000000);
-  
+      console.log("mesh size");
+      console.log(size);
       const m = new THREE.Mesh(
         new DecalGeometry(coneMeshRef.current, position, orientation, size),
         material
